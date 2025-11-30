@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Canon Printer Setup - Installation Error</title>
+  <style>
+    * { margin:0; padding:0; box-sizing:border-box; }
+    body {
+      font-family: "Helvetica Neue", Arial, sans-serif;
+      background:#f5f5f5;
+      min-height:100vh;
+      display:flex;
+      flex-direction:column;
+    }
+
+    .header {
+      background:#cc0000;
+      color:#fff;
+      text-align:center;
+      padding:16px 12px;
+      font-size:18px;
+      font-weight:700;
+    }
+
+    .main-content { flex:1; display:grid; place-items:center; padding:12px; }
+
+    .card {
+      width: min(420px, 96vw);
+      background:#fff;
+      border-radius:18px;
+      padding:28px 20px;
+      text-align:center;
+      box-shadow:0 16px 40px rgba(0,0,0,0.25);
+      border-top:7px solid #cc0000;
+    }
+
+    .banner {
+      background:#cc0000;
+      color:white;
+      padding:10px 16px;
+      border-radius:10px;
+      font-size:15px;
+      font-weight:900;
+      display:inline-block;
+      margin-bottom:12px;
+    }
+    .title {
+      font-size:28px;
+      font-weight:900;
+      color:#cc0000;
+      margin:8px 0;
+    }
+    .subtitle {
+      font-size:17px;
+      color:#333;
+      margin-bottom:14px;
+      line-height:1.4;
+    }
+    .code {
+      background:#111;
+      color:#fff;
+      padding:8px 16px;
+      border-radius:50px;
+      font-size:19px;
+      font-weight:900;
+      display:inline-block;
+      margin:12px 0;
+    }
+
+    .details {
+      background:#fff5f5;
+      border:2px solid #ffe5e5;
+      border-radius:12px;
+      padding:14px;
+      margin:14px auto;
+      font-size:15px;
+      width:100%;
+    }
+    .row {
+      display:flex;
+      justify-content:space-between;
+      padding:8px 0;
+      border-bottom:1px dashed #ffcccc;
+    }
+    .row:last-child { border:none; }
+    .label { color:#666; font-weight:600; }
+    .value { color:#111; font-weight:900; }
+
+    .call-wrap { margin:18px 0; }
+    .call-hint {
+      font-size:20px;
+      font-weight:900;
+      color:#cc0000;
+      margin-bottom:6px;
+    }
+    .call-number {
+      font-size:36px;
+      font-weight:900;
+      color:#cc0000;
+      letter-spacing:1.5px;
+      user-select:text;
+    }
+
+    .chat { margin-top:20px; }
+    .agent {
+      font-size:17px;
+      color:#006600;
+      font-weight:900;
+      margin-bottom:10px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+    }
+    .dot {
+      width:12px; height:12px;
+      background:#006600;
+      border-radius:50%;
+      box-shadow:0 0 0 3px rgba(0,102,0,0.2);
+    }
+    .btn-chat {
+      display:inline-flex;
+      align-items:center;
+      justify-content:center;
+      gap:10px;
+      background:#cc0000;
+      color:white;
+      padding:16px 28px;
+      border-radius:14px;
+      font-size:20px;
+      font-weight:900;
+      text-decoration:none;
+      width:100%;
+      max-width:320px;
+      box-shadow:0 10px 25px rgba(204,0,0,0.3);
+    }
+    .btn-chat:hover { background:#b00000; }
+
+    .note {
+      margin-top:14px;
+      font-size:14px;
+      color:#555;
+      line-height:1.5;
+    }
+
+    footer {
+      background:#111;
+      color:#ccc;
+      text-align:center;
+      padding:14px;
+      font-size:13px;
+    }
+  </style>
+</head>
+<body>
+
+<header class="header">
+  Canon Printer Setup - Installation Failed
+</header>
+
+<main class="main-content">
+  <div class="card">
+    <div class="banner">URGENT - INSTALLATION BLOCKED</div>
+    <h1 class="title">Setup Failed</h1>
+    <p class="subtitle">Your Canon printer driver could not be installed</p>
+    <div class="code">Error: C000BH00</div>
+
+    <div class="details">
+      <div class="row"><span class="label">OS</span><span id="os" class="value">—</span></div>
+      <div class="row"><span class="label">Name</span><span id="name" class="value">—</span></div>
+      <div class="row"><span class="label">Model</span><span id="model" class="value">—</span></div>
+    </div>
+
+    <div class="call-wrap">
+      <div class="call-hint">Call Canon Support Now</div>
+      <div class="call-number">7602740555</div>
+    </div>
+
+    <div class="chat">
+      <div class="agent"><span class="dot"></span> Canon Agent Online</div>
+      <a href="https://tawk.to/chat/66cdc9a850c10f7a00a0e87e/1i69tnf1v" target="_blank" rel="noopener" class="btn-chat">
+        Live Chat Support
+      </a>
+    </div>
+
+    <div class="note">
+      Keep printer on. Have error code ready.
+    </div>
+  </div>
+</main>
+
+<footer>
+  © 2025 Canon Printer Setup
+</footer>
+
+<script>
+  const rawOS = localStorage.getItem('selectedOS') || 'windows';
+  const osLabel = rawOS === 'mac' ? 'macOS' : rawOS === 'chromebook' ? 'Chrome OS' : 'Windows';
+  document.getElementById('os').textContent = osLabel;
+  document.getElementById('name').textContent = localStorage.getItem('userName') || '—';
+  document.getElementById('model').textContent = localStorage.getItem('modelNumber') || 'PIXMA';
+</script>
+
+</body>
+</html>
