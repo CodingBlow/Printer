@@ -120,6 +120,394 @@
   /* FULL-WIDTH BACKGROUND */
   .simple-hero {
     width: 100%;
+    padding: 30px 0;
+    background: #f3f6fa;
+  }
+
+  /* FULL-WIDTH CONTENT BOX */
+  .hero-box {
+    width: 100%;              /* FULL WIDTH */
+    max-width: 100%;          /* FULL WIDTH */
+    padding: 60px 80px;       /* Larger padding for wide screens */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #ffffff;
+    border-radius: 0;         /* No rounded corners, full width */
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  }
+
+  .hero-left {
+    flex: 1;
+    padding-right: 40px;
+  }
+
+  .hero-left h1 {
+    font-size: 40px;
+    margin-bottom: 20px;
+    font-weight: 700;
+    color: #0b74de;
+  }
+
+  .hero-left p {
+    font-size: 20px;
+    color: #333;
+    margin-bottom: 30px;
+    line-height: 1.6;
+  }
+
+  .keywords-list {
+    list-style: disc inside;
+    margin-bottom: 35px;
+    font-size: 20px;
+    color: #444;
+  }
+  .keywords-list li {
+    margin: 10px 0;
+  }
+
+  .setup-btn {
+    display: inline-block;
+    background-color: #0b74de;
+    color: white;
+    padding: 18px 32px;
+    border-radius: 8px;
+    font-size: 22px;
+    font-weight: 600;
+    text-decoration: none;
+    box-shadow: 0 4px 12px rgba(11,116,222,0.4);
+    transition: background-color 0.3s ease;
+  }
+
+  .setup-btn:hover,
+  .setup-btn:focus {
+    background-color: #0959a5;
+    outline: none;
+  }
+
+  .hero-right img {
+    width: 420px;
+    max-width: 100%;
+  }
+
+  /* MOBILE */
+  @media (max-width: 900px) {
+    .hero-box {
+      flex-direction: column;
+      text-align: center;
+      padding: 40px 20px;
+    }
+    .hero-left {
+      padding-right: 0;
+      margin-bottom: 30px;
+    }
+    .keywords-list {
+      font-size: 18px;
+      text-align: left;
+      display: inline-block;
+    }
+    .hero-right img {
+      width: 260px;
+    }
+    .hero-left h1 {
+      font-size: 30px;
+    }
+    .hero-left p {
+      font-size: 18px;
+    }
+    .setup-btn {
+      font-size: 20px;
+      padding: 14px 26px;
+    }
+  }
+
+
+
+
+        /* Problem Solver Grid */
+        .problem-solver-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; margin-top: 24px; }
+        .solver-card {
+            display: flex; align-items: center; gap: 12px; background: var(--gray-50);
+            border: 1px solid var(--gray-200); padding: 16px; border-radius: var(--radius-md);
+            text-decoration: none; color: var(--gray-800); font-weight: 600; font-size: 15px;
+            transition: all 0.2s ease;
+        }
+        .solver-card:hover {
+            background: #fff; border-color: var(--primary); box-shadow: 0 4px 12px rgba(30,64,175,0.1);
+            transform: translateY(-2px); color: var(--primary);
+        }
+        .solver-card i { font-size: 20px; color: var(--primary); width: 24px; text-align: center; }
+
+        /* Transparency Panel */
+        .transparency-panel {
+            background: linear-gradient(135deg, #fff9e6 0%, #fef3c7 100%);
+            border: 2px solid var(--warning); border-radius: var(--radius-lg);
+            padding: 32px; box-shadow: var(--shadow-md);
+        }
+        .transparency-panel h3 { display: flex; align-items: center; gap: 12px; font-size: 20px; color: var(--gray-900); margin-bottom: 16px; }
+        .transparency-panel h3 i { color: var(--warning); font-size: 24px; }
+        .transparency-list { list-style: none; margin-bottom: 24px; }
+        .transparency-list li {
+            display: flex; align-items: flex-start; gap: 14px; margin-bottom: 12px;
+            font-size: 15px; line-height: 1.6; color: var(--gray-800);
+        }
+        .transparency-list li i { color: var(--accent); font-size: 18px; margin-top: 2px; flex-shrink: 0; }
+
+        .btn {
+            display: inline-flex; align-items: center; gap: 10px; padding: 12px 24px;
+            border-radius: 50px; font-weight: 600; font-size: 15px; text-decoration: none;
+            transition: var(--transition); cursor: pointer; border: none;
+        }
+        .btn-secondary { background: #fff; color: var(--primary); border: 2px solid var(--primary); }
+        .btn-secondary:hover { background: var(--primary-light); }
+
+        /* Content Sections */
+        .content-section { background: #fff; margin: 40px 0; padding: 48px; border-radius: var(--radius-lg); box-shadow: var(--shadow-lg); }
+        .section-header { margin-bottom: 32px; }
+        .section-header h2 {
+            display: flex; align-items: center; gap: 14px; font-size: 30px;
+            font-weight: 800; color: var(--gray-900); margin-bottom: 12px;
+        }
+        .section-header h2 i { font-size: 28px; color: var(--info); }
+        .section-intro { font-size: 17px; line-height: 1.7; color: var(--gray-700); max-width: 900px; }
+
+        /* Topic Cards */
+        .topic-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 24px; margin-top: 32px; }
+        .topic-card {
+            background: linear-gradient(135deg, #fef2f2 0%, #fff1f2 100%);
+            border-left: 5px solid var(--info); border-radius: var(--radius-md);
+            padding: 24px; box-shadow: var(--shadow-sm); transition: var(--transition);
+            position: relative; overflow: hidden;
+        }
+        .topic-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); border-left-color: var(--primary); }
+        .topic-icon {
+            width: 52px; height: 52px; background: var(--info); color: #fff;
+            border-radius: var(--radius-sm); display: flex; align-items: center;
+            justify-content: center; font-size: 26px; margin-bottom: 12px;
+            box-shadow: 0 4px 12px rgba(59,130,246,0.3);
+        }
+        .topic-card h3 { font-size: 18px; font-weight: 700; color: var(--gray-900); margin-bottom: 10px; line-height: 1.4; }
+        .topic-card p { font-size: 15px; line-height: 1.7; color: var(--gray-700); }
+
+        /* Notice Boxes */
+        .notice-box {
+            background: linear-gradient(135deg, #fef3c7 0%, #fef6e8 100%);
+            border-left: 5px solid var(--warning); padding: 22px 24px;
+            border-radius: var(--radius-md); margin-top: 32px; font-size: 15px;
+            line-height: 1.7; color: var(--gray-800); box-shadow: var(--shadow-sm);
+        }
+        .notice-box strong { display: block; font-size: 16px; color: var(--gray-900); margin-bottom: 6px; }
+
+        /* Resources */
+        .resources-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px; margin-top: 32px; }
+        .resource-card {
+            background: var(--gray-50); border: 2px solid var(--gray-200);
+            border-radius: var(--radius-md); padding: 28px 22px; text-align: center;
+            transition: var(--transition);
+        }
+        .resource-card:hover { border-color: var(--primary); transform: translateY(-3px); box-shadow: var(--shadow-md); }
+        .resource-card .icon-wrapper {
+            width: 68px; height: 68px; background: linear-gradient(135deg, var(--primary) 0%, var(--info) 100%);
+            color: #fff; border-radius: var(--radius-md); display: flex;
+            align-items: center; justify-content: center; font-size: 32px;
+            margin: 0 auto 18px; box-shadow: 0 8px 20px rgba(30,64,175,0.25);
+        }
+        .resource-card h3 { font-size: 17px; font-weight: 700; color: var(--gray-900); margin-bottom: 10px; }
+        .resource-card p { font-size: 15px; line-height: 1.6; color: var(--gray-600); }
+
+        /* Footer */
+        footer {
+            background: #fff; border-top: 3px solid var(--gray-200);
+            padding: 40px 0 30px; margin-top: 60px;
+        }
+        .footer-content { text-align: center; max-width: 800px; margin: 0 auto; }
+        .footer-content p { font-size: 14px; line-height: 1.8; color: var(--gray-600); margin-bottom: 20px; }
+        .footer-links { display: flex; justify-content: center; flex-wrap: wrap; gap: 20px; margin-top: 12px; }
+        .footer-links a { color: var(--primary); text-decoration: none; font-weight: 600; font-size: 14px; transition: var(--transition); }
+        .footer-links a:hover { color: var(--primary-dark); text-decoration: underline; }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .hero-grid { grid-template-columns: 1fr; gap: 32px; }
+            .topic-grid { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+        }
+        @media (max-width: 768px) {
+            .container { padding: 0 16px; }
+            .hero-section, .content-section { padding: 32px 22px; }
+            .hero-content h2 { font-size: 30px; }
+            .section-header h2 { font-size: 26px; }
+            .topic-grid, .problem-solver-grid { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 480px) {
+            .hero-section { padding: 24px 18px; }
+            .hero-content h2 { font-size: 26px; }
+            .transparency-panel { padding: 24px 18px; }
+        }
+    </style>
+
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17754747703"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'AW-17754747703');
+    </script>
+</head>
+<body>
+
+
+<header style="width:100%; background:#ffffff; border-bottom:1px solid #e0e7ff; padding:18px 0; position:sticky; top:0; z-index:1000; box-shadow:0 4px 20px rgba(0,0,0,0.06);">
+    <div style="max-width:1280px; margin:0 auto; padding:0 24px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:16px;">
+        
+        <!-- Left: Logo + Title -->
+        <div style="display:flex; align-items:center; gap:20px;">
+            
+            <div style="width:56px; height:56px; background:#0078d4; border-radius:12px; display:flex; align-items:center; justify-content:center; color:#fff; font-size:34px; font-weight:900; box-shadow:0 8px 25px rgba(0,120,212,0.3);">
+                P
+            </div>
+            
+            <div>
+        <div style="font-size:18px; font-weight:600; letter-spacing:-0.02em; color:#111827;">
+          Printer Setup Guide
+        </div>
+        <div style="font-size:12px; color:#6b7280;">
+          Independent printer technology reference
+        </div>
+      </div>
+        </div>
+
+        <!-- Right: Clean Navigation -->
+        <nav style="display:flex; gap:36px; font-size:15.5px; font-weight:500;">
+            <a href="#" style="color:#001e73; text-decoration:none; opacity:0.92; transition:all 0.2s;">Home</a>
+            <a href="#" style="color:#001e73; text-decoration:none; opacity:0.92; transition:all 0.2s;">Installation Guide</a>
+            <a href="/contact" style="color:#001e73; text-decoration:none; opacity:0.92; transition:all 0.2s;">Contact</a>
+        </nav>
+    </div>
+</header>
+
+<div class="container">
+
+    <!-- Hero Section -->
+ 
+<section class="simple-hero">
+  <div class="hero-box">
+
+    <!-- LEFT SIDE -->
+    <div class="hero-left" role="main" aria-label="Printer setup information">
+      <h1>Printer Setup & Driver Install Instructions</h1>
+      <p>Driver installation, printer setup steps, and network connection information.</p>
+
+      <div style="
+    margin-bottom:24px; 
+    padding:20px; 
+    border:1px solid #e5e7eb; 
+    border-radius:16px; 
+    background:#ffffff;
+    box-shadow:0 4px 12px rgba(0,0,0,0.04);
+">
+
+  <div style="font-size:25px; font-weight:600; color:#111827; margin-bottom:16px;">
+    Select your printer brand
+  </div>
+
+  <div style="display:flex; flex-wrap:wrap; gap:20px; justify-content:center;">
+
+   
+    <button
+      type="button"
+      onclick="window.location.href='/setup/setup.html';"
+      style="
+        flex:1 1 200px;
+        padding:22px;
+        border-radius:16px;
+        border:1px solid #d1d5db;
+        background:#ffffff;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        cursor:pointer;
+        transition:0.25s ease;
+        box-shadow:0 1px 4px rgba(0,0,0,0.05);
+      "
+      onmouseover="this.style.transform='scale(1.04)'; this.style.boxShadow='0 6px 20px rgba(0,0,0,0.10)'"
+      onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 1px 4px rgba(0,0,0,0.05)'"
+    >
+      <img
+        src="../images/Logo.png"
+        style="width:85px; height:85px; object-fit:contain;"
+      >
+    </button>
+
+    <!-- CANON CARD -->
+    <button
+      type="button"
+      onclick="window.location.href='/printer/setup.html';"
+      style="
+        flex:1 1 200px;
+        padding:22px;
+        border-radius:16px;
+        border:1px solid #d1d5db;
+        background:#ffffff;
+        display:flex;
+        align-items:center;
+        justify-content:center;
+        cursor:pointer;
+        transition:0.25s ease;
+        box-shadow:0 1px 4px rgba(0,0,0,0.05);
+      "
+      onmouseover="this.style.transform='scale(1.04)'; this.style.boxShadow='0 6px 20px rgba(0,0,0,0.10)'"
+      onmouseout="this.style.transform='scale(1)'; this.style.boxShadow='0 1px 4px rgba(0,0,0,0.05)'"
+    >
+      <img
+        src="../images/logo1.png"
+        style="height:50px; object-fit:contain;"
+      >
+    </button>
+
+  </div>
+</div>
+
+
+      <ul class="keywords-list" aria-label="Related printer topics">
+        <li>Driver Installation</li>
+        <li>Printer Setup</li>
+        <li>Wireless Connection</li>
+        <li>Printer Configuration</li>
+      </ul>
+
+      <span id="btn-desc" class="visually-hidden">View printer setup instructions</span>
+    </div>
+
+    <!-- RIGHT SIDE -->
+    <div class="hero-right" aria-hidden="true">
+      <img src="https://res.cloudinary.com/dadqwaqis/image/upload/v1764446383/unnamed_ovbde6.jpg" alt="Printer Image" />
+    </div>
+
+  </div>
+</section>
+
+
+
+    <!-- Common Situations -->
+     <section id="topics" class="content-section" style="background:#ffffff; margin:40px 0; padding:48px; border-radius:16px; box-shadow:0 10px 25px rgba(0,0,0,0.08);">
+  <div class="section-header" style="margin-bottom:32px;">
+    <h2 style="display:flex; align-items:center; gap:14px; font-size:32px; font-weight:800; color:#111827; margin-bottom:12px;">
+      Common Printer Issues & How They Are Usually Resolved
+    </h2>
+    <p class="section-intro" style="font-size:18px; line-height:1.6; color:#4b5563; max-width:900px;">
+      Below are frequent/* Accessibility helper */
+  .visually-hidden {
+    position: absolute !important;
+    height: 1px; width: 1px;
+    overflow: hidden;
+    clip: rect(1px, 1px, 1px, 1px);
+    white-space: nowrap;
+  }
+
+  /* FULL-WIDTH BACKGROUND */
+  .simple-hero {
+    width: 100%;
     padding: 60px 0;
     background: #f3f6fa;
   }
