@@ -1,38 +1,265 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3D Basketball Throw</title>
+    <style>
+        body { margin: 0; overflow: hidden; background-color: #111; font-family: 'Arial', sans-serif; }
+        
+        /* UI और स्कोरबोर्ड */
+        #ui-layer {
+            position: absolute; top: 20px; width: 100%; text-align: center;
+            pointer-events: none; user-select: none;
+        }
+        h1 { color: white; margin: 0; text-transform: uppercase; letter-spacing: 2px; text-shadow: 0 0 10px #ff6600; }
+        p { color: #ccc; font-size: 14px; }
+        #score-board { font-size: 40px; color: #ffeb3b; font-weight: bold; margin-top: 10px; }
+        
+        /* क्लिक करने पर टच इफेक्ट (Ripple) */
+        .ripple {
+            position: absolute; border-radius: 50%; transform: scale(0);
+            background: rgba(255, 255, 255, 0.4);
+            animation: ripple-anim 0.6s linear; pointer-events: none;
+        }
+        @keyframes ripple-anim {
+            to { transform: scale(4); opacity: 0; }
+        }
+    </style>
 
-
-
-
-    <!-- Google tag (gtag.js) -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17754747703"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'AW-17754747703');
+    <script type="importmap">
+        {
+            "imports": {
+                "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
+                "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
+            }
+        }
     </script>
+</head>
+<body>
 
+    <div id="ui-layer">
+        <h1>Click to Shoot! 🏀</h1>
+        <p>Aim for the hoop</p>
+        <div id="score-board">0</div>
+    </div>
 
-function handleClick() {
-    gtag('event', 'conversion', {
-        'send_to': 'AW-17754747703/5oaICNngxMUbELfmj5JC',
-        'value': 1.0,
-        'currency': 'INR'
-    });
-    window.location.href = "/printer/os-selection.html";  
-}
-</script>
+    <script type="module">
+        import * as THREE from 'three';
 
+        // --- 1. बेसिक सेटअप ---
+        const scene = new THREE.Scene();
+        scene.background = new THREE.Color(0x20252f); // डार्क ब्लू कोर्ट
+        scene.fog = new THREE.Fog(0x20252f, 10, 50);
 
-<!--Start of Tawk.to Script-->
-<script type="text/javascript">
-var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
-(function(){
-var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
-s1.async=true;
-s1.src='https://embed.tawk.to/66cdc9a850c10f7a00a0e87e/1i69tnf1v';
-s1.charset='UTF-8';
-s1.setAttribute('crossorigin','*');
-s0.parentNode.insertBefore(s1,s0);
-})();
-</script>
-<!--End of Tawk.to Script-->
+        const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 100);
+        camera.position.set(0, 5, 15); // खिलाड़ी की पोजीशन
+        camera.lookAt(0, 4, 0);
+
+        const renderer = new THREE.WebGLRenderer({ antialias: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.shadowMap.enabled = true;
+        document.body.appendChild(renderer.domElement);
+
+        // --- 2. लाइट्स ---
+        const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+        scene.add(ambientLight);
+
+        const spotLight = new THREE.SpotLight(0xffffff, 50);
+        spotLight.position.set(5, 15, 10);
+        spotLight.angle = Math.PI / 6;
+        spotLight.castShadow = true;
+        scene.add(spotLight);
+
+        // --- 3. कोर्ट (Court) बनाना ---
+        // ज़मीन
+        const floorGeo = new THREE.PlaneGeometry(50, 50);
+        const floorMat = new THREE.MeshStandardMaterial({ color: 0x334455, roughness: 0.1 });
+        const floor = new THREE.Mesh(floorGeo, floorMat);
+        floor.rotation.x = -Math.PI / 2;
+        floor.receiveShadow = true;
+        scene.add(floor);
+
+        // --- 4. बास्केटबॉल हूप (The Net) ---
+        const hoopGroup = new THREE.Group();
+        
+        // पोल (Pole)
+        const poleGeo = new THREE.CylinderGeometry(0.2, 0.2, 8, 16);
+        const poleMat = new THREE.MeshStandardMaterial({ color: 0x888888, metalness: 0.5 });
+        const pole = new THREE.Mesh(poleGeo, poleMat);
+        pole.position.set(0, 4, -8);
+        hoopGroup.add(pole);
+
+        // बैकबोर्ड (Backboard)
+        const boardGeo = new THREE.BoxGeometry(3, 2, 0.1);
+        const boardMat = new THREE.MeshStandardMaterial({ color: 0xffffff });
+        const board = new THREE.Mesh(boardGeo, boardMat);
+        board.position.set(0, 7, -7.8);
+        board.castShadow = true;
+        hoopGroup.add(board);
+
+        // रिम (The Ring) - यह हमारा टारगेट है
+        const rimGeo = new THREE.TorusGeometry(0.8, 0.05, 16, 32);
+        const rimMat = new THREE.MeshStandardMaterial({ color: 0xff4400 });
+        const rim = new THREE.Mesh(rimGeo, rimMat);
+        rim.rotation.x = Math.PI / 2;
+        rim.position.set(0, 6, -6.5);
+        hoopGroup.add(rim);
+
+        // नेट (जाल) - एक पारदर्शी सिलेंडर
+        const netGeo = new THREE.CylinderGeometry(0.8, 0.5, 1, 32, 4, true);
+        const netMat = new THREE.MeshBasicMaterial({ 
+            color: 0xffffff, wireframe: true, transparent: true, opacity: 0.5 
+        });
+        const net = new THREE.Mesh(netGeo, netMat);
+        net.position.set(0, 5.5, -6.5);
+        hoopGroup.add(net);
+
+        scene.add(hoopGroup);
+
+        // --- 5. बॉल और फिजिक्स लॉजिक ---
+        const balls = []; // स्क्रीन पर मौजूद बॉल्स
+        const ballGeo = new THREE.SphereGeometry(0.5, 32, 32);
+        const ballMat = new THREE.MeshStandardMaterial({ 
+            color: 0xff6600, roughness: 0.4, metalness: 0.1 
+        });
+
+        // स्कोरिंग सिस्टम
+        let score = 0;
+        const scoreEl = document.getElementById('score-board');
+        const particles = []; // सेलिब्रेशन के लिए
+
+        // --- 6. बॉल फेंकने का फंक्शन ---
+        function shootBall(event) {
+            // A. टच इफेक्ट (Ripple) UI पर बनाना
+            const ripple = document.createElement('div');
+            ripple.className = 'ripple';
+            ripple.style.width = '50px'; ripple.style.height = '50px';
+            ripple.style.left = `${event.clientX - 25}px`;
+            ripple.style.top = `${event.clientY - 25}px`;
+            document.body.appendChild(ripple);
+            setTimeout(() => ripple.remove(), 600);
+
+            // B. 3D बॉल बनाना
+            const ball = new THREE.Mesh(ballGeo, ballMat);
+            ball.castShadow = true;
+            
+            // बॉल की शुरुआती स्थिति (कैमरे के थोड़ा नीचे)
+            ball.position.set(0, 4, 12);
+            
+            // C. निशाना लगाना (Physics Velocity)
+            // हम माउस की पोजीशन के हिसाब से थोड़ा एंगल बदलेंगे
+            const mouseX = (event.clientX / window.innerWidth) * 2 - 1;
+            const mouseY = -(event.clientY / window.innerHeight) * 2 + 1;
+
+            // वेलोसिटी वेक्टर (रफ़्तार और दिशा)
+            // x: माउस के हिसाब से लेफ्ट/राइट
+            // y: हमेशा ऊपर की तरफ थोड़ा सा (Throw arc)
+            // z: हमेशा नेट की तरफ (Negative Z)
+            const velocity = new THREE.Vector3(mouseX * 2, 6 + (mouseY * 2), -15);
+            
+            // बॉल ऑब्जेक्ट में डेटा सेव करें
+            ball.userData = { velocity: velocity, active: true, scored: false };
+            
+            scene.add(ball);
+            balls.push(ball);
+        }
+
+        // --- 7. पार्टीकल्स (Score होने पर) ---
+        function createConfetti(x, y, z) {
+            const colors = [0xff0000, 0x00ff00, 0x0000ff, 0xffff00];
+            for (let i = 0; i < 30; i++) {
+                const geo = new THREE.BoxGeometry(0.1, 0.1, 0.1);
+                const mat = new THREE.MeshBasicMaterial({ color: colors[Math.floor(Math.random()*colors.length)] });
+                const part = new THREE.Mesh(geo, mat);
+                part.position.set(x, y, z);
+                
+                // रैंडम फैलाव
+                part.userData = {
+                    velocity: new THREE.Vector3(
+                        (Math.random() - 0.5) * 5,
+                        (Math.random() - 0.5) * 5,
+                        (Math.random() - 0.5) * 5
+                    )
+                };
+                scene.add(part);
+                particles.push(part);
+            }
+        }
+
+        // --- 8. गेम लूप (Animation) ---
+        function animate() {
+            requestAnimationFrame(animate);
+
+            // A. सभी बॉल्स को अपडेट करें
+            for (let i = balls.length - 1; i >= 0; i--) {
+                const b = balls[i];
+                const v = b.userData.velocity;
+
+                if (b.userData.active) {
+                    // बॉल को मूव करें
+                    b.position.addScaledVector(v, 0.03); // 0.03 टाइम डेल्टा है
+
+                    // ग्रेविटी (Gravity) - Y velocity कम होती जाएगी
+                    v.y -= 0.25; 
+
+                    // ज़मीन से टकराना (Bounce)
+                    if (b.position.y <= 0.5) {
+                        b.position.y = 0.5;
+                        v.y *= -0.6; // बाउंस होने पर एनर्जी कम होगी
+                        v.x *= 0.9;  // फ्रिक्शन
+                        v.z *= 0.9;
+
+                        // अगर बॉल बहुत धीमी हो गई, तो उसे हटा दें
+                        if (Math.abs(v.y) < 0.5) b.userData.active = false;
+                    }
+
+                    // बी. क्या गोल हुआ? (Collision Detection with Hoop)
+                    // हूप की पोजीशन (0, 6, -6.5) है
+                    const dist = b.position.distanceTo(new THREE.Vector3(0, 6, -6.5));
+                    
+                    if (dist < 1 && !b.userData.scored && v.y < 0) {
+                        // गोल! (सिर्फ तब जब बॉल ऊपर से नीचे आ रही हो v.y < 0)
+                        score++;
+                        scoreEl.innerText = score;
+                        scoreEl.style.color = '#00ff00';
+                        setTimeout(() => scoreEl.style.color = '#ffeb3b', 200);
+                        
+                        b.userData.scored = true;
+                        createConfetti(0, 6, -6.5); // आतिशबाजी
+                    }
+                }
+                
+                // बॉल अगर बहुत दूर चली गई, तो मेमोरी से हटा दें
+                if (b.position.y < -5 || b.position.z < -20) {
+                    scene.remove(b);
+                    balls.splice(i, 1);
+                }
+            }
+
+            // B. पार्टीकल्स अपडेट
+            for (let i = particles.length - 1; i >= 0; i--) {
+                const p = particles[i];
+                p.position.addScaledVector(p.userData.velocity, 0.05);
+                p.scale.multiplyScalar(0.95); // धीरे धीरे छोटा हो
+                if (p.scale.x < 0.01) {
+                    scene.remove(p);
+                    particles.splice(i, 1);
+                }
+            }
+
+            renderer.render(scene, camera);
+        }
+
+        // इवेंट लिसनर
+        window.addEventListener('click', shootBall);
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth / window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+        animate();
+    </script>
+</body>
+</html>
