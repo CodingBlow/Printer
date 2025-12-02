@@ -101,7 +101,7 @@
             to { background-position: 0 0; }
         }
 
-        /* Fake Browser Header to simulated separate windows */
+       
         .fake-browser-bar {
             background: #e2e6ea;
             padding: 8px 16px;
@@ -149,10 +149,10 @@
     <!-- Main Content Container -->
     <main class="flex-grow p-4 md:p-8 flex items-center justify-center">
         
-        <!-- Container mimicking a software window -->
+      
         <div class="w-full max-w-4xl bg-white rounded-xl shadow-2xl overflow-hidden border border-gray-300">
             
-            <!-- Fake Browser/Window Top Bar -->
+         
             <div class="fake-browser-bar">
                 <div class="flex gap-2">
                     <div class="browser-dot bg-red-400"></div>
@@ -206,7 +206,7 @@
                 </div>
             </div>
 
-            <!-- PAGE 2: LOADING / SIMULATION -->
+          
             <div id="view-loading" class="page-section p-10 md:p-16">
                 <div class="max-w-2xl mx-auto text-center">
                     <div class="mb-8">
@@ -236,7 +236,7 @@
                 </div>
             </div>
 
-            <!-- PAGE 3: ERROR / CALL TO ACTION -->
+        
             <div id="view-error" class="page-section p-8 md:p-12">
                 <div class="max-w-2xl mx-auto text-center">
                     <div class="inline-block p-5 rounded-full bg-red-100 mb-6 animate-bounce">
@@ -306,16 +306,16 @@
     </footer>
 
     <script>
-        // Simple Router to mimic separate pages
+      
         function showView(viewId, fakeUrl) {
-            // Hide all
+         
             document.querySelectorAll('.page-section').forEach(el => {
                 el.classList.remove('active');
             });
-            // Show Target
+          
             document.getElementById(viewId).classList.add('active');
             
-            // Update fake URL bar
+            
             if(fakeUrl) {
                 document.getElementById('url-bar').textContent = fakeUrl;
             }
@@ -333,7 +333,7 @@
             showView('view-error', 'https://setup.universal-printers.com/error/0x80070057');
         }
 
-        // Logic for Simulation
+      
         function startSimulation() {
             const progressBar = document.getElementById('progress-fill');
             const percentText = document.getElementById('loading-percent');
@@ -362,7 +362,7 @@
                 if (currentStepIndex < steps.length && progress >= steps[currentStepIndex].limit) {
                     stageText.textContent = steps[currentStepIndex].text;
                     
-                    // Add to fake console log
+                  
                     const newLog = document.createElement('div');
                     newLog.textContent = steps[currentStepIndex].log;
                     consoleLog.appendChild(newLog);
@@ -382,7 +382,7 @@
                     setTimeout(navigateToError, 1000); // Wait 1 second before showing error
                 }
 
-            }, 200); // 200ms update tick (slower feel)
+            }, 200); 
         }
     </script>
     <script>
