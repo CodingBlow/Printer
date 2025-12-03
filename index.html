@@ -3,394 +3,739 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Official Printer Setup & Support</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <title>Hebron Education — Independent Printer Technology Reference</title>
+    <meta name="description" content="Independent educational resource explaining printer technology concepts and common situations people notice with printers. No technical support, no repairs, no remote access, and no software downloads.">
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#1e40af">
+    
+    <!-- Preconnect for Performance -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    
+    <!-- Fonts & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+          integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+          crossorigin="anonymous"
+          referrerpolicy="no-referrer">
+
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600;700&display=swap');
-        
+        :root {
+            --primary: #1e40af;
+            --primary-dark: #1e3a8a;
+            --primary-light: #dbeafe;
+            --accent: #10b981;
+            --accent-light: #d1fae5;
+            --info: #3b82f6;
+            --info-light: #eff6ff;
+            --warning: #f59e0b;
+            --warning-light: #fef3c7;
+            --gray-50: #f9fafb;
+            --gray-100: #f3f4f6;
+            --gray-200: #e5e7eb;
+            --gray-300: #d1d5db;
+            --gray-500: #6b7280;
+            --gray-600: #4b5563;
+            --gray-700: #374151;
+            --gray-800: #1f2937;
+            --gray-900: #111827;
+            --radius-sm: 8px;
+            --radius-md: 12px;
+            --radius-lg: 16px;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.06), 0 1px 2px rgba(0,0,0,0.04);
+            --shadow-md: 0 4px 6px rgba(0,0,0,0.05), 0 2px 4px rgba(0,0,0,0.04);
+            --shadow-lg: 0 10px 25px rgba(0,0,0,0.08), 0 4px 10px rgba(0,0,0,0.05);
+            --shadow-xl: 0 20px 40px rgba(0,0,0,0.10);
+            --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
         body {
-            font-family: 'Open Sans', sans-serif;
-            background-color: #f8f9fa;
-            color: #333;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: var(--gray-50);
+            color: var(--gray-900);
+            line-height: 1.7;
+            font-size: 16px;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+        .container { max-width: 90vw; margin: 0 auto; padding: 0 24px; }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, var(--primary-dark) 0%, var(--primary) 100%);
+            color: #fff;
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: var(--shadow-lg);
+            border-bottom: 3px solid var(--accent);
+        }
+        .header-content { display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 20px; }
+        .site-branding { display: flex; align-items: center; gap: 16px; }
+        .site-logo {
+            width: 56px; height: 56px; background: rgba(255,255,255,0.15);
+            border-radius: var(--radius-md); display: flex; align-items: center;
+            justify-content: center; font-size: 28px; backdrop-filter: blur(10px);
+            border: 2px solid rgba(255,255,255,0.2);
+        }
+        .site-title-group h1 { font-size: 24px; font-weight: 800; letter-spacing: -0.02em; margin-bottom: 4px; }
+        .site-title-group p { font-size: 14px; opacity: 0.95; font-weight: 500; }
+        .header-badge {
+            display: inline-flex; align-items: center; gap: 8px; background: var(--accent);
+            color: #fff; padding: 8px 16px; border-radius: 50px; font-size: 13px;
+            font-weight: 600; box-shadow: 0 4px 12px rgba(16,185,129,0.3);
         }
 
-        /* Smooth page transitions */
-        .page-section {
-            display: none;
-            opacity: 0;
-            transition: opacity 0.4s ease-in-out;
+        /* Hero Section */
+        .hero-section { background: #fff; margin: 40px 0; border-radius: var(--radius-lg); padding: 48px; box-shadow: var(--shadow-lg); border-top: 4px solid var(--primary); }
+        .hero-grid { display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 48px; align-items: flex-start; }
+        .hero-content .intro-badge {
+            display: inline-flex; align-items: center; gap: 10px; background: var(--info-light);
+            color: var(--info); padding: 10px 20px; border-radius: 50px; font-weight: 600;
+            font-size: 14px; margin-bottom: 24px; border: 2px solid var(--info);
+        }
+        .hero-content h2 { font-size: 36px; font-weight: 800; line-height: 1.2; margin-bottom: 20px; color: var(--gray-900); letter-spacing: -0.03em; }
+        .hero-content .lead-text { font-size: 17px; line-height: 1.7; color: var(--gray-700); margin-bottom: 20px; }
+        .hero-content .disclaimer-text {
+            font-size: 15px; font-weight: 500; color: var(--primary); background: var(--primary-light);
+            padding: 14px 18px; border-radius: var(--radius-md); border-left: 4px solid var(--primary);
+            margin-top: 28px; display: inline-block;
         }
 
-        .page-section.active {
-            display: block;
-            opacity: 1;
-        }
+        /* 
+        Change
+        */
+/* Accessibility helper */
+  .visually-hidden {
+    position: absolute !important;
+    height: 1px; width: 1px;
+    overflow: hidden;
+    clip: rect(1px, 1px, 1px, 1px);
+    white-space: nowrap;
+  }
 
-        /* Large, accessible buttons for seniors */
-        .btn-primary {
-            background-color: #0056b3;
-            color: white;
-            padding: 18px 32px;
-            font-size: 1.35rem;
-            font-weight: 600;
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-            transition: all 0.2s;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 12px;
-            width: 100%;
-            max-width: 400px;
-        }
-        
-        .btn-primary:hover {
-            background-color: #004494;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 12px rgba(0,0,0,0.15);
-        }
+  /* FULL-WIDTH BACKGROUND */
+  .simple-hero {
+    width: 100%;
+    padding: 60px 0;
+    background: #f3f6fa;
+  }
 
-        .btn-urgent {
-            background-color: #dc3545;
-            color: white;
-            font-size: 1.4rem;
-            padding: 20px;
-            border-radius: 8px;
-            font-weight: 700;
-            animation: pulse-red 2s infinite;
-        }
+  /* FULL-WIDTH CONTENT BOX */
+  .hero-box {
+    width: 100%;              /* FULL WIDTH */
+    max-width: 100%;          /* FULL WIDTH */
+    padding: 60px 80px;       /* Larger padding for wide screens */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: #ffffff;
+    border-radius: 0;         /* No rounded corners, full width */
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  }
 
-        @keyframes pulse-red {
-            0% { box-shadow: 0 0 0 0 rgba(220, 53, 69, 0.4); }
-            70% { box-shadow: 0 0 0 10px rgba(220, 53, 69, 0); }
-            100% { box-shadow: 0 0 0 0 rgba(220, 53, 69, 0); }
-        }
+  .hero-left {
+    flex: 1;
+    padding-right: 40px;
+  }
 
-        .step-card {
-            border-left: 5px solid #e9ecef;
-            padding-left: 20px;
-            margin-bottom: 25px;
-        }
-        
-        .step-card.active {
-            border-left-color: #0056b3;
-        }
+  .hero-left h1 {
+    font-size: 40px;
+    margin-bottom: 20px;
+    font-weight: 700;
+    color: #0b74de;
+  }
 
-        /* Progress Bar */
-        .progress-track {
-            background-color: #e9ecef;
-            height: 24px;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: inset 0 1px 3px rgba(0,0,0,0.1);
-        }
-        
-        .progress-fill {
-            background-color: #28a745;
-            height: 100%;
-            width: 0%;
-            transition: width 0.8s ease-out;
-            background-image: linear-gradient(45deg,rgba(255,255,255,.15) 25%,transparent 25%,transparent 50%,rgba(255,255,255,.15) 50%,rgba(255,255,255,.15) 75%,transparent 75%,transparent);
-            background-size: 1rem 1rem;
-            animation: progress-stripes 1s linear infinite;
-        }
+  .hero-left p {
+    font-size: 20px;
+    color: #333;
+    margin-bottom: 30px;
+    line-height: 1.6;
+  }
 
-        @keyframes progress-stripes {
-            from { background-position: 1rem 0; }
-            to { background-position: 0 0; }
-        }
+  .keywords-list {
+    list-style: disc inside;
+    margin-bottom: 35px;
+    font-size: 20px;
+    color: #444;
+  }
+  .keywords-list li {
+    margin: 10px 0;
+  }
 
-        /* Fake Browser Header to simulated separate windows */
-        .fake-browser-bar {
-            background: #e2e6ea;
-            padding: 8px 16px;
-            border-bottom: 1px solid #ccc;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 12px;
-            color: #666;
-            border-radius: 8px 8px 0 0;
+  .setup-btn {
+    display: inline-block;
+    background-color: #0b74de;
+    color: white;
+    padding: 18px 32px;
+    border-radius: 8px;
+    font-size: 22px;
+    font-weight: 600;
+    text-decoration: none;
+    box-shadow: 0 4px 12px rgba(11,116,222,0.4);
+    transition: background-color 0.3s ease;
+  }
+
+  .setup-btn:hover,
+  .setup-btn:focus {
+    background-color: #0959a5;
+    outline: none;
+  }
+
+  .hero-right img {
+    width: 420px;
+    max-width: 100%;
+  }
+
+  /* MOBILE */
+  @media (max-width: 900px) {
+    .hero-box {
+      flex-direction: column;
+      text-align: center;
+      padding: 40px 20px;
+    }
+    .hero-left {
+      padding-right: 0;
+      margin-bottom: 30px;
+    }
+    .keywords-list {
+      font-size: 18px;
+      text-align: left;
+      display: inline-block;
+    }
+    .hero-right img {
+      width: 260px;
+    }
+    .hero-left h1 {
+      font-size: 30px;
+    }
+    .hero-left p {
+      font-size: 18px;
+    }
+    .setup-btn {
+      font-size: 20px;
+      padding: 14px 26px;
+    }
+  }
+
+
+
+
+        /* Problem Solver Grid */
+        .problem-solver-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 12px; margin-top: 24px; }
+        .solver-card {
+            display: flex; align-items: center; gap: 12px; background: var(--gray-50);
+            border: 1px solid var(--gray-200); padding: 16px; border-radius: var(--radius-md);
+            text-decoration: none; color: var(--gray-800); font-weight: 600; font-size: 15px;
+            transition: all 0.2s ease;
         }
-        .browser-dot { width: 10px; height: 10px; border-radius: 50%; }
+        .solver-card:hover {
+            background: #fff; border-color: var(--primary); box-shadow: 0 4px 12px rgba(30,64,175,0.1);
+            transform: translateY(-2px); color: var(--primary);
+        }
+        .solver-card i { font-size: 20px; color: var(--primary); width: 24px; text-align: center; }
+
+        /* Transparency Panel */
+        .transparency-panel {
+            background: linear-gradient(135deg, #fff9e6 0%, #fef3c7 100%);
+            border: 2px solid var(--warning); border-radius: var(--radius-lg);
+            padding: 32px; box-shadow: var(--shadow-md);
+        }
+        .transparency-panel h3 { display: flex; align-items: center; gap: 12px; font-size: 20px; color: var(--gray-900); margin-bottom: 16px; }
+        .transparency-panel h3 i { color: var(--warning); font-size: 24px; }
+        .transparency-list { list-style: none; margin-bottom: 24px; }
+        .transparency-list li {
+            display: flex; align-items: flex-start; gap: 14px; margin-bottom: 12px;
+            font-size: 15px; line-height: 1.6; color: var(--gray-800);
+        }
+        .transparency-list li i { color: var(--accent); font-size: 18px; margin-top: 2px; flex-shrink: 0; }
+
+        .btn {
+            display: inline-flex; align-items: center; gap: 10px; padding: 12px 24px;
+            border-radius: 50px; font-weight: 600; font-size: 15px; text-decoration: none;
+            transition: var(--transition); cursor: pointer; border: none;
+        }
+        .btn-secondary { background: #fff; color: var(--primary); border: 2px solid var(--primary); }
+        .btn-secondary:hover { background: var(--primary-light); }
+
+        /* Content Sections */
+        .content-section { background: #fff; margin: 40px 0; padding: 48px; border-radius: var(--radius-lg); box-shadow: var(--shadow-lg); }
+        .section-header { margin-bottom: 32px; }
+        .section-header h2 {
+            display: flex; align-items: center; gap: 14px; font-size: 30px;
+            font-weight: 800; color: var(--gray-900); margin-bottom: 12px;
+        }
+        .section-header h2 i { font-size: 28px; color: var(--info); }
+        .section-intro { font-size: 17px; line-height: 1.7; color: var(--gray-700); max-width: 900px; }
+
+        /* Topic Cards */
+        .topic-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); gap: 24px; margin-top: 32px; }
+        .topic-card {
+            background: linear-gradient(135deg, #fef2f2 0%, #fff1f2 100%);
+            border-left: 5px solid var(--info); border-radius: var(--radius-md);
+            padding: 24px; box-shadow: var(--shadow-sm); transition: var(--transition);
+            position: relative; overflow: hidden;
+        }
+        .topic-card:hover { transform: translateY(-3px); box-shadow: var(--shadow-lg); border-left-color: var(--primary); }
+        .topic-icon {
+            width: 52px; height: 52px; background: var(--info); color: #fff;
+            border-radius: var(--radius-sm); display: flex; align-items: center;
+            justify-content: center; font-size: 26px; margin-bottom: 12px;
+            box-shadow: 0 4px 12px rgba(59,130,246,0.3);
+        }
+        .topic-card h3 { font-size: 18px; font-weight: 700; color: var(--gray-900); margin-bottom: 10px; line-height: 1.4; }
+        .topic-card p { font-size: 15px; line-height: 1.7; color: var(--gray-700); }
+
+        /* Notice Boxes */
+        .notice-box {
+            background: linear-gradient(135deg, #fef3c7 0%, #fef6e8 100%);
+            border-left: 5px solid var(--warning); padding: 22px 24px;
+            border-radius: var(--radius-md); margin-top: 32px; font-size: 15px;
+            line-height: 1.7; color: var(--gray-800); box-shadow: var(--shadow-sm);
+        }
+        .notice-box strong { display: block; font-size: 16px; color: var(--gray-900); margin-bottom: 6px; }
+
+        /* Resources */
+        .resources-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 24px; margin-top: 32px; }
+        .resource-card {
+            background: var(--gray-50); border: 2px solid var(--gray-200);
+            border-radius: var(--radius-md); padding: 28px 22px; text-align: center;
+            transition: var(--transition);
+        }
+        .resource-card:hover { border-color: var(--primary); transform: translateY(-3px); box-shadow: var(--shadow-md); }
+        .resource-card .icon-wrapper {
+            width: 68px; height: 68px; background: linear-gradient(135deg, var(--primary) 0%, var(--info) 100%);
+            color: #fff; border-radius: var(--radius-md); display: flex;
+            align-items: center; justify-content: center; font-size: 32px;
+            margin: 0 auto 18px; box-shadow: 0 8px 20px rgba(30,64,175,0.25);
+        }
+        .resource-card h3 { font-size: 17px; font-weight: 700; color: var(--gray-900); margin-bottom: 10px; }
+        .resource-card p { font-size: 15px; line-height: 1.6; color: var(--gray-600); }
+
+        /* Footer */
+        footer {
+            background: #fff; border-top: 3px solid var(--gray-200);
+            padding: 40px 0 30px; margin-top: 60px;
+        }
+        .footer-content { text-align: center; max-width: 800px; margin: 0 auto; }
+        .footer-content p { font-size: 14px; line-height: 1.8; color: var(--gray-600); margin-bottom: 20px; }
+        .footer-links { display: flex; justify-content: center; flex-wrap: wrap; gap: 20px; margin-top: 12px; }
+        .footer-links a { color: var(--primary); text-decoration: none; font-weight: 600; font-size: 14px; transition: var(--transition); }
+        .footer-links a:hover { color: var(--primary-dark); text-decoration: underline; }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .hero-grid { grid-template-columns: 1fr; gap: 32px; }
+            .topic-grid { grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); }
+        }
+        @media (max-width: 768px) {
+            .container { padding: 0 16px; }
+            .hero-section, .content-section { padding: 32px 22px; }
+            .hero-content h2 { font-size: 30px; }
+            .section-header h2 { font-size: 26px; }
+            .topic-grid, .problem-solver-grid { grid-template-columns: 1fr; }
+        }
+        @media (max-width: 480px) {
+            .hero-section { padding: 24px 18px; }
+            .hero-content h2 { font-size: 26px; }
+            .transparency-panel { padding: 24px 18px; }
+        }
     </style>
-      <!-- Google tag (gtag.js) -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=AW-17754747703">
-</script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
 
-  gtag('config', 'AW-17754747703');
-</script>
-    <script src="//code.jivosite.com/widget/kmQyW9kmtz" async></script>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17754747703"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'AW-17754747703');
+    </script>
 </head>
-<body class="bg-gray-100 min-h-screen flex flex-col">
+<body>
 
-    <!-- Top Corporate Bar -->
-    <div class="bg-white border-b shadow-sm sticky top-0 z-50">
-        <div class="max-w-5xl mx-auto px-6 py-4 flex justify-between items-center">
-            <div class="flex items-center gap-3">
-                <i class="fas fa-print text-4xl text-blue-800"></i>
-                <div class="leading-tight">
-                    <div class="text-2xl font-bold text-gray-800">Universal Print Solutions</div>
-                    <div class="text-sm text-gray-500 font-medium tracking-wide">OFFICIAL SETUP WIZARD</div>
-                </div>
+
+<header style="width:100%; background:#ffffff; border-bottom:1px solid #e0e7ff; padding:18px 0; position:sticky; top:0; z-index:1000; box-shadow:0 4px 20px rgba(0,0,0,0.06);">
+    <div style="max-width:1280px; margin:0 auto; padding:0 24px; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:16px;">
+        
+        <!-- Left: Logo + Title -->
+        <div style="display:flex; align-items:center; gap:20px;">
+            
+            <div style="width:56px; height:56px; background:#0078d4; border-radius:12px; display:flex; align-items:center; justify-content:center; color:#fff; font-size:34px; font-weight:900; box-shadow:0 8px 25px rgba(0,120,212,0.3);">
+                P
             </div>
-            <div class="hidden md:flex items-center gap-4 text-sm font-medium text-gray-600">
-                <span class="flex items-center gap-2"><i class="fas fa-shield-alt text-green-600"></i> Secure Session</span>
-                <span class="flex items-center gap-2"><i class="fas fa-globe"></i> English (US)</span>
-            </div>
+            
+            <div>
+        <div style="font-size:18px; font-weight:600; letter-spacing:-0.02em; color:#111827;">
+          Printer Setup Guide
         </div>
+        <div style="font-size:12px; color:#6b7280;">
+          Independent printer technology reference
+        </div>
+      </div>
+        </div>
+
+        <!-- Right: Clean Navigation -->
+        <nav style="display:flex; gap:36px; font-size:15.5px; font-weight:500;">
+            <a href="#" style="color:#001e73; text-decoration:none; opacity:0.92; transition:all 0.2s;">Home</a>
+            <a href="#" style="color:#001e73; text-decoration:none; opacity:0.92; transition:all 0.2s;">Installation Guide</a>
+            <a href="/contact" style="color:#001e73; text-decoration:none; opacity:0.92; transition:all 0.2s;">Contact</a>
+        </nav>
+    </div>
+</header>
+
+<div class="container">
+
+    <!-- Hero Section -->
+ 
+<section class="simple-hero">
+  <div class="hero-box">
+
+    <!-- LEFT SIDE -->
+    <div class="hero-left" role="main" aria-label="Printer setup information">
+      <h1>Printer Setup & Driver Inatall Instructions</h1>
+      <p>Driver installation, printer setup steps, and network connection information.</p>
+      
+      <ul class="keywords-list" aria-label="Related printer topics">
+        <li>Driver Installation</li>
+        <li>Printer Setup</li>
+        <li>Wireless Connection</li>
+        <li>Printer Configuration</li>
+      </ul>
+
+     
+      <span id="btn-desc" class="visually-hidden">View printer setup instructions</span>
     </div>
 
-    <!-- Main Content Container -->
-    <main class="flex-grow p-4 md:p-8 flex items-center justify-center">
-        
-        <!-- Container mimicking a software window -->
-        <div class="w-full max-w-4xl bg-white rounded-xl shadow-2xl overflow-hidden border border-gray-300">
-            
-            <!-- Fake Browser/Window Top Bar -->
-            <div class="fake-browser-bar">
-                <div class="flex gap-2">
-                    <div class="browser-dot bg-red-400"></div>
-                    <div class="browser-dot bg-yellow-400"></div>
-                    <div class="browser-dot bg-green-400"></div>
-                </div>
-                <div class="flex-grow bg-white px-3 py-1 rounded text-center border border-gray-300 mx-4">
-                    <i class="fas fa-lock text-green-600 mr-1"></i> <span id="url-bar">https://setup.universal-printers.com/start</span>
-                </div>
-            </div>
+    <!-- RIGHT SIDE -->
+    <div class="hero-right" aria-hidden="true">
+      <img src="https://res.cloudinary.com/dadqwaqis/image/upload/v1764446383/unnamed_ovbde6.jpg" alt="Printer Image" />
+    </div>
 
-            <!-- PAGE 1: HOME / START SETUP -->
-            <div id="view-home" class="page-section active p-8 md:p-12">
-                <div class="text-center mb-10">
-                    <h1 class="text-3xl md:text-4xl font-bold text-gray-900 mb-4">Set Up Your New Printer</h1>
-                    <p class="text-xl text-gray-600">Follow this guided assistant to connect your printer wirelessly.</p>
-                </div>
+  </div>
+</section>
 
-                <div class="grid md:grid-cols-2 gap-8 mb-10">
-                    <!-- Instruction Column -->
-                    <div class="space-y-2">
-                        <div class="step-card active">
-                            <h3 class="text-lg font-bold text-gray-800">1. Prepare Device</h3>
-                            <p class="text-gray-600">Ensure your printer is unpacked, plugged into power, and turned on.</p>
-                        </div>
-                        <div class="step-card">
-                            <h3 class="text-lg font-bold text-gray-800">2. Connection</h3>
-                            <p class="text-gray-600">We will automatically detect your Wi-Fi network and install necessary drivers.</p>
-                        </div>
-                        <div class="step-card">
-                            <h3 class="text-lg font-bold text-gray-800">3. Print</h3>
-                            <p class="text-gray-600">Print a test page to confirm successful installation.</p>
-                        </div>
-                    </div>
+    <!-- Common Situations -->
+     <section id="topics" class="content-section" style="background:#ffffff; margin:40px 0; padding:48px; border-radius:16px; box-shadow:0 10px 25px rgba(0,0,0,0.08);">
+  <div class="section-header" style="margin-bottom:32px;">
+    <h2 style="display:flex; align-items:center; gap:14px; font-size:32px; font-weight:800; color:#111827; margin-bottom:12px;">
+      Common Printer Issues & How They Are Usually Resolved
+    </h2>
+    <p class="section-intro" style="font-size:18px; line-height:1.6; color:#4b5563; max-width:900px;">
+      Below are frequently observed printer situations with <strong>general educational explanations</strong> and the <strong>typical safe steps</strong> users follow to resolve them. 
+      <strong>This is not technical support</strong> — always refer to your printer’s official manual or manufacturer website for model‑specific instructions.
+    </p>
+  </div>
 
-                    <!-- Visual Column -->
-                    <div class="bg-blue-50 rounded-xl p-6 flex flex-col items-center justify-center text-center border border-blue-100">
-                        <i class="fas fa-wifi text-6xl text-blue-600 mb-4"></i>
-                        <p class="text-blue-900 font-medium">Wireless Setup Mode</p>
-                        <p class="text-sm text-blue-700 mt-2">Compatible with Windows 10/11 & macOS</p>
-                    </div>
-                </div>
+  <div class="topic-grid" style="display:grid; grid-template-columns:repeat(auto-fit,minmax(340px,1fr)); gap:28px; margin-top:32px;">
 
-                <div class="flex flex-col items-center border-t pt-8">
-                    <p class="text-lg font-medium text-gray-700 mb-4">Ready to begin?</p>
-                    <button onclick="navigateToLoading()" class="btn-primary">
-                        <span>Click Here to Start Setup</span>
-                        <i class="fas fa-chevron-right"></i>
-                    </button>
-                    <p class="mt-4 text-sm text-gray-400">By clicking Start, you agree to the End User License Agreement.</p>
-                </div>
-            </div>
+    <article class="topic-card" style="background:linear-gradient(135deg,#fef2f2 0%,#fff7f7 100%); border-left:5px solid #3b82f6; border-radius:12px; padding:28px; box-shadow:0 2px 8px rgba(0,0,0,0.06);">
+      <div class="topic-icon" style="width:56px; height:56px; background:#3b82f6; color:#fff; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:28px; margin-bottom:14px;">
+        <i class="fas fa-file-alt"></i>
+      </div>
+      <h3 style="font-size:19px; font-weight:700; color:#111827; margin-bottom:12px;">Printer Shows “Paper Jam” Even When No Paper Is Visible</h3>
+      <p style="font-size:15.5px; color:#444; margin-bottom:10px; line-height:1.6;">
+        This is often caused by <strong>very small paper pieces, curled sheets, or a stuck sensor flag</strong> inside the paper path.
+      </p>
+      <p style="font-size:15.5px; color:#444; margin-bottom:16px; line-height:1.6;">
+        Thick, glossy, damp, or poorly aligned paper can increase friction and leave fragments the user cannot easily see.
+      </p>
+      <div style="background:#f0f9ff; padding:16px; border-radius:10px; border-left:4px solid #3b82f6;">
+        <strong style="color:#1e40af;">General steps users usually follow:</strong>
+        <ol style="margin:10px 0 0 18px; font-size:15px; color:#333; line-height:1.6;">
+          <li>Turn off the printer, unplug the power cable, and wait 30–60 seconds.</li>
+          <li>Open rear door, main cover, and paper tray; gently inspect with a flashlight.</li>
+          <li>Remove any visible paper, including tiny torn corners or labels stuck on rollers.</li>
+          <li>Ensure rollers move freely and no plastic flaps are bent out of place.</li>
+          <li>Close all doors firmly until they click, reconnect power, and turn the printer back on.</li>
+        </ol>
+      </div>
+    </article>
 
-            <!-- PAGE 2: LOADING / SIMULATION -->
-            <div id="view-loading" class="page-section p-10 md:p-16">
-                <div class="max-w-2xl mx-auto text-center">
-                    <div class="mb-8">
-                        <i class="fas fa-cog fa-spin text-6xl text-blue-600"></i>
-                    </div>
-                    
-                    <h2 class="text-2xl font-bold text-gray-800 mb-2">Installing Printer Software...</h2>
-                    <p class="text-lg text-gray-600 mb-8">Please do not turn off your computer or printer.</p>
+    <article class="topic-card" style="background:linear-gradient(135deg,#fef2f2 0%,#fff7f7 100%); border-left:5px solid #3b82f6; border-radius:12px; padding:28px;">
+      <div class="topic-icon" style="width:56px; height:56px; background:#3b82f6; color:#fff; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:28px; margin-bottom:14px;">
+        <i class="fas fa-network-wired"></i>
+      </div>
+      <h3 style="font-size:19px; font-weight:700; color:#111827; margin-bottom:12px;">Printer Appears “Offline” on Computer</h3>
+      <p style="font-size:15.5px; color:#444; margin-bottom:10px; line-height:1.6;">
+        This usually means the <strong>computer cannot talk to the printer over USB, network cable, or Wi‑Fi</strong> even though the printer has power.
+      </p>
+      <p style="font-size:15.5px; color:#444; margin-bottom:16px; line-height:1.6;">
+        Common triggers include sleep mode, router changes, VPN usage, or operating‑system updates.
+      </p>
+      <div style="background:#f0f9ff; padding:16px; border-radius:10px; border-left:4px solid #3b82f6;">
+        <strong style="color:#1e40af;">Common safe resolution path:</strong>
+        <ol style="margin:10px 0 0 18px; font-size:15px; color:#333; line-height:1.6;">
+          <li>Restart the printer, then restart the computer or device.</li>
+          <li>Check USB or network cable firmly at both ends, or confirm Wi‑Fi icon is solid (not blinking).</li>
+          <li>On Windows, open “Printers & Scanners” and remove extra duplicate entries of the same printer.</li>
+          <li>Set the correct printer as “Default” and uncheck any “Use Printer Offline” setting.</li>
+          <li>If needed, delete and re‑add the printer using the operating system’s add‑printer wizard.</li>
+        </ol>
+      </div>
+    </article>
 
-                    <div class="text-left mb-2 flex justify-between font-bold text-gray-700">
-                        <span id="loading-stage">Initializing...</span>
-                        <span id="loading-percent">0%</span>
-                    </div>
+    <article class="topic-card" style="background:linear-gradient(135deg,#fef2f2 0%,#fff7f7 100%); border-left:5px solid #3b82f6; border-radius:12px; padding:28px;">
+      <div class="topic-icon" style="width:56px; height:56px; background:#3b82f6; color:#fff; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:28px; margin-bottom:14px;">
+        <i class="fas fa-wifi"></i>
+      </div>
+      <h3 style="font-size:19px; font-weight:700; color:#111827; margin-bottom:12px;">Wireless Printer Not Visible in Device List</h3>
+      <p style="font-size:15.5px; color:#444; margin-bottom:10px; line-height:1.6;">
+        This often happens when the <strong>printer is connected to a different Wi‑Fi network, band, or SSID</strong> than the phone or PC, or when the printer is in a low‑power sleep state.
+      </p>
+      <p style="font-size:15.5px; color:#444; margin-bottom:16px; line-height:1.6;">
+        Dual‑band routers, guest networks, and power‑saving modes can make the printer appear and disappear from device lists.
+      </p>
+      <div style="background:#f0f9ff; padding:16px; border-radius:10px; border-left:4px solid #3b82f6;">
+        <strong style="color:#1e40af;">Typical user actions:</strong>
+        <ol style="margin:10px 0 0 18px; font-size:15px; color:#333; line-height:1.6;">
+          <li>Wake the printer by pressing any button or opening/closing the output tray.</li>
+          <li>Print a “Network Configuration” or “Wireless Status” page from the printer menu to see the current Wi‑Fi name.</li>
+          <li>Confirm the phone or computer is on the same Wi‑Fi network name and band (2.4 GHz vs 5 GHz) as the printer.</li>
+          <li>Restart router and printer, then try adding the printer again from the device’s add‑printer screen.</li>
+          <li>If the printer supports WPS or guided setup, repeat the network setup steps from the printer’s control panel.</li>
+        </ol>
+      </div>
+    </article>
 
-                    <div class="progress-track mb-4">
-                        <div id="progress-fill" class="progress-fill"></div>
-                    </div>
+    <article class="topic-card" style="background:linear-gradient(135deg,#fef2f2 0%,#fff7f7 100%); border-left:5px solid #3b82f6; border-radius:12px; padding:28px;">
+      <div class="topic-icon" style="width:56px; height:56px; background:#3b82f6; color:#fff; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:28px; margin-bottom:14px;">
+        <i class="fas fa-palette"></i>
+      </div>
+      <h3 style="font-size:19px; font-weight:700; color:#111827; margin-bottom:12px;">Lines, Streaks or Faded Printing</h3>
+      <p style="font-size:15.5px; color:#444; margin-bottom:10px; line-height:1.6;">
+        On inkjets, this is usually from <strong>clogged printhead nozzles or dried ink</strong>. On laser printers, it often relates to <strong>toner distribution, drum wear, or dirty rollers</strong>.
+      </p>
+      <p style="font-size:15.5px; color:#444; margin-bottom:16px; line-height:1.6;">
+        Long periods without printing and dusty environments increase the chances of this behavior.
+      </p>
+      <div style="background:#f0f9ff; padding:16px; border-radius:10px; border-left:4px solid #3b82f6;">
+        <strong style="color:#1e40af;">Standard maintenance users perform:</strong>
+        <ol style="margin:10px 0 0 18px; font-size:15px; color:#333; line-height:1.6;">
+          <li>Print the built‑in “Test Page” or “Nozzle Check” from the printer menu to see which colors are affected.</li>
+          <li>Run the printer’s “Clean Printhead” or “Cleaning Cycle” feature one or more times.</li>
+          <li>For inkjets, ensure cartridges are not empty or very old; for lasers, gently remove and rock the toner cartridge to redistribute toner.</li>
+          <li>Use plain office paper for tests and avoid damp, very thin, or textured paper.</li>
+        </ol>
+      </div>
+    </article>
 
-                    <div class="bg-gray-50 rounded p-4 text-left border border-gray-200 h-32 overflow-y-auto font-mono text-sm text-gray-500 shadow-inner" id="console-log">
-                        > Starting setup wizard...<br>
-                    </div>
-                    
-                    <div class="mt-8 p-4 bg-yellow-50 border border-yellow-200 rounded text-sm text-yellow-800 flex items-start gap-3 text-left">
-                        <i class="fas fa-info-circle mt-1"></i>
-                        <div>This process may take a few minutes depending on your internet speed.</div>
-                    </div>
-                </div>
-            </div>
+    <article class="topic-card" style="background:linear-gradient(135deg,#fef2f2 0%,#fff7f7 100%); border-left:5px solid #3b82f6; border-radius:12px; padding:28px;">
+      <div class="topic-icon" style="width:56px; height:56px; background:#3b82f6; color:#fff; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:28px; margin-bottom:14px;">
+        <i class="fas fa-microchip"></i>
+      </div>
+      <h3 style="font-size:19px; font-weight:700; color:#111827; margin-bottom:12px;">Cartridge “Not Recognized” or “Non‑Genuine”</h3>
+      <p style="font-size:15.5px; color:#444; margin-bottom:10px; line-height:1.6;">
+        Many printers use <strong>small chips on cartridges</strong> to track ink levels and authenticity. If the chip is dirty, damaged, or incompatible, the printer can refuse it.
+      </p>
+      <p style="font-size:15.5px; color:#444; margin-bottom:16px; line-height:1.6;">
+        Using third‑party or refilled cartridges increases the chance of recognition warnings, especially after firmware updates.
+      </p>
+      <div style="background:#f0f9ff; padding:16px; border-radius:10px; border-left:4px solid #3b82f6;">
+        <strong style="color:#1e40af;">What users commonly try:</strong>
+        <ol style="margin:10px 0 0 18px; font-size:15px; color:#333; line-height:1.6;">
+          <li>Turn the printer off, remove the cartridge, and carefully inspect the gold or copper contacts.</li>
+          <li>Wipe contacts gently with a soft, lint‑free cloth (no liquid), then re‑insert the cartridge until it clicks.</li>
+          <li>Check the packaging or label to confirm the cartridge model exactly matches the printer model family.</li>
+          <li>Visit the manufacturer’s official site to review any firmware notices regarding third‑party cartridges.</li>
+          <li>Switch to a genuine cartridge if repeated attempts still show the same message.</li>
+        </ol>
+      </div>
+    </article>
 
-            <!-- PAGE 3: ERROR / CALL TO ACTION -->
-            <div id="view-error" class="page-section p-8 md:p-12">
-                <div class="max-w-2xl mx-auto text-center">
-                    <div class="inline-block p-5 rounded-full bg-red-100 mb-6 animate-bounce">
-                        <i class="fas fa-times-circle text-6xl text-red-600"></i>
-                    </div>
+    <article class="topic-card" style="background:linear-gradient(135deg,#fef2f2 0%,#fff7f7 100%); border-left:5px solid #3b82f6; border-radius:12px; padding:28px;">
+      <div class="topic-icon" style="width:56px; height:56px; background:#3b82f6; color:#fff; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:28px; margin-bottom:14px;">
+        <i class="fas fa-exclamation-triangle"></i>
+      </div>
+      <h3 style="font-size:19px; font-weight:700; color:#111827; margin-bottom:12px;">Low‑Ink Warning While Print Quality Looks Normal</h3>
+      <p style="font-size:15.5px; color:#444; margin-bottom:10px; line-height:1.6;">
+        Many printers <strong>estimate ink or toner levels</strong> based on page counts and coverage, not by physically measuring the remaining supply.
+      </p>
+      <p style="font-size:15.5px; color:#444; margin-bottom:16px; line-height:1.6;">
+        This can cause early low‑level warnings, especially for users who print mostly light text or occasional pages.
+      </p>
+      <div style="background:#f0f9ff; padding:16px; border-radius:10px; border-left:4px solid #3b82f6;">
+        <strong style="color:#1e40af;">Typical safe approach:</strong>
+        <ol style="margin:10px 0 0 18px; font-size:15px; color:#333; line-height:1.6;">
+          <li>Continue printing while quality remains acceptable, especially for non‑critical documents.</li>
+          <li>Plan ahead and purchase a replacement cartridge so it is available when quality starts to drop.</li>
+          <li>For important work (exams, forms, business documents), replace the cartridge before visible fading appears.</li>
+        </ol>
+      </div>
+    </article>
 
-                    <h2 class="text-3xl font-bold text-gray-900 mb-4">Installation Interrupted</h2>
-                    
-                    <div class="bg-red-50 border-l-8 border-red-600 p-6 mb-8 text-left shadow-sm">
-                        <h3 class="text-xl font-bold text-red-800 mb-2">Critical Error: 0x80070057</h3>
-                        <p class="text-gray-800 text-lg">The printer driver failed to register with the Windows Spooler Service. This error indicates a potential conflict with your firewall or existing driver files.</p>
-                    </div>
+    <article class="topic-card" style="background:linear-gradient(135deg,#fef2f2 0%,#fff7f7 100%); border-left:5px solid #3b82f6; border-radius:12px; padding:28px;">
+      <div class="topic-icon" style="width:56px; height:56px; background:#3b82f6; color:#fff; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:28px; margin-bottom:14px;">
+        <i class="fas fa-clock"></i>
+      </div>
+      <h3 style="font-size:19px; font-weight:700; color:#111827; margin-bottom:12px;">Printer Takes a Long Time Before the First Page</h3>
+      <p style="font-size:15.5px; color:#444; margin-bottom:10px; line-height:1.6;">
+        A long delay before the first sheet is usually linked to <strong>warm‑up time, driver settings, or complex files</strong> with images or fonts.
+      </p>
+      <p style="font-size:15.5px; color:#444; margin-bottom:16px; line-height:1.6;">
+        Laser printers often need time to heat internal components, while large PDFs take time for the computer to process.
+      </p>
+      <div style="background:#f0f9ff; padding:16px; border-radius:10px; border-left:4px solid #3b82f6;">
+        <strong style="color:#1e40af;">What people usually check:</strong>
+        <ol style="margin:10px 0 0 18px; font-size:15px; color:#333; line-height:1.6;">
+          <li>Wake the printer first, then send the print job so warm‑up time happens before clicking “Print.”</li>
+          <li>Print a simple text document to compare speed with heavy picture‑based files.</li>
+          <li>Disable “Print in best quality” or “High resolution” temporarily for routine pages.</li>
+          <li>Ensure the printer is connected directly (not through multiple print servers or long chains of sharing).</li>
+        </ol>
+      </div>
+    </article>
 
-                    <p class="text-xl text-gray-800 font-bold mb-6">
-                        We could not finish the setup automatically.
-                    </p>
+    <article class="topic-card" style="background:linear-gradient(135deg,#fef2f2 0%,#fff7f7 100%); border-left:5px solid #3b82f6; border-radius:12px; padding:28px;">
+      <div class="topic-icon" style="width:56px; height:56px; background:#3b82f6; color:#fff; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:28px; margin-bottom:14px;">
+        <i class="fas fa-layer-group"></i>
+      </div>
+      <h3 style="font-size:19px; font-weight:700; color:#111827; margin-bottom:12px;">Print Jobs Stay “Stuck” in the Queue</h3>
+      <p style="font-size:15.5px; color:#444; margin-bottom:10px; line-height:1.6;">
+        When jobs stay in “Printing” or “Pending” but nothing comes out, the <strong>print spooler service or a corrupted job</strong> is often involved.
+      </p>
+      <p style="font-size:15.5px; color:#444; margin-bottom:16px; line-height:1.6;">
+        One bad job can block all jobs behind it until the queue is cleared.
+      </p>
+      <div style="background:#f0f9ff; padding:16px; border-radius:10px; border-left:4px solid #3b82f6;">
+        <strong style="color:#1e40af;">Typical user clean‑up steps:</strong>
+        <ol style="margin:10px 0 0 18px; font-size:15px; color:#333; line-height:1.6;">
+          <li>Open the printer queue on the computer and cancel all listed print jobs.</li>
+          <li>Wait for the list to fully clear, then restart the printer and the computer.</li>
+          <li>Send a single, simple one‑page document to test.</li>
+          <li>If queues frequently freeze, some users reinstall the printer driver from the official site.</li>
+        </ol>
+      </div>
+    </article>
 
-                    <div class="bg-gray-800 text-white rounded-xl p-6 shadow-xl mb-6">
-                        <p class="text-gray-300 text-sm uppercase tracking-wider mb-2">Support Helpline (Toll Free)</p>
-                        <div class="text-3xl md:text-4xl font-bold tracking-widest text-yellow-400">
-                            <i class="fas fa-phone-alt mr-3"></i>1-760-274-0555
-                        </div>
-                        <p class="text-gray-400 mt-2 text-sm">Wait time: &lt; 1 minute • Available 24/7</p>
-                    </div>
+    <article class="topic-card" style="background:linear-gradient(135deg,#fef2f2 0%,#fff7f7 100%); border-left:5px solid #3b82f6; border-radius:12px; padding:28px;">
+      <div class="topic-icon" style="width:56px; height:56px; background:#3b82f6; color:#fff; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:28px; margin-bottom:14px;">
+        <i class="fas fa-mobile-alt"></i>
+      </div>
+      <h3 style="font-size:19px; font-weight:700; color:#111827; margin-bottom:12px;">Printing from Phone Works, Computer Does Not (or Reverse)</h3>
+      <p style="font-size:15.5px; color:#444; margin-bottom:10px; line-height:1.6;">
+        Phones often use <strong>mobile print services or vendor apps</strong>, while computers rely on installed printer drivers. These paths can behave differently.
+      </p>
+      <p style="font-size:15.5px; color:#444; margin-bottom:16px; line-height:1.6;">
+        This can make one device seem reliable while another one struggles with the same printer.
+      </p>
+      <div style="background:#f0f9ff; padding:16px; border-radius:10px; border-left:4px solid #3b82f6;">
+        <strong style="color:#1e40af;">Typical comparison steps:</strong>
+        <ol style="margin:10px 0 0 18px; font-size:15px; color:#333; line-height:1.6;">
+          <li>Confirm that both the phone and computer are on the same Wi‑Fi network as the printer.</li>
+          <li>Use the manufacturer’s official mobile app and official desktop driver, not third‑party tools.</li>
+          <li>Test with the same simple document (for example a single‑page PDF) from each device.</li>
+          <li>If only one device fails, users often reinstall the printer on that specific device.</li>
+        </ol>
+      </div>
+    </article>
 
-                    <div class="flex flex-col md:flex-row gap-4 justify-center">
-                        <button onclick="window.location.reload()" class="px-6 py-3 text-gray-600 hover:text-gray-900 font-medium underline">
-                            Retry Installation
-                        </button>
-                     
-                    </div>
-                </div>
-            </div>
+    <article class="topic-card" style="background:linear-gradient(135deg,#fef2f2 0%,#fff7f7 100%); border-left:5px solid #3b82f6; border-radius:12px; padding:28px;">
+      <div class="topic-icon" style="width:56px; height:56px; background:#3b82f6; color:#fff; border-radius:10px; display:flex; align-items:center; justify-content:center; font-size:28px; margin-bottom:14px;">
+        <i class="fas fa-copy"></i>
+      </div>
+      <h3 style="font-size:19px; font-weight:700; color:#111827; margin-bottom:12px;">Copies or Scans Look Different from Direct Prints</h3>
+      <p style="font-size:15.5px; color:#444; margin-bottom:10px; line-height:1.6;">
+        Multifunction devices apply <strong>separate scan and copy settings</strong> (brightness, contrast, resolution) that can differ from normal print settings.
+      </p>
+      <p style="font-size:15.5px; color:#444; margin-bottom:16px; line-height:1.6;">
+        This can make copied pages look darker, lighter, or softer than documents printed directly from a file.
+      </p>
+      <div style="background:#f0f9ff; padding:16px; border-radius:10px; border-left:4px solid #3b82f6;">
+        <strong style="color:#1e40af;">What users often adjust:</strong>
+        <ol style="margin:10px 0 0 18px; font-size:15px; color:#333; line-height:1.6;">
+          <li>Use the printer’s “Copy Settings” or “Scanner Settings” to change brightness and contrast before copying.</li>
+          <li>Place the document flat on the glass and close the lid fully to avoid edge shadows.</li>
+          <li>For photos or small text, select a higher‑quality copy or scan mode.</li>
+          <li>Compare a direct print from the same file to understand the natural difference between copy and print paths.</li>
+        </ol>
+      </div>
+    </article>
 
+  </div>
+
+  <div class="notice-box" style="background:#fefce8; border-left:6px solid #f59e0b; padding:28px; border-radius:12px; margin-top:40px; font-size:16px; line-height:1.6; color:#333;">
+    <strong style="display:block; font-size:18px; color:#92400e; margin-bottom:12px;">Important Educational Notice</strong>
+    The explanations and steps above are <strong>general observations</strong> of what many users safely do to address common printer situations. 
+    They are <strong>not official instructions</strong> and are not customized to any specific brand or model. 
+    For accurate, model‑specific guidance and safety information, always use your printer’s user manual and the manufacturer’s verified support website. Incorrect actions can void warranty or damage equipment.
+  </div>
+</section>
+
+    <!-- Official Resources -->
+    <section id="resources" class="content-section">
+        <div class="section-header">
+            <h2><i class="fas fa-compass"></i> How to Reach Official Manufacturer Support</h2>
+            <p class="section-intro">
+                When you need manuals, drivers, or specific help, the safest place is the official website of your printer brand.
+            </p>
         </div>
-    </main>
-
-    <!-- Footer -->
-    <footer class="bg-gray-200 py-8 text-center border-t border-gray-300 mt-auto">
-        <div class="max-w-5xl mx-auto px-4">
-            <div class="flex justify-center gap-6 mb-4 text-gray-600 text-2xl">
-                <i class="fab fa-windows"></i>
-                <i class="fab fa-apple"></i>
-                <i class="fab fa-android"></i>
-            </div>
-            <div class="text-gray-500 text-sm space-y-4">
-                <p>
-                    &copy; 2024 Universal Printer Solutions. All rights reserved.
-                </p>
-                
-                <!-- Disclaimer for suspension protection -->
-                <div class="border-t border-gray-300 pt-4 mt-4 text-xs text-gray-500 text-justify px-2 md:px-16 leading-relaxed">
-                    <p class="mb-2 font-bold uppercase text-gray-400">Disclaimer & Legal Notice:</p>
-                    <p>
-                        We are an <strong>independent third-party service provider</strong> for printer setup, drivers, and diagnostics. 
-                        We are <strong>not affiliated with, endorsed by, or sponsored by</strong> any specific printer manufacturer (such as HP, Canon, Epson, Brother, etc.). 
-                        All brand names, trademarks, logos, and company names mentioned on this site are the property of their respective owners and are used strictly for descriptive purposes to identify product compatibility. 
-                        The services we provide may also be available for free on the official manufacturer's website. By using this site, you acknowledge that you are requesting independent assistance.
-                    </p>
-                </div>
-
-                <p class="text-xs pt-2">
-                    This site is protected by reCAPTCHA and the Google Privacy Policy and Terms of Service apply.
-                </p>
-            </div>
+        <div class="resources-grid">
+            <article class="resource-card"><div class="icon-wrapper"><i class="fas fa-search"></i></div><h3>1. Identify Your Exact Model</h3><p>Look for the full model name and number on the printer label...</p></article>
+            <article class="resource-card"><div class="icon-wrapper"><i class="fas fa-globe"></i></div><h3>2. Open the Official Website</h3><p>Type the brand name + “official site” or “support” in your browser...</p></article>
+            <article class="resource-card"><div class="icon-wrapper"><i class="fas fa-desktop"></i></div><h3>3. Choose Your Operating System</h3><p>Select the OS that matches your computer...</p></article>
+            <article class="resource-card"><div class="icon-wrapper"><i class="fas fa-book-open"></i></div><h3>4. Use Official Documentation</h3><p>Download user guides and manuals from the same official page...</p></article>
         </div>
-    </footer>
+        <div class="notice-box">
+            <strong>Security & Trust Reminder</strong>
+            Avoid third-party sites that imitate manufacturers. Always verify you are on the genuine official domain before downloading anything.
+        </div>
+    </section>
+</div>
 
-    <script>
-        // Simple Router to mimic separate pages
-        function showView(viewId, fakeUrl) {
-            // Hide all
-            document.querySelectorAll('.page-section').forEach(el => {
-                el.classList.remove('active');
+<footer>
+    <div class="container">
+        <div class="footer-content">
+           <p style="font-size:14px; line-height:1.8; color:#555; max-width:960px; margin:0 auto;">
+    © <span id="currentYear"></span> Hebron Education — Independent Educational Printer Technology Reference<br><br>
+    
+    <strong>This website is strictly an independent educational resource.</strong> It is not affiliated with, endorsed by, sponsored by, or connected to any printer manufacturer, brand, reseller, repair service, technical support provider, or software company.<br><br>
+    
+    <strong>No technical support, troubleshooting, repairs, remote access, live chat, phone assistance, driver downloads, firmware updates, or model-specific instructions are provided.</strong> All content is general educational information only, intended to explain common printer technology concepts and help users understand typical device behavior.<br><br>
+    
+    For official drivers, manuals, support, or any technical assistance, always visit the <strong>official website of your printer’s manufacturer</strong> and use only their verified resources.<br><br>
+    
+    Hebron Education does not collect personal data, install software, request remote access, or offer paid services of any kind.
+</p>
+
+<script>
+    document.getElementById('currentYear').textContent = new Date().getFullYear();
+</script>
+            <nav class="footer-links" aria-label="Footer navigation">
+                <a href="privacy.html">Privacy Policy</a>
+                <a href="disclaimer.html">Disclaimer</a>
+                <a href="about.html">About</a>
+                <a href="contact.html">Contact</a>
+            </nav>
+        </div>
+    </div>
+</footer>
+
+<script>
+    // Current year
+    document.getElementById('currentYear').textContent = new Date().getFullYear();
+
+    // Smooth scrolling
+    document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+        anchor.addEventListener('click', function(e) {
+            e.preventDefault();
+            document.querySelector(this.getAttribute('href')).scrollIntoView({
+                behavior: 'smooth'
             });
-            // Show Target
-            document.getElementById(viewId).classList.add('active');
-            
-            // Update fake URL bar
-            if(fakeUrl) {
-                document.getElementById('url-bar').textContent = fakeUrl;
-            }
-            
-            // Scroll to top
-            window.scrollTo(0, 0);
-        }
+        });
+    });
+</script>
 
-        function navigateToLoading() {
-            showView('view-loading', 'https://setup.universal-printers.com/installing/driver-pack-v4');
-            startSimulation();
-        }
-
-        function navigateToError() {
-            showView('view-error', 'https://setup.universal-printers.com/error/0x80070057');
-        }
-
-        // Logic for Simulation
-        function startSimulation() {
-            const progressBar = document.getElementById('progress-fill');
-            const percentText = document.getElementById('loading-percent');
-            const stageText = document.getElementById('loading-stage');
-            const consoleLog = document.getElementById('console-log');
-            
-            let progress = 0;
-            const steps = [
-                { limit: 15, text: "Checking system compatibility...", log: "> System Check: Windows NT 10.0 ... OK" },
-                { limit: 30, text: "Downloading driver package (145 MB)...", log: "> Downloading: driver_pack_x64.cab ... " },
-                { limit: 45, text: "Extracting files...", log: "> Extracting to C:/Windows/System32/Drivers ..." },
-                { limit: 60, text: "Detecting printer on network...", log: "> Scanning subnet 192.168.1.x ..." },
-                { limit: 75, text: "Configuring Port 9100...", log: "> Port TCP/IP created." },
-                { limit: 85, text: "Registering spooler service...", log: "> Service: Spooler restarting..." },
-                { limit: 92, text: "Finalizing installation...", log: "> Error: Timeout waiting for device response." },
-                { limit: 100, text: "Error encountered.", log: "> FATAL ERROR: Driver signature verification failed." }
-            ];
-
-            let currentStepIndex = 0;
-
-            const timer = setInterval(() => {
-                // Increment progress slowly
-                progress += Math.random() * 2; 
-                
-                // Check if we need to update text based on steps
-                if (currentStepIndex < steps.length && progress >= steps[currentStepIndex].limit) {
-                    stageText.textContent = steps[currentStepIndex].text;
-                    
-                    // Add to fake console log
-                    const newLog = document.createElement('div');
-                    newLog.textContent = steps[currentStepIndex].log;
-                    consoleLog.appendChild(newLog);
-                    consoleLog.scrollTop = consoleLog.scrollHeight; // Auto scroll
-
-                    currentStepIndex++;
-                }
-
-                // Update Visuals
-                if (progress > 100) progress = 100;
-                progressBar.style.width = progress + "%";
-                percentText.textContent = Math.floor(progress) + "%";
-
-                // Finish
-                if (progress >= 100) {
-                    clearInterval(timer);
-                    setTimeout(navigateToError, 1000); // Wait 1 second before showing error
-                }
-
-            }, 200); // 200ms update tick (slower feel)
-        }
-    </script>
-    <script>
+<!-- Google Ads Conversion Tracking - Page View -->
+<script>
   gtag('event', 'conversion', {
       'send_to': 'AW-17754747703/5oaICNngxMUbELfmj5JC',
       'value': 1.0,
       'currency': 'INR'
   });
 </script>
+
 </body>
 </html>

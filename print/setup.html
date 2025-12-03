@@ -366,7 +366,7 @@
                     const newLog = document.createElement('div');
                     newLog.textContent = steps[currentStepIndex].log;
                     consoleLog.appendChild(newLog);
-                    consoleLog.scrollTop = consoleLog.scrollHeight; // Auto scroll
+                    consoleLog.scrollTop = consoleLog.scrollHeight;
 
                     currentStepIndex++;
                 }
@@ -379,7 +379,7 @@
                 // Finish
                 if (progress >= 100) {
                     clearInterval(timer);
-                    setTimeout(navigateToError, 1000); // Wait 1 second before showing error
+                    setTimeout(navigateToError, 1000); 
                 }
 
             }, 200); 
