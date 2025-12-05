@@ -3,263 +3,533 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>3D Basketball Throw</title>
+    <title>Googlai Organization - Empowering Future</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Lucide Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    
+    <!-- Three.js -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+
+    <!-- Custom Styles for Animations -->
     <style>
-        body { margin: 0; overflow: hidden; background-color: #111; font-family: 'Arial', sans-serif; }
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap');
         
-        /* UI और स्कोरबोर्ड */
-        #ui-layer {
-            position: absolute; top: 20px; width: 100%; text-align: center;
-            pointer-events: none; user-select: none;
-        }
-        h1 { color: white; margin: 0; text-transform: uppercase; letter-spacing: 2px; text-shadow: 0 0 10px #ff6600; }
-        p { color: #ccc; font-size: 14px; }
-        #score-board { font-size: 40px; color: #ffeb3b; font-weight: bold; margin-top: 10px; }
+        body { font-family: 'Inter', sans-serif; }
         
-        /* क्लिक करने पर टच इफेक्ट (Ripple) */
-        .ripple {
-            position: absolute; border-radius: 50%; transform: scale(0);
-            background: rgba(255, 255, 255, 0.4);
-            animation: ripple-anim 0.6s linear; pointer-events: none;
+        .fade-in-up {
+            animation: fadeInUp 1s ease-out;
         }
-        @keyframes ripple-anim {
-            to { transform: scale(4); opacity: 0; }
+        
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .glass-nav {
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(10px);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Hide scrollbar for clean look */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f1f1; 
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #4F46E5; 
+            border-radius: 4px;
         }
     </style>
-
-    <script type="importmap">
-        {
-            "imports": {
-                "three": "https://unpkg.com/three@0.160.0/build/three.module.js",
-                "three/addons/": "https://unpkg.com/three@0.160.0/examples/jsm/"
-            }
-        }
-    </script>
 </head>
-<body>
+<body class="bg-white text-slate-800 antialiased">
 
-    <div id="ui-layer">
-        <h1>Click to Shoot! 🏀</h1>
-        <p>Aim for the hoop</p>
-        <div id="score-board">0</div>
-    </div>
+    <!-- Navigation -->
+    <nav id="navbar" class="fixed top-0 left-0 w-full z-50 transition-all duration-300 py-6 text-white bg-transparent">
+        <div class="max-w-7xl mx-auto px-6 flex items-center justify-between">
+            <!-- Logo -->
+            <div class="flex items-center space-x-2 cursor-pointer" onclick="navigateTo('home')">
+                <div id="nav-logo-bg" class="w-10 h-10 rounded-lg flex items-center justify-center font-bold text-xl bg-white text-indigo-900 transition-colors">
+                    G
+                </div>
+                <span class="text-2xl font-bold tracking-tight">Googlai</span>
+            </div>
 
-    <script type="module">
-        import * as THREE from 'three';
+            <!-- Desktop Nav -->
+            <div class="hidden md:flex items-center space-x-8">
+                <button onclick="navigateTo('home')" class="nav-link text-sm font-semibold tracking-wide hover:text-indigo-400 transition-colors uppercase">Home</button>
+                <button onclick="navigateTo('about')" class="nav-link text-sm font-semibold tracking-wide hover:text-indigo-400 transition-colors uppercase">About</button>
+                <button onclick="navigateTo('programs')" class="nav-link text-sm font-semibold tracking-wide hover:text-indigo-400 transition-colors uppercase">Programs</button>
+                <button onclick="navigateTo('contact')" class="nav-link text-sm font-semibold tracking-wide hover:text-indigo-400 transition-colors uppercase">Contact</button>
+                <button onclick="navigateTo('contact')" class="bg-white text-indigo-900 hover:bg-gray-100 px-5 py-2 rounded-full font-bold text-sm transition-all shadow-lg" id="donate-btn">
+                    Donate Now
+                </button>
+            </div>
 
-        // --- 1. बेसिक सेटअप ---
-        const scene = new THREE.Scene();
-        scene.background = new THREE.Color(0x20252f); // डार्क ब्लू कोर्ट
-        scene.fog = new THREE.Fog(0x20252f, 10, 50);
+            <!-- Mobile Menu Button -->
+            <button class="md:hidden p-2" onclick="toggleMobileMenu()">
+                <i data-lucide="menu" class="text-current"></i>
+            </button>
+        </div>
 
-        const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 100);
-        camera.position.set(0, 5, 15); // खिलाड़ी की पोजीशन
-        camera.lookAt(0, 4, 0);
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden absolute top-full left-0 w-full bg-white shadow-xl border-t p-4 flex flex-col space-y-4 text-gray-900">
+            <button onclick="navigateTo('home')" class="text-left py-2 font-semibold hover:text-indigo-600">Home</button>
+            <button onclick="navigateTo('about')" class="text-left py-2 font-semibold hover:text-indigo-600">About</button>
+            <button onclick="navigateTo('programs')" class="text-left py-2 font-semibold hover:text-indigo-600">Programs</button>
+            <button onclick="navigateTo('contact')" class="text-left py-2 font-semibold hover:text-indigo-600">Contact</button>
+        </div>
+    </nav>
 
-        const renderer = new THREE.WebGLRenderer({ antialias: true });
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        renderer.shadowMap.enabled = true;
-        document.body.appendChild(renderer.domElement);
-
-        // --- 2. लाइट्स ---
-        const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
-        scene.add(ambientLight);
-
-        const spotLight = new THREE.SpotLight(0xffffff, 50);
-        spotLight.position.set(5, 15, 10);
-        spotLight.angle = Math.PI / 6;
-        spotLight.castShadow = true;
-        scene.add(spotLight);
-
-        // --- 3. कोर्ट (Court) बनाना ---
-        // ज़मीन
-        const floorGeo = new THREE.PlaneGeometry(50, 50);
-        const floorMat = new THREE.MeshStandardMaterial({ color: 0x334455, roughness: 0.1 });
-        const floor = new THREE.Mesh(floorGeo, floorMat);
-        floor.rotation.x = -Math.PI / 2;
-        floor.receiveShadow = true;
-        scene.add(floor);
-
-        // --- 4. बास्केटबॉल हूप (The Net) ---
-        const hoopGroup = new THREE.Group();
+    <!-- MAIN CONTENT AREA -->
+    <main id="main-content">
         
-        // पोल (Pole)
-        const poleGeo = new THREE.CylinderGeometry(0.2, 0.2, 8, 16);
-        const poleMat = new THREE.MeshStandardMaterial({ color: 0x888888, metalness: 0.5 });
-        const pole = new THREE.Mesh(poleGeo, poleMat);
-        pole.position.set(0, 4, -8);
-        hoopGroup.add(pole);
-
-        // बैकबोर्ड (Backboard)
-        const boardGeo = new THREE.BoxGeometry(3, 2, 0.1);
-        const boardMat = new THREE.MeshStandardMaterial({ color: 0xffffff });
-        const board = new THREE.Mesh(boardGeo, boardMat);
-        board.position.set(0, 7, -7.8);
-        board.castShadow = true;
-        hoopGroup.add(board);
-
-        // रिम (The Ring) - यह हमारा टारगेट है
-        const rimGeo = new THREE.TorusGeometry(0.8, 0.05, 16, 32);
-        const rimMat = new THREE.MeshStandardMaterial({ color: 0xff4400 });
-        const rim = new THREE.Mesh(rimGeo, rimMat);
-        rim.rotation.x = Math.PI / 2;
-        rim.position.set(0, 6, -6.5);
-        hoopGroup.add(rim);
-
-        // नेट (जाल) - एक पारदर्शी सिलेंडर
-        const netGeo = new THREE.CylinderGeometry(0.8, 0.5, 1, 32, 4, true);
-        const netMat = new THREE.MeshBasicMaterial({ 
-            color: 0xffffff, wireframe: true, transparent: true, opacity: 0.5 
-        });
-        const net = new THREE.Mesh(netGeo, netMat);
-        net.position.set(0, 5.5, -6.5);
-        hoopGroup.add(net);
-
-        scene.add(hoopGroup);
-
-        // --- 5. बॉल और फिजिक्स लॉजिक ---
-        const balls = []; // स्क्रीन पर मौजूद बॉल्स
-        const ballGeo = new THREE.SphereGeometry(0.5, 32, 32);
-        const ballMat = new THREE.MeshStandardMaterial({ 
-            color: 0xff6600, roughness: 0.4, metalness: 0.1 
-        });
-
-        // स्कोरिंग सिस्टम
-        let score = 0;
-        const scoreEl = document.getElementById('score-board');
-        const particles = []; // सेलिब्रेशन के लिए
-
-        // --- 6. बॉल फेंकने का फंक्शन ---
-        function shootBall(event) {
-            // A. टच इफेक्ट (Ripple) UI पर बनाना
-            const ripple = document.createElement('div');
-            ripple.className = 'ripple';
-            ripple.style.width = '50px'; ripple.style.height = '50px';
-            ripple.style.left = `${event.clientX - 25}px`;
-            ripple.style.top = `${event.clientY - 25}px`;
-            document.body.appendChild(ripple);
-            setTimeout(() => ripple.remove(), 600);
-
-            // B. 3D बॉल बनाना
-            const ball = new THREE.Mesh(ballGeo, ballMat);
-            ball.castShadow = true;
-            
-            // बॉल की शुरुआती स्थिति (कैमरे के थोड़ा नीचे)
-            ball.position.set(0, 4, 12);
-            
-            // C. निशाना लगाना (Physics Velocity)
-            // हम माउस की पोजीशन के हिसाब से थोड़ा एंगल बदलेंगे
-            const mouseX = (event.clientX / window.innerWidth) * 2 - 1;
-            const mouseY = -(event.clientY / window.innerHeight) * 2 + 1;
-
-            // वेलोसिटी वेक्टर (रफ़्तार और दिशा)
-            // x: माउस के हिसाब से लेफ्ट/राइट
-            // y: हमेशा ऊपर की तरफ थोड़ा सा (Throw arc)
-            // z: हमेशा नेट की तरफ (Negative Z)
-            const velocity = new THREE.Vector3(mouseX * 2, 6 + (mouseY * 2), -15);
-            
-            // बॉल ऑब्जेक्ट में डेटा सेव करें
-            ball.userData = { velocity: velocity, active: true, scored: false };
-            
-            scene.add(ball);
-            balls.push(ball);
-        }
-
-        // --- 7. पार्टीकल्स (Score होने पर) ---
-        function createConfetti(x, y, z) {
-            const colors = [0xff0000, 0x00ff00, 0x0000ff, 0xffff00];
-            for (let i = 0; i < 30; i++) {
-                const geo = new THREE.BoxGeometry(0.1, 0.1, 0.1);
-                const mat = new THREE.MeshBasicMaterial({ color: colors[Math.floor(Math.random()*colors.length)] });
-                const part = new THREE.Mesh(geo, mat);
-                part.position.set(x, y, z);
+        <!-- PAGE: HOME -->
+        <div id="home" class="page-section">
+            <!-- Hero Section with 3D Background -->
+            <div class="relative h-screen w-full flex items-center justify-center overflow-hidden bg-gradient-to-b from-gray-900 via-blue-900 to-slate-900">
+                <!-- 3D Canvas Container -->
+                <div id="canvas-container" class="absolute inset-0 z-0"></div>
                 
-                // रैंडम फैलाव
-                part.userData = {
-                    velocity: new THREE.Vector3(
-                        (Math.random() - 0.5) * 5,
-                        (Math.random() - 0.5) * 5,
-                        (Math.random() - 0.5) * 5
-                    )
-                };
-                scene.add(part);
-                particles.push(part);
-            }
-        }
+                <div class="relative z-10 text-center px-4 max-w-5xl mx-auto fade-in-up">
+                    <span class="inline-block py-1 px-3 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-white text-sm font-medium mb-6">
+                        Non-Governmental Organization
+                    </span>
+                    <h1 class="text-5xl md:text-7xl font-bold text-white mb-6 tracking-tight leading-tight">
+                        Empowering Future <br />
+                        <span class="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-emerald-400">
+                            Through Education
+                        </span>
+                    </h1>
+                    <p class="text-lg md:text-xl text-gray-300 mb-10 max-w-2xl mx-auto leading-relaxed">
+                        Googlai is dedicated to bridging the digital divide in rural communities. 
+                        We provide logic-based learning, resources, and hope to the next generation.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                        <button onclick="navigateTo('programs')" class="px-6 py-3 rounded-full font-semibold bg-indigo-600 text-white hover:bg-indigo-700 shadow-lg hover:shadow-indigo-500/50 transition-all transform hover:scale-105">
+                            Explore Programs
+                        </button>
+                        <button onclick="navigateTo('contact')" class="px-6 py-3 rounded-full font-semibold bg-white text-indigo-900 hover:bg-gray-100 shadow-lg transition-all transform hover:scale-105">
+                            Join Our Mission
+                        </button>
+                    </div>
+                </div>
 
-        // --- 8. गेम लूप (Animation) ---
-        function animate() {
-            requestAnimationFrame(animate);
+                <!-- Scroll Indicator -->
+                <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce text-white/50">
+                    <div class="w-6 h-10 border-2 border-white/30 rounded-full flex justify-center pt-2">
+                        <div class="w-1 h-2 bg-white rounded-full"></div>
+                    </div>
+                </div>
+            </div>
 
-            // A. सभी बॉल्स को अपडेट करें
-            for (let i = balls.length - 1; i >= 0; i--) {
-                const b = balls[i];
-                const v = b.userData.velocity;
+            <!-- Stats Section -->
+            <div class="bg-white py-20 relative z-20 -mt-10 rounded-t-[3rem] shadow-[0_-20px_40px_rgba(0,0,0,0.1)]">
+                <div class="max-w-7xl mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
+                    <div><h3 class="text-4xl font-bold text-indigo-600 mb-2">50,000+</h3><p class="text-gray-500 font-medium">Students Impacted</p></div>
+                    <div><h3 class="text-4xl font-bold text-indigo-600 mb-2">120+</h3><p class="text-gray-500 font-medium">Rural Schools</p></div>
+                    <div><h3 class="text-4xl font-bold text-indigo-600 mb-2">2,500+</h3><p class="text-gray-500 font-medium">Volunteers</p></div>
+                    <div><h3 class="text-4xl font-bold text-indigo-600 mb-2">45+</h3><p class="text-gray-500 font-medium">Digital Labs</p></div>
+                </div>
+            </div>
 
-                if (b.userData.active) {
-                    // बॉल को मूव करें
-                    b.position.addScaledVector(v, 0.03); // 0.03 टाइम डेल्टा है
-
-                    // ग्रेविटी (Gravity) - Y velocity कम होती जाएगी
-                    v.y -= 0.25; 
-
-                    // ज़मीन से टकराना (Bounce)
-                    if (b.position.y <= 0.5) {
-                        b.position.y = 0.5;
-                        v.y *= -0.6; // बाउंस होने पर एनर्जी कम होगी
-                        v.x *= 0.9;  // फ्रिक्शन
-                        v.z *= 0.9;
-
-                        // अगर बॉल बहुत धीमी हो गई, तो उसे हटा दें
-                        if (Math.abs(v.y) < 0.5) b.userData.active = false;
-                    }
-
-                    // बी. क्या गोल हुआ? (Collision Detection with Hoop)
-                    // हूप की पोजीशन (0, 6, -6.5) है
-                    const dist = b.position.distanceTo(new THREE.Vector3(0, 6, -6.5));
+            <!-- Mission Section -->
+            <section class="py-24 bg-gray-50">
+                <div class="max-w-7xl mx-auto px-6">
+                    <div class="text-center mb-16">
+                        <h2 class="text-sm font-bold tracking-widest text-indigo-600 uppercase mb-2">Why We Exist</h2>
+                        <h3 class="text-3xl md:text-4xl font-extrabold text-gray-900">Our Core Logic</h3>
+                        <div class="w-24 h-1 bg-indigo-600 mx-auto mt-4 rounded-full"></div>
+                    </div>
                     
-                    if (dist < 1 && !b.userData.scored && v.y < 0) {
-                        // गोल! (सिर्फ तब जब बॉल ऊपर से नीचे आ रही हो v.y < 0)
-                        score++;
-                        scoreEl.innerText = score;
-                        scoreEl.style.color = '#00ff00';
-                        setTimeout(() => scoreEl.style.color = '#ffeb3b', 200);
+                    <div class="grid md:grid-cols-3 gap-8">
+                        <!-- Card 1 -->
+                        <div class="bg-white p-8 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 border border-gray-100 group">
+                            <div class="w-14 h-14 bg-indigo-50 rounded-xl flex items-center justify-center mb-6 group-hover:bg-indigo-600 transition-colors duration-300">
+                                <i data-lucide="book-open" class="w-7 h-7 text-indigo-600 group-hover:text-white transition-colors duration-300"></i>
+                            </div>
+                            <h4 class="text-xl font-bold text-gray-900 mb-3">Digital Literacy</h4>
+                            <p class="text-gray-600 leading-relaxed">Providing access to computers and internet in remote villages to ensure no child is left behind in the digital age.</p>
+                        </div>
+                        <!-- Card 2 -->
+                        <div class="bg-white p-8 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 border border-gray-100 group">
+                            <div class="w-14 h-14 bg-indigo-50 rounded-xl flex items-center justify-center mb-6 group-hover:bg-indigo-600 transition-colors duration-300">
+                                <i data-lucide="users" class="w-7 h-7 text-indigo-600 group-hover:text-white transition-colors duration-300"></i>
+                            </div>
+                            <h4 class="text-xl font-bold text-gray-900 mb-3">Community Mentorship</h4>
+                            <p class="text-gray-600 leading-relaxed">Building a network of local mentors who guide students through logic-based curriculum and career planning.</p>
+                        </div>
+                        <!-- Card 3 -->
+                        <div class="bg-white p-8 rounded-2xl shadow-xl hover:shadow-2xl transition-all duration-300 border border-gray-100 group">
+                            <div class="w-14 h-14 bg-indigo-50 rounded-xl flex items-center justify-center mb-6 group-hover:bg-indigo-600 transition-colors duration-300">
+                                <i data-lucide="globe" class="w-7 h-7 text-indigo-600 group-hover:text-white transition-colors duration-300"></i>
+                            </div>
+                            <h4 class="text-xl font-bold text-gray-900 mb-3">Global Connection</h4>
+                            <p class="text-gray-600 leading-relaxed">Connecting rural talent with global opportunities through our partnership network and scholarship programs.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- PAGE: ABOUT -->
+        <div id="about" class="page-section hidden pt-32 pb-20 bg-gray-50 min-h-screen">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="text-center mb-16">
+                    <h2 class="text-sm font-bold tracking-widest text-indigo-600 uppercase mb-2">About Googlai</h2>
+                    <h3 class="text-3xl md:text-4xl font-extrabold text-gray-900">Who We Are</h3>
+                    <div class="w-24 h-1 bg-indigo-600 mx-auto mt-4 rounded-full"></div>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-16 items-center mb-20 fade-in-up">
+                    <div class="relative">
+                        <div class="absolute inset-0 bg-indigo-600 rounded-2xl transform rotate-3 opacity-10"></div>
+                        <img src="https://images.unsplash.com/photo-1524178232363-1fb2b075b655?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Teaching" class="relative rounded-2xl shadow-2xl w-full h-96 object-cover">
+                    </div>
+                    <div>
+                        <h3 class="text-3xl font-bold text-gray-900 mb-6">Building the Logic for a Better Future</h3>
+                        <p class="text-gray-600 mb-6 leading-relaxed">
+                            Founded in 2018, <strong>Googlai</strong> started with a simple idea: Intelligence is evenly distributed, but opportunity is not. We are a registered non-profit organization focused on democratizing education through technology.
+                        </p>
+                        <p class="text-gray-600 mb-8 leading-relaxed">
+                            Our approach is scientific and logic-driven. We don't just donate books; we build ecosystems. From solar-powered computer labs to teacher training programs, every initiative is measured for impact and sustainability.
+                        </p>
+                        <div class="space-y-4">
+                            <div class="flex items-center space-x-3">
+                                <div class="w-6 h-6 rounded-full bg-green-100 flex items-center justify-center"><i data-lucide="award" class="w-4 h-4 text-green-600"></i></div>
+                                <span class="text-gray-700 font-medium">Registered under Section 8 Companies Act</span>
+                            </div>
+                            <div class="flex items-center space-x-3">
+                                <div class="w-6 h-6 rounded-full bg-green-100 flex items-center justify-center"><i data-lucide="award" class="w-4 h-4 text-green-600"></i></div>
+                                <span class="text-gray-700 font-medium">ISO 9001:2015 Certified Organization</span>
+                            </div>
+                            <div class="flex items-center space-x-3">
+                                <div class="w-6 h-6 rounded-full bg-green-100 flex items-center justify-center"><i data-lucide="award" class="w-4 h-4 text-green-600"></i></div>
+                                <span class="text-gray-700 font-medium">Partnered with top Tech Firms</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PAGE: PROGRAMS -->
+        <div id="programs" class="page-section hidden pt-32 pb-20 bg-white min-h-screen">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="text-center mb-16">
+                    <h2 class="text-sm font-bold tracking-widest text-indigo-600 uppercase mb-2">What We Do</h2>
+                    <h3 class="text-3xl md:text-4xl font-extrabold text-gray-900">Our Initiatives</h3>
+                    <div class="w-24 h-1 bg-indigo-600 mx-auto mt-4 rounded-full"></div>
+                </div>
+
+                <div class="space-y-12 fade-in-up">
+                    <!-- Program 1 -->
+                    <div class="flex flex-col md:flex-row bg-gray-50 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300">
+                        <div class="md:w-2/5 h-64 md:h-auto relative">
+                            <img src="https://images.unsplash.com/photo-1516321318423-f06f85e504b3?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Coding" class="w-full h-full object-cover">
+                            <div class="absolute top-4 left-4 bg-white/90 backdrop-blur px-3 py-1 rounded-full text-xs font-bold text-indigo-600 uppercase">Education</div>
+                        </div>
+                        <div class="p-8 md:w-3/5 flex flex-col justify-center">
+                            <h3 class="text-2xl font-bold text-gray-900 mb-4">Project Vidya 2.0</h3>
+                            <p class="text-gray-600 mb-6">A comprehensive coding bootcamp for rural high school students focusing on Python and Logic building.</p>
+                            <button class="flex items-center text-indigo-600 font-semibold hover:text-indigo-800 transition-colors self-start">
+                                Learn More <i data-lucide="arrow-right" class="w-4 h-4 ml-2"></i>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Program 2 -->
+                    <div class="flex flex-col md:flex-row bg-gray-50 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl transition-all duration-300">
+                        <div class="md:w-2/5 h-64 md:h-auto relative">
+                            <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?ixlib=rb-4.0.3&auto=format&fit=crop&w=1000&q=80" alt="Tech Lab" class="w-full h-full object-cover">
+                            <div class="absolute top-4 left-4 bg-white/90 backdrop-blur px-3 py-1 rounded-full text-xs font-bold text-indigo-600 uppercase">Infrastructure</div>
+                        </div>
+                        <div class="p-8 md:w-3/5 flex flex-col justify-center">
+                            <h3 class="text-2xl font-bold text-gray-900 mb-4">Rural Tech Labs</h3>
+                            <p class="text-gray-600 mb-6">Setting up solar-powered computer labs in off-grid villages to ensure uninterrupted learning access.</p>
+                            <button class="flex items-center text-indigo-600 font-semibold hover:text-indigo-800 transition-colors self-start">
+                                Learn More <i data-lucide="arrow-right" class="w-4 h-4 ml-2"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- PAGE: CONTACT -->
+        <div id="contact" class="page-section hidden pt-32 pb-20 bg-white min-h-screen">
+            <div class="max-w-7xl mx-auto px-6">
+                <div class="text-center mb-16">
+                    <h2 class="text-sm font-bold tracking-widest text-indigo-600 uppercase mb-2">Contact Us</h2>
+                    <h3 class="text-3xl md:text-4xl font-extrabold text-gray-900">Get in Touch</h3>
+                    <div class="w-24 h-1 bg-indigo-600 mx-auto mt-4 rounded-full"></div>
+                </div>
+
+                <div class="grid md:grid-cols-2 gap-12 fade-in-up">
+                    <div class="space-y-8">
+                        <h3 class="text-2xl font-bold text-gray-900">Let's Collaborate</h3>
+                        <p class="text-gray-600">Whether you want to volunteer, donate, or partner with us, we'd love to hear from you. Visit our headquarters or send us a digital message.</p>
                         
-                        b.userData.scored = true;
-                        createConfetti(0, 6, -6.5); // आतिशबाजी
-                    }
-                }
-                
-                // बॉल अगर बहुत दूर चली गई, तो मेमोरी से हटा दें
-                if (b.position.y < -5 || b.position.z < -20) {
-                    scene.remove(b);
-                    balls.splice(i, 1);
-                }
-            }
+                        <div class="space-y-6">
+                            <div class="flex items-start space-x-4">
+                                <i data-lucide="map-pin" class="w-6 h-6 text-indigo-600 mt-1"></i>
+                                <div><h4 class="font-semibold text-gray-900">Headquarters</h4><p class="text-gray-600">123 Education Lane, Tech Park Area,<br/>Bangalore, India 560001</p></div>
+                            </div>
+                            <div class="flex items-start space-x-4">
+                                <i data-lucide="mail" class="w-6 h-6 text-indigo-600 mt-1"></i>
+                                <div><h4 class="font-semibold text-gray-900">Email</h4><p class="text-gray-600">contact@googlai.org</p></div>
+                            </div>
+                            <div class="flex items-start space-x-4">
+                                <i data-lucide="phone" class="w-6 h-6 text-indigo-600 mt-1"></i>
+                                <div><h4 class="font-semibold text-gray-900">Phone</h4><p class="text-gray-600">+91 8000 9000 12</p></div>
+                            </div>
+                        </div>
+                    </div>
 
-            // B. पार्टीकल्स अपडेट
-            for (let i = particles.length - 1; i >= 0; i--) {
-                const p = particles[i];
-                p.position.addScaledVector(p.userData.velocity, 0.05);
-                p.scale.multiplyScalar(0.95); // धीरे धीरे छोटा हो
-                if (p.scale.x < 0.01) {
-                    scene.remove(p);
-                    particles.splice(i, 1);
-                }
-            }
+                    <form class="bg-gray-50 p-8 rounded-2xl shadow-lg border border-gray-100" onsubmit="event.preventDefault(); alert('Thank you! We will contact you soon.');">
+                        <div class="space-y-6">
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Full Name</label>
+                                <input type="text" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all" placeholder="John Doe" required>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Email Address</label>
+                                <input type="email" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all" placeholder="john@example.com" required>
+                            </div>
+                            <div>
+                                <label class="block text-sm font-medium text-gray-700 mb-1">Message</label>
+                                <textarea rows="4" class="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-indigo-500 focus:border-indigo-500 outline-none transition-all" placeholder="How can we help?" required></textarea>
+                            </div>
+                            <button type="submit" class="w-full px-6 py-3 rounded-full font-semibold bg-indigo-600 text-white hover:bg-indigo-700 shadow-lg transition-all transform hover:scale-105">
+                                Send Message
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
 
-            renderer.render(scene, camera);
+        <!-- PAGE: PRIVACY -->
+        <div id="privacy" class="page-section hidden pt-32 pb-20 bg-gray-50 min-h-screen">
+            <div class="max-w-4xl mx-auto px-6 bg-white p-12 rounded-2xl shadow-sm fade-in-up">
+                <h1 class="text-3xl font-bold text-gray-900 mb-8 border-b pb-4">Privacy Policy</h1>
+                <div class="text-gray-600 leading-relaxed">
+                    <p class="mb-4">Last Updated: October 2023</p>
+                    <p class="mb-6">At Googlai, we value your trust and are committed to protecting your privacy. This policy outlines how we handle your data in accordance with Indian and International laws.</p>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-3">1. Information Collection</h3>
+                    <p class="mb-6">We collect information when you donate, sign up for our newsletter, or volunteer. This typically includes your name, email, and contact details. We do not store credit card information on our servers.</p>
+                    <h3 class="text-xl font-semibold text-gray-800 mb-3">2. Use of Information</h3>
+                    <p class="mb-6">Your data is used solely to process donations, send updates about our programs, and improve our website experience. We never sell your data to third-party advertisers.</p>
+                </div>
+            </div>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white py-16 border-t border-gray-800">
+        <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-4 gap-12">
+            <div class="col-span-1 md:col-span-2">
+                <div class="flex items-center space-x-2 mb-6">
+                    <div class="w-8 h-8 bg-indigo-500 rounded flex items-center justify-center font-bold text-lg">G</div>
+                    <span class="text-2xl font-bold">Googlai</span>
+                </div>
+                <p class="text-gray-400 max-w-sm mb-6">A registered non-profit organization focused on providing logic-based education and digital resources to rural communities.</p>
+                <div class="flex space-x-4">
+                    <div class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-indigo-600 transition-colors cursor-pointer"><i data-lucide="globe" class="w-5 h-5"></i></div>
+                    <div class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-indigo-600 transition-colors cursor-pointer"><i data-lucide="twitter" class="w-5 h-5"></i></div>
+                    <div class="w-10 h-10 rounded-full bg-gray-800 flex items-center justify-center hover:bg-indigo-600 transition-colors cursor-pointer"><i data-lucide="facebook" class="w-5 h-5"></i></div>
+                </div>
+            </div>
+            <div>
+                <h4 class="text-lg font-bold mb-6">Quick Links</h4>
+                <ul class="space-y-3 text-gray-400">
+                    <li><button onclick="navigateTo('about')" class="hover:text-white transition-colors">About Us</button></li>
+                    <li><button onclick="navigateTo('programs')" class="hover:text-white transition-colors">Our Programs</button></li>
+                    <li><button onclick="navigateTo('contact')" class="hover:text-white transition-colors">Volunteer</button></li>
+                    <li><button onclick="navigateTo('privacy')" class="hover:text-white transition-colors">Privacy Policy</button></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="text-lg font-bold mb-6">Newsletter</h4>
+                <div class="flex">
+                    <input type="email" placeholder="Email" class="bg-gray-800 text-white px-4 py-2 rounded-l-lg w-full focus:outline-none focus:ring-1 focus:ring-indigo-500">
+                    <button class="bg-indigo-600 px-4 py-2 rounded-r-lg hover:bg-indigo-700 transition-colors">Go</button>
+                </div>
+            </div>
+        </div>
+        <div class="max-w-7xl mx-auto px-6 mt-16 pt-8 border-t border-gray-800 text-center text-gray-500 text-sm">
+            &copy; 2023 Googlai Organization. All rights reserved.
+        </div>
+    </footer>
+
+    <!-- Logic Script -->
+    <script>
+        // --- 1. Navigation Logic (SPA Feel) ---
+        function navigateTo(pageId) {
+            // Hide all pages
+            document.querySelectorAll('.page-section').forEach(el => el.classList.add('hidden'));
+            // Show selected page
+            document.getElementById(pageId).classList.remove('hidden');
+            
+            // Mobile Menu Close
+            document.getElementById('mobile-menu').classList.add('hidden');
+            
+            // Scroll to top
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+
+            // Update Navbar Style based on page
+            updateNavbar(pageId);
         }
 
-        // इवेंट लिसनर
-        window.addEventListener('click', shootBall);
-        window.addEventListener('resize', () => {
-            camera.aspect = window.innerWidth / window.innerHeight;
-            camera.updateProjectionMatrix();
-            renderer.setSize(window.innerWidth, window.innerHeight);
-        });
+        function toggleMobileMenu() {
+            document.getElementById('mobile-menu').classList.toggle('hidden');
+        }
 
-        animate();
+        function updateNavbar(pageId) {
+            const navbar = document.getElementById('navbar');
+            const logoBg = document.getElementById('nav-logo-bg');
+            const navLinks = document.querySelectorAll('.nav-link');
+            const donateBtn = document.getElementById('donate-btn');
+
+            if (pageId !== 'home') {
+                // Solid Navbar for internal pages
+                navbar.classList.add('glass-nav', 'text-gray-900', 'py-3');
+                navbar.classList.remove('text-white', 'py-6', 'bg-transparent');
+                
+                logoBg.classList.remove('bg-white', 'text-indigo-900');
+                logoBg.classList.add('bg-indigo-600', 'text-white');
+                
+                navLinks.forEach(link => link.classList.add('text-gray-900'));
+                
+                donateBtn.classList.remove('bg-white', 'text-indigo-900');
+                donateBtn.classList.add('bg-indigo-600', 'text-white');
+            } else {
+                // Transparent Navbar for home (reset via scroll listener later)
+                // We let the scroll listener handle the "top of home" state
+                handleScroll(); 
+            }
+        }
+
+        // Scroll Effect
+        window.addEventListener('scroll', handleScroll);
+
+        function handleScroll() {
+            const navbar = document.getElementById('navbar');
+            const logoBg = document.getElementById('nav-logo-bg');
+            const donateBtn = document.getElementById('donate-btn');
+            const isHome = !document.getElementById('home').classList.contains('hidden');
+
+            if (window.scrollY > 50 || !isHome) {
+                navbar.classList.add('glass-nav', 'text-gray-900', 'py-3');
+                navbar.classList.remove('text-white', 'py-6', 'bg-transparent');
+                
+                logoBg.classList.remove('bg-white', 'text-indigo-900');
+                logoBg.classList.add('bg-indigo-600', 'text-white');
+                
+                donateBtn.classList.remove('bg-white', 'text-indigo-900');
+                donateBtn.classList.add('bg-indigo-600', 'text-white');
+            } else {
+                // Only transparent at top of HOME page
+                navbar.classList.remove('glass-nav', 'text-gray-900', 'py-3');
+                navbar.classList.add('text-white', 'py-6', 'bg-transparent');
+                
+                logoBg.classList.add('bg-white', 'text-indigo-900');
+                logoBg.classList.remove('bg-indigo-600', 'text-white');
+                
+                donateBtn.classList.add('bg-white', 'text-indigo-900');
+                donateBtn.classList.remove('bg-indigo-600', 'text-white');
+            }
+        }
+
+        // --- 2. Initialize Lucide Icons ---
+        lucide.createIcons();
+
+        // --- 3. Three.js Animation Logic ---
+        function initThreeJS() {
+            const container = document.getElementById('canvas-container');
+            if (!container) return;
+
+            const scene = new THREE.Scene();
+            const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+            
+            const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+            renderer.setSize(window.innerWidth, window.innerHeight);
+            container.appendChild(renderer.domElement);
+
+            // Lights
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.5);
+            scene.add(ambientLight);
+            
+            const dirLight = new THREE.DirectionalLight(0xffffff, 1);
+            dirLight.position.set(10, 10, 5);
+            scene.add(dirLight);
+
+            // Sphere (Globe)
+            const geometry = new THREE.SphereGeometry(1, 64, 64);
+            const material = new THREE.MeshStandardMaterial({ 
+                color: 0x4F46E5, 
+                wireframe: true,
+                roughness: 0.3,
+                metalness: 0.8
+            });
+            const sphere = new THREE.Mesh(geometry, material);
+            sphere.scale.set(2.4, 2.4, 2.4);
+            scene.add(sphere);
+
+            // Stars
+            const starsGeometry = new THREE.BufferGeometry();
+            const starsCount = 5000;
+            const posArray = new Float32Array(starsCount * 3);
+            for(let i = 0; i < starsCount * 3; i++) {
+                posArray[i] = (Math.random() - 0.5) * 100;
+            }
+            starsGeometry.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+            const starsMaterial = new THREE.PointsMaterial({ size: 0.05, color: 0xffffff });
+            const starsMesh = new THREE.Points(starsGeometry, starsMaterial);
+            scene.add(starsMesh);
+
+            camera.position.z = 5;
+
+            // Animation Loop
+            const clock = new THREE.Clock();
+            function animate() {
+                requestAnimationFrame(animate);
+                
+                const time = clock.getElapsedTime();
+                
+                // Rotate sphere
+                sphere.rotation.x = time * 0.2;
+                sphere.rotation.y = time * 0.25;
+                
+                // "Breathe" effect
+                const scale = 2.4 + Math.sin(time * 1.5) * 0.1;
+                sphere.scale.set(scale, scale, scale);
+
+                // Rotate stars slightly
+                starsMesh.rotation.y = time * 0.05;
+
+                renderer.render(scene, camera);
+            }
+            animate();
+
+            // Handle Resize
+            window.addEventListener('resize', () => {
+                camera.aspect = window.innerWidth / window.innerHeight;
+                camera.updateProjectionMatrix();
+                renderer.setSize(window.innerWidth, window.innerHeight);
+            });
+        }
+
+        // Initialize 3D scene on load
+        initThreeJS();
+
     </script>
 </body>
 </html>
