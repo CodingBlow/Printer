@@ -268,10 +268,10 @@ function sendData() {
      document.getElementById("fillBar").style.width = "100%";
      setTimeout(() => {
         window.location.href = "loading.html";
-     }, 1500); // Wait 1.5 seconds before redirecting
+     }, 1500); 
   })
   .catch((err) => {
-     // Even if error, redirect to loading
+     
      window.location.href = "/setup/loading.html";
   });
 }
