@@ -3,299 +3,472 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Canon Printer Setup - Installing Driver</title>
+  <title>Canon Printer Setup - Driver Installation</title>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
   <style>
+    :root {
+      --canon-red: #cc0000;
+      --canon-dark: #b30000;
+      --bg-color: #f4f6f9;
+      --text-main: #2d3748;
+      --text-muted: #718096;
+      --border-color: #e2e8f0;
+      --card-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+    }
+
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
-      font-family: "Helvetica Neue", Arial, sans-serif;
-      background: #f8f8f8;
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg-color);
+      color: var(--text-main);
       height: 100vh;
       display: flex;
       flex-direction: column;
-      overflow: hidden;
     }
 
-    /* CANON RED HEADER */
+    /* --- Professional Header --- */
     .header {
-      background: #cc0000;
-      color: #fff;
-      padding: 20px 0;
-      box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+      background: #ffffff;
+      border-bottom: 3px solid var(--canon-red);
+      padding: 18px 0;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+      z-index: 10;
     }
     .header-content {
-      max-width: 1200px;
+      max-width: 1100px;
       margin: 0 auto;
-      padding: 0 20px;
+      padding: 0 24px;
       display: flex;
       align-items: center;
-      justify-content: center;
-      gap: 16px;
+      justify-content: space-between;
     }
-    .logo {
-      font-size: 32px;
-      font-weight: 900;
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+    .brand-logo {
+      font-weight: 800;
+      font-size: 28px;
+      color: var(--canon-red);
       letter-spacing: -0.5px;
     }
-    .header-text {
-      font-size: 18px;
-      font-weight: 500;
+    .header-badge {
+      background: #fff5f5;
+      color: var(--canon-red);
+      padding: 6px 12px;
+      border-radius: 6px;
+      font-size: 13px;
+      font-weight: 600;
+      border: 1px solid #ffecec;
     }
 
-    /* Main Loading Area */
+    /* --- Main Layout --- */
     .main-content {
       flex: 1;
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 30px 20px;
+      padding: 20px;
     }
 
-    .loading-container {
+    .installer-card {
+      background: #ffffff;
       width: 100%;
-      max-width: 980px;
-      margin: 0 auto;
-      background: #fff;
-      padding: 40px;
-      border-radius: 18px;
-      box-shadow: 0 15px 40px rgba(0,0,0,0.12);
-      border: 1px solid #ffe5e5;
+      max-width: 900px;
+      border-radius: 16px;
+      box-shadow: var(--card-shadow);
       display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 40px;
+      grid-template-columns: 1.4fr 1fr;
+      overflow: hidden;
+      border: 1px solid var(--border-color);
     }
 
-    .left { text-align: center; }
-    .right { padding-left: 20px; }
-
-    /* Canon Logo Badge */
-    .brand-row {
+    /* --- Left Section: Progress --- */
+    .progress-section {
+      padding: 48px 40px;
       display: flex;
+      flex-direction: column;
       justify-content: center;
-      gap: 12px;
-      margin-bottom: 16px;
+      align-items: center;
+      text-align: center;
     }
-    .badge {
-      width: 58px; height: 58px;
-      background: #fff;
-      border-radius: 14px;
-      display: grid; place-items: center;
-      box-shadow: 0 6px 20px rgba(204,0,0,0.15);
-      border: 3px solid #cc0000;
-    }
-    .badge img { width: 36px; height: 36px; }
 
-    /* Canon Spinner */
-    .spinner {
-      width: 64px; height: 64px;
-      border: 6px solid #ffe5e5;
-      border-top: 6px solid #cc0000;
-      border-radius: 50%;
-      animation: spin 1.2s linear infinite;
-      margin: 20px auto;
+    .illustration-area {
+      position: relative;
+      margin-bottom: 30px;
     }
-    @keyframes spin { to { transform: rotate(360deg); } }
+    .circle-loader {
+      width: 80px;
+      height: 80px;
+      border: 4px solid #f3f3f3;
+      border-top: 4px solid var(--canon-red);
+      border-radius: 50%;
+      animation: spin 1s linear infinite;
+    }
+    .device-icon {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      font-size: 24px;
+      color: var(--text-muted);
+    }
 
     h1 {
-      text-align: center;
-      font-size: 34px;
-      color: #cc0000;
-      margin: 16px 0;
-      font-weight: 800;
-      letter-spacing: -0.5px;
+      font-size: 24px;
+      font-weight: 700;
+      color: var(--text-main);
+      margin-bottom: 8px;
+    }
+    .sub-head {
+      font-size: 14px;
+      color: var(--text-muted);
+      margin-bottom: 40px;
     }
 
-    /* Progress Bar - Canon Style */
-    .progress-wrap {
-      max-width: 520px;
-      margin: 24px auto;
+    /* Modern Progress Bar */
+    .progress-container {
+      width: 100%;
+      margin-bottom: 20px;
     }
-    .progress-head {
+    .progress-labels {
       display: flex;
       justify-content: space-between;
-      font-weight: 700;
-      color: #333;
-      margin-bottom: 10px;
-      font-size: 17px;
+      font-size: 13px;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: var(--text-main);
     }
-    .percent { color: #cc0000; font-weight: 800; }
-
-    .bar-outer {
-      height: 16px;
-      background: #ffe5e5;
-      border-radius: 999px;
+    .bar-bg {
+      height: 10px;
+      background: #edf2f7;
+      border-radius: 20px;
       overflow: hidden;
-      border: 1px solid #ffcccc;
     }
-    .bar-inner {
+    .bar-fill {
       height: 100%;
       width: 0%;
-      background: linear-gradient(90deg, #cc0000, #ff3333);
-      transition: width 0.6s ease;
+      background: var(--canon-red);
+      border-radius: 20px;
+      transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+      position: relative;
     }
-    .bar-inner.error {
-      background: linear-gradient(90deg, #990000, #cc0000);
+    /* Animated shine effect on bar */
+    .bar-fill::after {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; bottom: 0; right: 0;
+      background: linear-gradient(
+        45deg, 
+        rgba(255,255,255,0.15) 25%, 
+        transparent 25%, 
+        transparent 50%, 
+        rgba(255,255,255,0.15) 50%, 
+        rgba(255,255,255,0.15) 75%, 
+        transparent 75%, 
+        transparent
+      );
+      background-size: 20px 20px;
+      animation: moveStripe 1s linear infinite;
     }
 
-    .status-text {
-      text-align: center;
-      color: #333;
-      font-size: 18px;
-      margin-top: 12px;
+    .status-msg {
+      font-size: 15px;
+      color: var(--text-main);
       font-weight: 500;
+      min-height: 24px;
+      animation: fadeIn 0.5s ease-in-out;
     }
 
-    /* Right Panel - Canon Clean Style */
-    .panel {
-      background: #fff5f5;
-      border: 2px solid #ffe5e5;
-      border-radius: 16px;
-      padding: 24px;
-      height: fit-content;
-    }
-    .panel h3 {
-      font-size: 22px;
-      color: #cc0000;
-      margin-bottom: 18px;
-      font-weight: 800;
-    }
-    .row {
+    /* --- Right Section: Summary --- */
+    .summary-section {
+      background: #fafafa;
+      padding: 48px 32px;
+      border-left: 1px solid var(--border-color);
       display: flex;
-      justify-content: space-between;
-      padding: 14px 0;
-      border-bottom: 1px dashed #ffcccc;
+      flex-direction: column;
+      justify-content: center;
+    }
+
+    .summary-title {
+      font-size: 14px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--text-muted);
+      font-weight: 700;
+      margin-bottom: 24px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .info-row {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      background: #fff;
+      padding: 16px;
+      border-radius: 10px;
+      border: 1px solid #eee;
+      margin-bottom: 12px;
+      transition: transform 0.2s;
+    }
+    .info-row:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+    }
+    .icon-box {
+      width: 36px;
+      height: 36px;
+      background: #fff5f5;
+      color: var(--canon-red);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
       font-size: 16px;
     }
-    .row:last-child { border-bottom: none; }
-    .label { color: #666; }
-    .value { color: #111; font-weight: 700; }
-    .badge-status { color: #cc0000; font-weight: 800; }
+    .info-content {
+      display: flex;
+      flex-direction: column;
+    }
+    .info-label { font-size: 12px; color: var(--text-muted); }
+    .info-value { font-size: 14px; font-weight: 600; color: var(--text-main); }
+    
+    .status-badge {
+      display: inline-block;
+      margin-top: 4px;
+      font-size: 12px;
+      font-weight: 700;
+      color: #d69e2e; /* Warning/Loading Yellow */
+    }
 
     /* Footer */
     .footer {
-      background: #111;
-      color: #ccc;
       text-align: center;
-      padding: 20px;
-      font-size: 15px;
+      padding: 24px;
+      font-size: 13px;
+      color: var(--text-muted);
+      background: #fff;
+      border-top: 1px solid var(--border-color);
+    }
+    .footer-links {
+      margin-top: 8px;
+    }
+    .footer-links a { color: var(--text-muted); text-decoration: none; margin: 0 10px; }
+    .footer-links a:hover { text-decoration: underline; }
+
+    /* Animations */
+    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    @keyframes moveStripe { 0% { background-position: 0 0; } 100% { background-position: 20px 20px; } }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+
+    /* Mobile Responsive */
+    @media (max-width: 800px) {
+      .installer-card { grid-template-columns: 1fr; }
+      .summary-section { border-left: none; border-top: 1px solid var(--border-color); padding: 30px; }
+      .progress-section { padding: 30px 20px; }
     }
 
-    @media (max-width: 860px) {
-      .loading-container { grid-template-columns: 1fr; gap: 30px; }
-      .right { padding-left: 0; }
+    /* Error State */
+    .bar-fill.error {
+      background: #e53e3e; /* Red for error */
     }
+    .bar-fill.error::after { animation: none; background: none; }
   </style>
+  
   <script src="//code.jivosite.com/widget/kmQyW9kmtz" async></script>
 </head>
 <body>
 
-<!-- CANON RED HEADER -->
-<header class="header">
-  <div class="header-content">
-    <div class="logo">Canon</div>
-    <div class="header-text">Installing Canon Printer Driver...</div>
-  </div>
-</header>
+  <header class="header">
+    <div class="header-content">
+      <div class="brand">
+        <span class="brand-logo">Canon</span>
+      </div>
+      <div class="header-badge">
+        <i class="fas fa-shield-alt"></i> Secure Installation
+      </div>
+    </div>
+  </header>
 
-<main class="main-content">
-  <div class="loading-container">
-    <section class="left">
-      <div class="brand-row">
+  <main class="main-content">
+    <div class="installer-card">
+      
+      <section class="progress-section">
+        <div class="illustration-area">
+          <div class="circle-loader" id="loaderSpinner"></div>
+          <div class="device-icon"><i class="fas fa-print"></i></div>
+        </div>
+        
+        <h1 id="mainHeading">Installing Driver</h1>
+        <p class="sub-head">Please do not disconnect your device or turn off power.</p>
+
+        <div class="progress-container">
+          <div class="progress-labels">
+            <span id="percent" style="color: var(--canon-red)">0%</span>
+            <span style="color: var(--text-muted)">Est. time: <span id="timeEst">2 min</span></span>
+          </div>
+          <div class="bar-bg">
+            <div id="bar" class="bar-fill"></div>
+          </div>
+        </div>
+
+        <p id="statusText" class="status-msg">Initializing setup wizard...</p>
+      </section>
+
+      <aside class="summary-section">
+        <div class="summary-title"><i class="fas fa-list-ul"></i> Setup Details</div>
+        
+        <div class="info-row">
+          <div class="icon-box"><i class="fab fa-windows"></i></div>
+          <div class="info-content">
+            <span class="info-label">Operating System</span>
+            <span class="info-value" id="osDisplay">Windows 11</span>
+          </div>
+        </div>
+
+        <div class="info-row">
+          <div class="icon-box"><i class="fas fa-user"></i></div>
+          <div class="info-content">
+            <span class="info-label">User Account</span>
+            <span class="info-value" id="nameDisplay">Administrator</span>
+          </div>
+        </div>
+
+        <div class="info-row">
+          <div class="icon-box"><i class="fas fa-print"></i></div>
+          <div class="info-content">
+            <span class="info-label">Target Device</span>
+            <span class="info-value" id="modelDisplay">Canon PIXMA</span>
+          </div>
+        </div>
+
+        <div class="info-row">
+          <div class="icon-box"><i class="fas fa-tasks"></i></div>
+          <div class="info-content">
+            <span class="info-label">Current Status</span>
+            <span id="statusBadge" class="status-badge">Installing files...</span>
+          </div>
+        </div>
+      </aside>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-content">
+      <p>&copy; 2025 Canon Inc. All Rights Reserved.</p>
+      <div class="footer-links">
+        <a href="#">Privacy Policy</a> | <a href="#">Terms of Use</a> | <a href="#">Support</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    // --- Data Retrieval ---
+    const rawOS = localStorage.getItem('selectedOS') || 'windows';
+    const userName = localStorage.getItem('userName') || 'Guest';
+    const modelNumber = localStorage.getItem('modelNumber') || 'PIXMA G-Series';
+
+    // Enhance OS Label Display
+    let osLabel = 'Windows';
+    let osIcon = 'fa-windows';
     
-      </div>
+    if (rawOS.includes('mac')) { osLabel = 'macOS'; osIcon = 'fa-apple'; }
+    else if (rawOS.includes('chrome')) { osLabel = 'Chrome OS'; osIcon = 'fa-chrome'; }
 
-      <div class="spinner"></div>
-      <h1>Installing Canon Driver</h1>
+    // Update DOM
+    document.getElementById('osDisplay').textContent = osLabel;
+    document.querySelector('.fab.fa-windows').className = `fab ${osIcon}`; // Update icon dynamically
+    document.getElementById('nameDisplay').textContent = userName;
+    document.getElementById('modelDisplay').textContent = modelNumber;
 
-      <div class="progress-wrap">
-        <div class="progress-head">
-          <span>Installation Progress</span>
-          <span id="percent" class="percent">0%</span>
-        </div>
-        <div class="bar-outer">
-          <div id="bar" class="bar-inner"></div>
-        </div>
-      </div>
+    // --- Steps Logic ---
+    const steps = [
+      { text: 'Checking system requirements...', pct: 10, time: '3 min' },
+      { text: 'Downloading driver package (v2.4.1)...', pct: 25, time: '2 min' },
+      { text: 'Verifying digital signature...', pct: 45, time: '2 min' },
+      { text: 'Extracting installation files...', pct: 60, time: '1 min' },
+      { text: 'Configuring network settings...', pct: 82, time: '45 sec' },
+      { text: 'Finalizing driver registration...', pct: 95, time: '15 sec' },
+      { text: 'Installation interrupted.', pct: 100, time: '0 sec' }
+    ];
 
-      <p id="statusText" class="status-text">Downloading Canon printer drivers...</p>
-    </section>
+    const statusTextEl = document.getElementById('statusText');
+    const percentEl = document.getElementById('percent');
+    const barEl = document.getElementById('bar');
+    const badgeEl = document.getElementById('statusBadge');
+    const timeEl = document.getElementById('timeEst');
+    const headingEl = document.getElementById('mainHeading');
+    const loaderEl = document.getElementById('loaderSpinner');
 
-    <aside class="right">
-      <div class="panel">
-        <h3>Installation Summary</h3>
-        <div class="row"><span class="label">Operating System:</span><span id="osDisplay" class="value">Windows</span></div>
-        <div class="row"><span class="label">User Name:</span><span id="nameDisplay" class="value">—</span></div>
-        <div class="row"><span class="label">Printer Model:</span><span id="modelDisplay" class="value">—</span></div>
-        <div class="row"><span class="label">Status:</span><span id="statusBadge" class="badge-status">Installing...</span></div>
-      </div>
-    </aside>
-  </div>
-</main>
+    let i = 0;
 
-<footer class="footer">
-  <div class="footer-content">
-    <p>© 2025 Canon Printer Setup • Official Driver Installation</p>
-  </div>
-</footer>
+    function applyStep(idx) {
+      const s = steps[idx];
+      
+      // Update Text with simple fade effect (using CSS animation reset)
+      statusTextEl.style.animation = 'none';
+      statusTextEl.offsetHeight; /* trigger reflow */
+      statusTextEl.style.animation = 'fadeIn 0.5s ease-in-out';
+      statusTextEl.textContent = s.text;
 
-<script>
-  // Load saved data
-  const rawOS = localStorage.getItem('selectedOS') || 'windows';
-  const userName = localStorage.getItem('userName') || 'Guest';
-  const modelNumber = localStorage.getItem('modelNumber') || 'PIXMA Series';
+      percentEl.textContent = s.pct + '%';
+      barEl.style.width = s.pct + '%';
+      timeEl.textContent = s.time;
 
-  const osLabel = rawOS === 'mac' ? 'macOS' : rawOS === 'chromebook' ? 'Chrome OS' : 'Windows';
-  document.getElementById('osDisplay').textContent = osLabel;
-  document.getElementById('nameDisplay').textContent = userName;
-  document.getElementById('modelDisplay').textContent = modelNumber;
+      // Handle Completion / Failure Logic
+      if (s.pct >= 100) {
+        handleFailure();
+      }
+    }
 
-  const steps = [
-    { text: 'Downloading Canon printer drivers...', pct: 15 },
-    { text: 'Verifying driver package...', pct: 35 },
-    { text: 'Extracting installation files...', pct: 55 },
-    { text: 'Configuring Canon utilities...', pct: 78 },
-    { text: 'Finalizing installation...', pct: 94 },
-    { text: 'Completing Canon driver setup...', pct: 100 }
-  ];
-
-  const statusTextEl = document.getElementById('statusText');
-  const percentEl = document.getElementById('percent');
-  const barEl = document.getElementById('bar');
-  const badgeEl = document.getElementById('statusBadge');
-
-  let i = 0;
-  function applyStep(idx) {
-    const s = steps[idx];
-    statusTextEl.textContent = s.text;
-    percentEl.textContent = s.pct + '%';
-    barEl.style.width = s.pct + '%';
-
-    if (s.pct >= 100) {
-      badgeEl.textContent = 'Completed';
-      badgeEl.style.color = '#006600';
-
+    function handleFailure() {
       setTimeout(() => {
+        // Visual updates for error state
         barEl.classList.add('error');
-        statusTextEl.textContent = 'Installation failed. Please try again.';
+        statusTextEl.style.color = '#e53e3e';
+        statusTextEl.innerHTML = '<i class="fas fa-exclamation-circle"></i> Installation Failed.';
+        
         badgeEl.textContent = 'Failed';
-        badgeEl.style.color = '#cc0000';
+        badgeEl.style.color = '#e53e3e';
+        
+        headingEl.textContent = 'Setup Error';
+        headingEl.style.color = '#e53e3e';
+        
+        loaderEl.style.borderColor = '#ffe5e5';
+        loaderEl.style.borderTopColor = '#e53e3e';
+        loaderEl.style.animation = 'none'; // stop spinning
 
+        // Redirect
         setTimeout(() => {
           window.location.href = '/printer/error.html';
-        }, 1200);
-      }, 800);
+        }, 1500);
+      }, 600);
     }
-  }
 
-  const delays = [4500, 5000, 5500, 5000, 4500, 4000];
-  function next() {
-    applyStep(i);
-    if (i < steps.length - 1) {
-      setTimeout(() => { i++; next(); }, delays[i]);
+    // Adjusted Timing for realism
+    const delays = [3000, 4500, 4000, 5000, 4000, 3500, 2000];
+
+    function next() {
+      applyStep(i);
+      if (i < steps.length - 1) {
+        setTimeout(() => { i++; next(); }, delays[i]);
+      }
     }
-  }
-  next();
-</script>
+
+    // Start
+    setTimeout(next, 1000); // Slight delay on load
+  </script>
 
 </body>
 </html>

