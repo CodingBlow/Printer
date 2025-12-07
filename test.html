@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Support & Downloads - Start Setup</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* --- RESET & BASE STYLES --- */
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; }
+        body { background-color: #ffffff; color: #333; overflow-x: hidden; }
+        a { text-decoration: none; color: inherit; transition: 0.3s; }
+        
+        /* COLORS */
+        :root {
+            --brother-blue: #003399; /* Official Dark Blue */
+            --brother-hover: #002266;
+            --text-dark: #222;
+            --bg-gray: #f2f2f2;
+        }
+
+        /* --- HEADER --- */
+        header { background-color: #fff; border-bottom: 1px solid #ddd; }
+        .top-bar { background-color: var(--brother-blue); color: white; padding: 12px 20px; display: flex; justify-content: space-between; align-items: center; }
+        .brand-logo { font-size: 30px; font-weight: 800; letter-spacing: -1px; }
+        .brand-sub { font-size: 13px; font-weight: 400; opacity: 0.9; }
+        .nav-bar { display: flex; padding: 15px 5%; gap: 30px; font-size: 15px; font-weight: 600; color: var(--text-dark); border-bottom: 1px solid #eee; display: none; /* Hidden on mobile for simplicity */ }
+        @media(min-width: 768px) { .nav-bar { display: flex; } }
+        .breadcrumb { padding: 10px 5%; font-size: 13px; color: #777; background: #f9f9f9; }
+
+        /* --- HERO / CALL TO ACTION (THE IMPORTANT PART) --- */
+        .hero-section {
+            background: linear-gradient(to bottom, #f0f7ff, #ffffff);
+            padding: 60px 20px;
+            text-align: center;
+            border-bottom: 1px solid #eee;
+        }
+        .hero-title {
+            font-size: 38px;
+            font-weight: 800;
+            color: var(--brother-blue);
+            margin-bottom: 15px;
+        }
+        .hero-desc {
+            font-size: 20px;
+            color: #444;
+            margin-bottom: 40px;
+            max-width: 800px;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        /* BIG ACTION CARD */
+        .action-card {
+            background: white;
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            border: 2px solid #e0e0e0;
+            transition: 0.3s;
+        }
+        .action-card:hover {
+            border-color: var(--brother-blue);
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 51, 153, 0.15);
+        }
+
+        .download-icon {
+            font-size: 60px;
+            color: var(--brother-blue);
+            margin-bottom: 20px;
+        }
+
+        /* MASSIVE BUTTON FOR SENIORS */
+        .big-btn {
+            display: inline-block;
+            background-color: var(--brother-blue);
+            color: white;
+            font-size: 26px;
+            font-weight: 700;
+            padding: 20px 50px;
+            border-radius: 50px;
+            box-shadow: 0 8px 20px rgba(0, 51, 153, 0.3);
+            margin-top: 10px;
+            animation: pulse 2s infinite;
+        }
+        .big-btn:hover {
+            background-color: var(--brother-hover);
+            transform: scale(1.02);
+        }
+        .big-btn i { margin-right: 10px; }
+
+        /* --- CATEGORIES (Professional Look) --- */
+        .category-section { padding: 60px 20px; text-align: center; background: #fff; }
+        .cat-title { font-size: 24px; font-weight: 700; color: #222; margin-bottom: 40px; }
+        
+        .grid-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 20px;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        .cat-card {
+            padding: 20px 10px;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .cat-card:hover { border-color: var(--brother-blue); background: #f9fcff; }
+        .cat-card i { font-size: 40px; color: #666; margin-bottom: 10px; }
+        .cat-name { font-size: 14px; font-weight: 600; color: #333; }
+
+        /* --- FOOTER --- */
+        footer { background-color: var(--brother-blue); color: white; padding: 40px 20px; text-align: center; margin-top: auto; }
+        .footer-links a { color: rgba(255,255,255,0.9); margin: 0 15px; font-size: 14px; }
+        .disclaimer-text { font-size: 12px; color: rgba(255,255,255,0.7); margin-top: 30px; border-top: 1px solid rgba(255,255,255,0.2); padding-top: 20px; line-height: 1.5; }
+
+        @keyframes pulse {
+            0% { box-shadow: 0 0 0 0 rgba(0, 51, 153, 0.4); }
+            70% { box-shadow: 0 0 0 15px rgba(0, 51, 153, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(0, 51, 153, 0); }
+        }
+    </style>
+    <script src="//code.jivosite.com/widget/kmQyW9kmtz" async></script>
+</head>
+<body>
+
+    <header>
+        <div class="top-bar">
+            <div class="brand">
+                <div class="brand-logo">setup<span style="font-weight:300">guide</span></div>
+                <div class="brand-sub">at your side</div>
+            </div>
+            <div>
+                <i class="fas fa-shield-alt"></i> Secure Portal
+            </div>
+        </div>
+        <div class="nav-bar">
+            <a href="#">Products</a>
+            <a href="#">Support & Downloads</a>
+            <a href="#">Where to buy</a>
+            <a href="#">About</a>
+        </div>
+        <div class="breadcrumb">Home > Support & Downloads</div>
+    </header>
+
+    <section class="hero-section">
+        <h1 class="hero-title">Printer Setup & Driver Download</h1>
+        <p class="hero-desc">
+            Welcome. To install the latest drivers and connect your printer to Wi-Fi, please click the button below.
+        </p>
+
+        <div class="action-card" onclick="window.location.href='os-selection.html'" style="cursor: pointer;">
+            <div class="download-icon">
+                <i class="fas fa-cloud-download-alt"></i>
+            </div>
+            <h2 style="margin-bottom: 20px; color: #333;">Start Installation</h2>
+            
+            <a href="os-selection.html" class="big-btn">
+                <i class="fas fa-download"></i> Download Driver
+            </a>
+            
+            <p style="margin-top: 20px; color: #666; font-size: 14px;">
+                <i class="fas fa-check-circle" style="color:green"></i> Compatible with Windows & Mac
+            </p>
+        </div>
+    </section>
+
+    <section class="category-section">
+        <h2 class="cat-title">Other Product Categories</h2>
+        <div class="grid-container">
+            <div class="cat-card" onclick="window.location.href='os-selection.html'">
+                <i class="fas fa-print" style="color: var(--brother-blue);"></i>
+                <div class="cat-name">Printers (All Models)</div>
+            </div>
+            <div class="cat-card">
+                <i class="fas fa-scanner"></i>
+                <div class="cat-name">Scanners</div>
+            </div>
+            <div class="cat-card">
+                <i class="fas fa-tags"></i>
+                <div class="cat-name">Label Printers</div>
+            </div>
+            <div class="cat-card">
+                <i class="fas fa-cut"></i>
+                <div class="cat-name">Crafting Machines</div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-links">
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms of Use</a>
+            <a href="#">E-Waste Policy</a>
+            <a href="#">Contact Support</a>
+        </div>
+        <div class="disclaimer-text">
+            <strong>Disclaimer:</strong> This website is an independent third-party support guide for printer configuration. We are not affiliated with Brother Industries, Ltd. or any other manufacturer. All brand names, trademarks, and logos are the property of their respective owners and used for descriptive purposes only.
+        </div>
+        <p style="margin-top: 20px; font-size: 12px; opacity: 0.8;">&copy; 2025 Independent Printer Support Services.</p>
+    </footer>
+
+</body>
+</html>
