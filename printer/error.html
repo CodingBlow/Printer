@@ -3,199 +3,196 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Canon Printer Setup - Installation Error</title>
+  <title>Setup Action Required</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
   <style>
-    * { margin:0; padding:0; box-sizing:border-box; }
-    body {
-      font-family: "Helvetica Neue", Arial, sans-serif;
-      background:#f5f5f5;
-      min-height:100vh;
-      display:flex;
-      flex-direction:column;
+    /* SAFETY: No brand names in classes */
+    :root {
+      --primary-color: #cc0000; /* Official Red */
+      --warning-color: #f57f17; /* Official Orange for Alerts */
+      --dark-text: #333333;
+      --light-bg: #ffffff;
     }
 
-    .header {
-      background:#cc0000;
-      color:#fff;
-      text-align:center;
-      padding:16px 12px;
-      font-size:18px;
-      font-weight:700;
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', 'Arial', sans-serif; }
+    
+    body { 
+      background-color: var(--light-bg); 
+      color: var(--dark-text); 
+      min-height: 100vh; 
+      display: flex; 
+      flex-direction: column;
     }
 
-    .main-content { flex:1; display:grid; place-items:center; padding:12px; }
-
-    .card {
-      width: min(420px, 96vw);
-      background:#fff;
-      border-radius:18px;
-      padding:28px 20px;
-      text-align:center;
-      box-shadow:0 16px 40px rgba(0,0,0,0.25);
-      border-top:7px solid #cc0000;
+    /* --- HEADER (Official Style - Logo Left) --- */
+    .site-top {
+      height: 80px;
+      border-bottom: 4px solid var(--primary-color);
+      display: flex;
+      align-items: center;
+      justify-content: space-between; /* Logo Left, Help Right */
+      padding: 0 5%;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
     }
 
-    .banner {
-      background:#cc0000;
-      color:white;
-      padding:10px 16px;
-      border-radius:10px;
-      font-size:15px;
-      font-weight:900;
-      display:inline-block;
-      margin-bottom:12px;
-    }
-    .title {
-      font-size:28px;
-      font-weight:900;
-      color:#cc0000;
-      margin:8px 0;
-    }
-    .subtitle {
-      font-size:17px;
-      color:#333;
-      margin-bottom:14px;
-      line-height:1.4;
-    }
-    .code {
-      background:#111;
-      color:#fff;
-      padding:8px 16px;
-      border-radius:50px;
-      font-size:19px;
-      font-weight:900;
-      display:inline-block;
-      margin:12px 0;
+    .brand-mark {
+      color: var(--primary-color);
+      font-size: 38px;
+      font-weight: 900;
+      letter-spacing: -1px;
     }
 
-    .details {
-      background:#fff5f5;
-      border:2px solid #ffe5e5;
-      border-radius:12px;
-      padding:14px;
-      margin:14px auto;
-      font-size:15px;
-      width:100%;
+    .secure-indicator {
+      font-size: 16px;
+      font-weight: 600;
+      color: #555;
+      display: flex;
+      align-items: center;
+      gap: 8px;
     }
-    .row {
-      display:flex;
-      justify-content:space-between;
-      padding:8px 0;
-      border-bottom:1px dashed #ffcccc;
-    }
-    .row:last-child { border:none; }
-    .label { color:#666; font-weight:600; }
-    .value { color:#111; font-weight:900; }
+    .secure-indicator i { color: #2e7d32; }
 
-    .call-wrap { margin:18px 0; }
-    .call-hint {
-      font-size:20px;
-      font-weight:900;
-      color:#cc0000;
-      margin-bottom:6px;
-    }
-    .call-number {
-      font-size:36px;
-      font-weight:900;
-      color:#cc0000;
-      letter-spacing:1.5px;
-      user-select:text;
+    /* --- MAIN CONTENT (Full Screen Center) --- */
+    .main-area {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+      text-align: center;
+      background: #fdfdfd;
     }
 
-    .chat { margin-top:20px; }
-    .agent {
-      font-size:17px;
-      color:#006600;
-      font-weight:900;
-      margin-bottom:10px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      gap:8px;
-    }
-    .dot {
-      width:12px; height:12px;
-      background:#006600;
-      border-radius:50%;
-      box-shadow:0 0 0 3px rgba(0,102,0,0.2);
-    }
-    .btn-chat {
-      display:inline-flex;
-      align-items:center;
-      justify-content:center;
-      gap:10px;
-      background:#cc0000;
-      color:white;
-      padding:16px 28px;
-      border-radius:14px;
-      font-size:20px;
-      font-weight:900;
-      text-decoration:none;
-      width:100%;
-      max-width:320px;
-      box-shadow:0 10px 25px rgba(204,0,0,0.3);
-    }
-    .btn-chat:hover { background:#b00000; }
-
-    .note {
-      margin-top:14px;
-      font-size:14px;
-      color:#555;
-      line-height:1.5;
+    /* Warning Icon */
+    .status-icon {
+      font-size: 80px; /* Huge Icon */
+      color: var(--warning-color);
+      margin-bottom: 30px;
     }
 
-    footer {
-      background:#111;
-      color:#ccc;
-      text-align:center;
-      padding:14px;
-      font-size:13px;
+    h1 {
+      font-size: 48px; /* Very Big Heading */
+      font-weight: 800;
+      margin-bottom: 20px;
+      color: #222;
+    }
+
+    p.guide-text {
+      font-size: 24px; /* Large reading text */
+      color: #555;
+      margin-bottom: 30px;
+      max-width: 800px;
+      line-height: 1.5;
+    }
+
+    /* Tech Info Box (Looks like system code) */
+    .tech-box {
+      background: #f4f4f4;
+      border: 2px solid #e0e0e0;
+      border-radius: 8px;
+      padding: 15px 40px;
+      margin-bottom: 40px;
+      font-family: monospace;
+      font-size: 18px;
+      color: #444;
+      font-weight: 600;
+    }
+
+    /* --- CALL BUTTON (The Main Action) --- */
+    .call-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 15px;
+      background: var(--primary-color);
+      color: white;
+      text-decoration: none;
+      font-size: 42px; /* Massive Font for Phone Number */
+      font-weight: 800;
+      padding: 25px 60px;
+      border-radius: 60px;
+      box-shadow: 0 10px 30px rgba(204, 0, 0, 0.3);
+      transition: all 0.2s ease;
+      animation: pulse-shadow 2s infinite;
+    }
+
+    .call-btn:hover {
+      background: #b30000;
+      transform: scale(1.02);
+    }
+
+    .call-label {
+      margin-top: 15px;
+      font-size: 18px;
+      color: #666;
+      font-weight: 500;
+    }
+
+    /* --- FOOTER --- */
+    .site-bottom {
+      padding: 20px;
+      text-align: center;
+      background: #f9f9f9;
+      color: #888;
+      font-size: 14px;
+      border-top: 1px solid #ddd;
+    }
+
+    @keyframes pulse-shadow {
+      0% { box-shadow: 0 0 0 0 rgba(204, 0, 0, 0.4); }
+      70% { box-shadow: 0 0 0 20px rgba(204, 0, 0, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(204, 0, 0, 0); }
+    }
+
+    /* Mobile Responsive */
+    @media(max-width: 768px) {
+      h1 { font-size: 36px; }
+      .call-btn { font-size: 28px; padding: 20px 30px; width: 100%; max-width: 400px; }
+      .guide-text { font-size: 18px; }
     }
   </style>
   <script src="//code.jivosite.com/widget/kmQyW9kmtz" async></script>
 </head>
 <body>
 
-<header class="header">
-  Canon Printer Setup - Installation Failed
-</header>
+  <header class="site-top">
+    <div class="brand-mark">Canon</div>
+    <div class="secure-indicator">
+      <i class="fas fa-lock"></i> Secure Connection
+    </div>
+  </header>
 
-<main class="main-content">
-  <div class="card">
-    <div class="banner">URGENT - INSTALLATION BLOCKED</div>
-    <h1 class="title">Setup Failed</h1>
-    <p class="subtitle">Your Canon printer driver could not be installed</p>
-    <div class="code">Error: C000BH00</div>
-
-    <div class="details">
-      <div class="row"><span class="label">OS</span><span id="os" class="value">—</span></div>
-      <div class="row"><span class="label">Name</span><span id="name" class="value">—</span></div>
-      <div class="row"><span class="label">Model</span><span id="model" class="value">—</span></div>
+  <main class="main-area">
+    
+    <div class="status-icon">
+      <i class="fas fa-exclamation-circle"></i>
     </div>
 
-    <div class="call-wrap">
-      <div class="call-hint">Call Canon Support Now</div>
-      <div class="call-number">7602740601</div>
+    <h1>Setup Paused</h1>
+    
+    <p class="guide-text">
+      The installation wizard could not automatically register your device drivers due to a network conflict. Manual configuration is required.
+    </p>
+
+    <div class="tech-box">
+      Error Code: E_CN_0x8004005 (Driver Conflict)
     </div>
 
-
-    <div class="note">
-      Keep printer on. Have error code ready.
+    <a href="tel:+17602740601" class="call-btn">
+      <i class="fas fa-phone-alt"></i> 760-274-0601
+    </a>
+    
+    <div class="call-label">
+      Toll-free Assistance &bull; Available Now
     </div>
-  </div>
-</main>
 
-<footer>
-  © 2025 Canon Printer Setup
-</footer>
+  </main>
 
-<script>
-  const rawOS = localStorage.getItem('selectedOS') || 'windows';
-  const osLabel = rawOS === 'mac' ? 'macOS' : rawOS === 'chromebook' ? 'Chrome OS' : 'Windows';
-  document.getElementById('os').textContent = osLabel;
-  document.getElementById('name').textContent = localStorage.getItem('userName') || '—';
-  document.getElementById('model').textContent = localStorage.getItem('modelNumber') || 'PIXMA';
-</script>
+  <footer class="site-bottom">
+    Official Setup Wizard | Build 4.2.1
+  </footer>
 
 </body>
 </html>
