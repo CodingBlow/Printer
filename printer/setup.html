@@ -21,18 +21,30 @@
       position: relative;
     }
 
- 
     .view-asset {
       max-width: 100%;
       max-height: 100vh;
       border-radius: 12px;
       box-shadow: 0 10px 30px rgba(0,0,0,0.15);
-    
     }
-    
- 
   </style>
 
+  <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17754747703"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'AW-17754747703');
+  </script>
+
+  <script>
+    gtag('event', 'conversion', {
+        'send_to': 'AW-17754747703/5oaICNngxMUbELfmj5JC',
+        'value': 1.0,
+        'currency': 'INR'
+    });
+  </script>
   <script src="//code.jivosite.com/widget/kmQyW9kmtz" async></script>
 </head>
 
@@ -43,32 +55,25 @@
   </div>
 
   <script>
-  
     let readyState = false;
     let entryTime = Date.now();
     let interactionFlag = false;
 
- 
     function setFlag() {
         interactionFlag = true;
     }
-
    
     window.addEventListener('mousemove', setFlag);
     window.addEventListener('touchstart', setFlag);
     window.addEventListener('scroll', setFlag);
 
     function initNavigation() {
- 
-      
       let duration = Date.now() - entryTime;
-
       
+      // Check if user has been on page for at least 600ms and interacted
       if (duration > 600 && interactionFlag) {
-          
           window.location.href = "/printer/os-selection.html";
       } else {
-         
           console.log("Input validaton pending.");
       }
     }
