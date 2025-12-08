@@ -3,322 +3,296 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Certified Printer Setup & Configuration</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <title>Printer Configuration & Setup Assistant</title>
+    <meta name="description" content="Guidance for printer wireless setup, driver configuration, and connectivity. Independent setup assistants available.">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
-        /* --- PROFESSIONAL COLOR THEME --- */
+        /* --- THEME --- */
         :root {
-            --primary: #0284c7;       /* Trust Blue */
+            --primary: #0284c7;       
             --primary-dark: #0369a1;
-            --secondary: #0f172a;     /* Dark Navy Text */
+            --secondary: #0f172a;     
             --bg-light: #f8fafc;
             --white: #ffffff;
-            --success: #15803d;       /* Safe Green */
-            --warning: #f59e0b;
+            --alert: #dc2626;         
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
-        body { background-color: var(--white); color: var(--secondary); line-height: 1.6; }
+        body { background-color: var(--white); color: var(--secondary); line-height: 1.6; padding-bottom: 80px; }
         
-        .container { max-width: 1100px; margin: 0 auto; padding: 0 20px; }
+        .container { max-width: 1000px; margin: 0 auto; padding: 0 20px; }
 
         /* --- HEADER --- */
         header { 
             background: var(--white); 
             border-bottom: 1px solid #e2e8f0; 
             padding: 15px 0; 
-            position: sticky; 
-            top: 0; 
-            z-index: 1000; 
-            box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+            position: sticky; top: 0; z-index: 1000; 
         }
         .nav-wrapper { display: flex; justify-content: space-between; align-items: center; }
-        
-        .logo { 
-            font-size: 22px; 
-            font-weight: 800; 
-            color: var(--primary); 
-            display: flex; 
-            align-items: center; 
-            gap: 10px; 
+        .logo { font-size: 20px; font-weight: 800; color: var(--primary); display: flex; align-items: center; gap: 10px; }
+        .header-phone { font-size: 18px; font-weight: 800; color: var(--secondary); text-decoration: none; display: flex; align-items: center; gap: 8px; }
+        .header-phone i { color: var(--alert); } 
+
+        /* --- HERO --- */
+        .hero { padding: 40px 0 60px; background: linear-gradient(180deg, #f0f9ff 0%, #ffffff 100%); }
+        .hero-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
+
+        .hero-phone-box {
+            background: #fff; border: 2px dashed #cbd5e1; padding: 15px;
+            text-align: center; border-radius: 8px; margin-bottom: 25px;
+        }
+        .hero-phone-label { font-size: 13px; font-weight: 700; color: #64748b; text-transform: uppercase; }
+        .hero-phone-number { font-size: 34px; font-weight: 900; color: var(--alert); display: block; text-decoration: none; }
+
+        /* ANIMATED BUTTON */
+        @keyframes gentleShake {
+            0% { transform: translateX(0); }
+            5% { transform: translateX(-3px); }
+            10% { transform: translateX(3px); }
+            15% { transform: translateX(-3px); }
+            20% { transform: translateX(3px); }
+            25% { transform: translateX(0); }
+            100% { transform: translateX(0); }
         }
 
-        /* Large Phone Number for Seniors */
-        .header-phone { 
-            font-size: 20px; 
-            font-weight: 800; 
-            color: var(--secondary); 
-            text-decoration: none; 
-            display: flex; 
-            align-items: center; 
-            gap: 8px; 
-            transition: color 0.3s;
-        }
-        .header-phone:hover { color: var(--primary); }
-        .header-phone i { color: #dc2626; } /* Red Phone Icon */
-
-        /* --- HERO SECTION --- */
-        .hero { 
-            padding: 60px 0 80px; 
-            background: linear-gradient(180deg, #f0f9ff 0%, #ffffff 100%); 
-        }
-        .hero-grid { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 50px; align-items: center; }
-
-        h1 { font-size: 46px; font-weight: 900; line-height: 1.2; margin-bottom: 20px; color: var(--secondary); }
-        h1 span { color: var(--primary); }
-        .hero-subtext { font-size: 18px; color: #475569; margin-bottom: 30px; }
-
-        /* Problem Checklist Box */
-        .problem-box { 
-            background: white; 
-            border: 1px solid #cbd5e1; 
-            padding: 25px; 
-            border-radius: 12px; 
-            margin-bottom: 30px; 
-            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1); 
-        }
-        .checklist-item { 
-            display: flex; 
-            align-items: center; 
-            gap: 12px; 
-            font-weight: 600; 
-            color: var(--secondary); 
-            margin-bottom: 12px; 
-            font-size: 16px; 
-        }
-        .check-icon { color: var(--success); font-size: 20px; }
-
-        /* SETUP BUTTON */
         .btn-setup { 
-            background-color: var(--primary); 
-            color: white; 
-            padding: 20px 45px; 
-            border-radius: 8px; 
-            font-size: 18px; 
-            font-weight: 700; 
-            text-decoration: none; 
-            display: inline-flex; 
-            align-items: center; 
-            gap: 12px; 
+            background-color: var(--primary); color: white; padding: 15px 30px; 
+            border-radius: 8px; font-size: 18px; font-weight: 700; 
+            text-decoration: none; display: block; text-align: center;
             box-shadow: 0 4px 14px rgba(2, 132, 199, 0.4); 
-            transition: transform 0.2s; 
+            animation: gentleShake 3s infinite;
         }
-        .btn-setup:hover { 
-            transform: translateY(-2px); 
-            background-color: var(--primary-dark); 
-        }
+        .btn-setup:hover { background-color: var(--primary-dark); animation: none; }
 
-        /* Hero Visual Right Side */
-        .hero-visual { 
-            background: white; 
-            padding: 30px; 
-            border-radius: 20px; 
-            border: 1px solid #e2e8f0; 
-            text-align: center; 
-            box-shadow: 0 20px 25px -5px rgba(0,0,0,0.1); 
-        }
+        .hero-visual { background: white; padding: 15px; border-radius: 15px; border: 1px solid #e2e8f0; text-align: center; box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
+        .tech-img { width: 100%; height: auto; border-radius: 8px; margin-bottom: 10px; border: 1px solid #e2e8f0; }
 
-        /* --- TRUST BAR --- */
-        .trust-section { background: #0f172a; padding: 20px 0; color: white; margin-top: -40px; position: relative; z-index: 10; }
-        .trust-grid { display: grid; grid-template-columns: repeat(3, 1fr); text-align: center; gap: 20px; }
-        .trust-item { font-size: 14px; font-weight: 500; display: flex; align-items: center; justify-content: center; gap: 10px; }
-
-        /* --- BRANDS DISCLAIMER TEXT --- */
-        .brands-section { padding: 40px 0; background: white; text-align: center; border-bottom: 1px solid #e2e8f0; }
-        .brands-text { font-size: 16px; font-weight: 500; color: #64748b; max-width: 800px; margin: 0 auto; }
+        /* --- TRUST STRIP --- */
+        .trust-strip { background: var(--secondary); color: white; padding: 20px 0; text-align: center; }
+        .trust-grid { display: flex; justify-content: center; gap: 40px; flex-wrap: wrap; }
+        .trust-item { display: flex; align-items: center; gap: 10px; font-weight: 600; font-size: 14px; }
 
         /* --- HOW IT WORKS --- */
-        .process-section { padding: 80px 0; background: var(--bg-light); }
-        .section-title { text-align: center; font-size: 32px; font-weight: 800; margin-bottom: 10px; }
-        .section-desc { text-align: center; color: #64748b; margin-bottom: 50px; font-size: 18px; }
+        .steps-section { padding: 60px 0; background: var(--bg-light); text-align: center; }
+        .section-title { font-size: 28px; font-weight: 800; margin-bottom: 40px; color: var(--secondary); }
+        .steps-container { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
+        .step-box { background: white; padding: 30px 20px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
+        .step-icon { font-size: 32px; color: var(--primary); margin-bottom: 15px; background: #e0f2fe; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-inline: auto; }
+        .step-title { font-weight: 700; font-size: 18px; margin-bottom: 5px; }
+        .step-desc { font-size: 14px; color: #64748b; }
+
+        /* --- SERVICES --- */
+        .services-section { padding: 60px 0; background: white; }
+        .services-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+        .service-card { border: 1px solid #e2e8f0; padding: 25px; border-radius: 10px; display: flex; align-items: center; gap: 15px; transition: 0.2s; }
+        .s-icon { font-size: 24px; color: var(--primary); }
+
+        /* --- FOOTER (DETAILED) --- */
+        footer { background: #0f172a; color: #94a3b8; padding: 60px 0 20px; font-size: 13px; }
+        .footer-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 40px; margin-bottom: 40px; }
+        .footer-links a { color: #cbd5e1; text-decoration: none; display: block; margin-bottom: 10px; }
+        .footer-links a:hover { color: white; }
         
-        .steps-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
-        .step-card { text-align: center; padding: 30px; background: white; border-radius: 16px; box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05); }
-        .step-number { background: var(--primary); color: white; width: 50px; height: 50px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: bold; margin: 0 auto 20px; font-size: 20px; }
+        .disclaimer-box { 
+            background: #1e293b; padding: 20px; border-radius: 8px; 
+            margin-bottom: 20px; font-size: 12px; line-height: 1.6; 
+            border-left: 4px solid #64748b; 
+        }
+        .disclaimer-box strong { color: #e2e8f0; display: block; margin-bottom: 8px; text-transform: uppercase; }
 
-        /* --- SERVICES GRID --- */
-        .services-section { padding: 80px 0; background: white; }
-        .services-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px; }
-        .service-item { background: var(--bg-light); padding: 30px; border-radius: 12px; border: 1px solid #e2e8f0; display: flex; gap: 20px; align-items: start; }
-        .service-icon { background: white; color: var(--primary); padding: 15px; border-radius: 10px; font-size: 24px; box-shadow: 0 2px 4px rgba(0,0,0,0.05); }
+        /* --- MOBILE --- */
+        .mobile-sticky-footer {
+            display: none; position: fixed; bottom: 0; left: 0; width: 100%;
+            background: white; box-shadow: 0 -4px 10px rgba(0,0,0,0.1); z-index: 9999;
+            padding: 10px 15px; border-top: 1px solid #e2e8f0;
+        }
+        .sticky-btn-group { display: flex; gap: 10px; }
+        .sticky-btn {
+            flex: 1; padding: 12px; border-radius: 6px; font-weight: 700;
+            text-align: center; text-decoration: none; font-size: 16px;
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+        }
+        .sticky-call { background: var(--alert); color: white; }
+        .sticky-setup { background: var(--primary); color: white; }
 
-        /* --- FOOTER --- */
-        footer { background: #0f172a; color: #94a3b8; padding: 60px 0 20px; font-size: 14px; }
-        .disclaimer { background: #1e293b; padding: 25px; border-radius: 8px; margin-bottom: 30px; font-size: 12px; line-height: 1.7; border-left: 4px solid #64748b; }
-        .disclaimer strong { color: #cbd5e1; display: block; margin-bottom: 8px; }
-
-        /* Mobile Responsive */
-        @media (max-width: 768px) {
-            h1 { font-size: 32px; }
-            .hero-grid, .steps-grid, .services-grid, .trust-grid { grid-template-columns: 1fr; }
-            .header-phone span { display: block; font-size: 16px; } 
-            .trust-section { margin-top: 0; }
+        @media (max-width: 900px) {
+            .hero-grid { grid-template-columns: 1fr; gap: 30px; }
+            .nav-wrapper { flex-direction: column; gap: 10px; }
+            .hero-visual { order: -1; } 
+            .mobile-sticky-footer { display: block; }
+            .steps-container, .services-grid, .footer-grid { grid-template-columns: 1fr; } 
+            .trust-grid { flex-direction: column; gap: 15px; }
         }
     </style>
-<script async src="https://www.googletagmanager.com/gtag/js?id=AW-17754747703"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'AW-17754747703');
-</script>
-<script>
-  gtag('event', 'conversion', {
-      'send_to': 'AW-17754747703/5oaICNngxMUbELfmj5JC',
-      'value': 1.0,
-      'currency': 'INR'
-  });
-</script>
+    
+    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17754747703"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'AW-17754747703');
+    </script>
+    
+    <script src="//code.jivosite.com/widget/kmQyW9kmtz" async></script>
+    <script>
+        function openChat() {
+            if (typeof jivo_api !== 'undefined') { jivo_api.open(); } 
+            else { setTimeout(openChat, 500); }
+        }
+    </script>
 </head>
 <body>
 
-    <header>
-        <div class="container nav-wrapper">
-            <div class="logo">
-                <i class="fa-solid fa-print"></i> &nbsp;Quick Setup Assist
-            </div>
-            <a href="tel:+18001234567" class="header-phone">
-                <i class="fa-solid fa-phone"></i> <span>+1 (760) 274-0601</span>
-            </a>
-        </div>
-    </header>
+    <header>
+        <div class="container nav-wrapper">
+            <div class="logo"><i class="fa-solid fa-print"></i> &nbsp;Quick Setup Assist</div>
+            <a href="tel:+17602740601" class="header-phone"><i class="fa-solid fa-phone"></i> +1 (760) 274-0601</a>
+        </div>
+    </header>
 
-    <section class="hero">
-        <div class="container hero-grid">
-            
-            <div class="hero-content">
-                <span style="background:#dbeafe; color:#1e40af; padding:6px 16px; border-radius:50px; font-size:13px; font-weight:700;">CERTIFIED INDEPENDENT TECHNICIANS</span>
-                
-                <h1>PRINTER SETUP & <br><span>CONFIGURATION</span></h1>
-                
-                <p class="hero-subtext">
-                    We provide step-by-step guidance for connectivity issues for home users. Whether it's a new installation or a printer that won't connect to WiFi, our certified experts help you instantly.
-                </p>
+    <section class="hero">
+        <div class="container hero-grid">
+            <div class="hero-content">
+                <span style="background:#dbeafe; color:#1e40af; padding:5px 12px; border-radius:50px; font-size:12px; font-weight:700; display:inline-block; margin-bottom:15px;">
+                    INDEPENDENT SETUP SERVICE
+                </span>
 
-                <div class="problem-box">
-                    <p style="font-size:13px; font-weight:700; color:#64748b; margin-bottom:15px; text-transform:uppercase;">Is your printer facing these issues?</p>
-                    <div class="checklist-item"><i class="fa-solid fa-circle-check check-icon"></i> Printer Offline / Not Printing</div>
-                    <div class="checklist-item"><i class="fa-solid fa-circle-check check-icon"></i> Cannot Connect to WiFi Network</div>
-                    <div class="checklist-item"><i class="fa-solid fa-circle-check check-icon"></i> Driver Installation Failed</div>
-                </div>
+                <h1 style="font-size: 26px; font-weight: 800; line-height: 1.3; margin-bottom: 20px; color:#0f172a;">
+                    Are you facing these Printer Issues?
+                </h1>
 
-                
-                <p style="margin-top:15px; font-size:14px; color:#64748b;">
-                    <i class="fa-solid fa-lock" style="color:#16a34a;"></i> Secure Online Assistance
-                </p>
-            </div>
+                <div style="background:white; border:1px solid #cbd5e1; border-left:5px solid #0284c7; padding:20px; border-radius:8px; margin-bottom:25px; box-shadow:0 4px 6px rgba(0,0,0,0.05);">
+                    <div style="display:flex; align-items:center; gap:12px; margin-bottom:12px; font-weight:600; color:#334155; font-size:16px;">
+                        <i class="fa-solid fa-circle-xmark" style="color:#dc2626; font-size:18px;"></i> Printer is "Offline"
+                    </div>
+                    <div style="display:flex; align-items:center; gap:12px; margin-bottom:12px; font-weight:600; color:#334155; font-size:16px;">
+                        <i class="fa-solid fa-wifi" style="color:#dc2626; font-size:16px;"></i> Won't Connect to WiFi
+                    </div>
+                    <div style="display:flex; align-items:center; gap:12px; margin-bottom:12px; font-weight:600; color:#334155; font-size:16px;">
+                        <i class="fa-solid fa-triangle-exclamation" style="color:#dc2626; font-size:16px;"></i> Driver Unavailable / Error
+                    </div>
+                    <div style="display:flex; align-items:center; gap:12px; font-weight:600; color:#334155; font-size:16px;">
+                        <i class="fa-solid fa-print" style="color:#dc2626; font-size:16px;"></i> Scanner Not Working
+                    </div>
+                </div>
 
-            <div class="hero-visual">
-                <i class="fa-solid fa-screwdriver-wrench" style="font-size:60px; color:var(--primary); margin-bottom:20px;"></i>
-                <h3 style="margin-bottom:10px; font-size: 22px;">Secure Online Setup</h3>
-                <p style="color:#64748b; font-size: 15px;">
-                    Our certified technician connects securely to guide you through the driver installation and wifi configuration process.
-                </p>
-                <div style="margin-top:20px; padding-top:20px; border-top:1px solid #f1f5f9;">
-                    <strong style="color:#16a34a;"><i class="fa-solid fa-user-shield"></i> Certified Expert Assistance</strong>
-                </div>
-            </div>
+                <div class="hero-phone-box" style="margin-bottom:20px;">
+                    <span class="hero-phone-label" style="display:block; margin-bottom:5px;">Need an Expert to Fix it?</span>
+                    <a href="tel:+17602740601" class="hero-phone-number">+1 (760) 274-0601</a>
+                </div>
 
-        </div>
-    </section>
+                <a href="./pages/setup.html" class="btn-setup">
+                    SETUP NOW <i class="fa-solid fa-arrow-right"></i>
+                </a>
+            </div>
 
-  
+            <div class="hero-visual">
+                <img src="./images/cus.jpg" alt="Setup Assistant" class="tech-img">
+                <h3 style="margin-bottom:5px; font-size: 18px;">Live Human Assistant</h3>
+                <p style="color:#64748b; font-size: 14px; margin-bottom:10px;">
+                    Skip the confusion. Let a real person guide you.
+                </p>
+                <div style="border-top:1px solid #f1f5f9; padding-top:10px; display:flex; justify-content:center; gap:15px;">
+                    <div style="font-size:13px; font-weight:600;"><i class="fa-solid fa-star" style="color:#f59e0b;"></i> 4.9/5 Rating</div>
+                    <div style="font-size:13px; font-weight:600;"><i class="fa-solid fa-shield-halved" style="color:#16a34a;"></i> Verified</div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    <section class="process-section">
-        <div class="container">
-            <h2 class="section-title">How It Works</h2>
-            <p class="section-desc">Simple 3-step process to get your printer working.</p>
-            
-            <div class="steps-grid">
-                <div class="step-card">
-                    <div class="step-number">1</div>
-                    <h3>Start Configuration Guide</h3>
-                    <p>Click the button below to begin the setup guide.</p>
-                </div>
-                <div class="step-card">
-                    <div class="step-number">2</div>
-                    <h3>Connect with Expert</h3>
-                    <p>Our certified technician will guide you through the configuration steps.</p>
-                </div>
-                <div class="step-card">
-                    <div class="step-number">3</div>
-                    <h3>Ready to Print</h3>
-                    <p>We ensure the connection is stable and you can print your documents.</p>
-                </div>
-                <a href="setup.html" class="btn-setup">
-                    Start Setup Now <i class="fa-solid fa-arrow-right"></i>
-                </a>
-            </div>
-        </div>
-    </section>
+    <section class="trust-strip">
+        <div class="container">
+            <div class="trust-grid">
+                <div class="trust-item"><i class="fa-solid fa-lock"></i> SSL Secure Connection</div>
+                <div class="trust-item"><i class="fa-solid fa-user-check"></i> Verified Experts</div>
+                <div class="trust-item"><i class="fa-solid fa-clock"></i> 24/7 Availability</div>
+            </div>
+        </div>
+    </section>
 
-    <section class="services-section">
-        <div class="container">
-            <h2 class="section-title">Common Issues We Resolve</h2>
-            <div class="services-grid">
-                <div class="service-item">
-                    <div class="service-icon"><i class="fa-solid fa-wifi"></i></div>
-                    <div>
-                        <h3>Wireless Connection Failure</h3>
-                        <p>Printer cannot find the WiFi network or keeps disconnecting frequently.</p>
-                    </div>
-                </div>
-                <div class="service-item">
-                    <div class="service-icon"><i class="fa-solid fa-power-off"></i></div>
-                    <div>
-                        <h3>Printer Offline Status</h3>
-                        <p>Computer says "Printer is Offline" even when the device is turned on.</p>
-                    </div>
-                </div>
-                <div class="service-item">
-                    <div class="service-icon"><i class="fa-solid fa-download"></i></div>
-                    <div>
-                        <h3>Driver Errors</h3>
-                        <p>Installation failed or "Driver Unavailable" error messages on screen.</p>
-                    </div>
-                </div>
-                <div class="service-item">
-                    <div class="service-icon"><i class="fa-solid fa-file-circle-xmark"></i></div>
-                    <div>
-                        <h3>Scanner Not Working</h3>
-                        <p>Issues with scanning documents to computer or email configuration.</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
+    <section class="steps-section">
+        <div class="container">
+            <h2 class="section-title">Simple 3-Step Process</h2>
+            <div class="steps-container">
+                <div class="step-box">
+                    <div class="step-icon"><i class="fa-solid fa-mouse-pointer"></i></div>
+                    <div class="step-title">1. Start Guide</div>
+                    <div class="step-desc">Click the button or call us to begin the diagnostic.</div>
+                </div>
+                <div class="step-box">
+                    <div class="step-icon"><i class="fa-solid fa-headset"></i></div>
+                    <div class="step-title">2. Connect</div>
+                    <div class="step-desc">Our assistant will remotely help you configure settings.</div>
+                </div>
+                <div class="step-box">
+                    <div class="step-icon"><i class="fa-solid fa-print"></i></div>
+                    <div class="step-title">3. Print</div>
+                    <div class="step-desc">Your printer is online and ready to print documents.</div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-    <footer>
-        <div class="container">
-            <div style="display: flex; justify-content: space-between; flex-wrap: wrap; margin-bottom: 40px;">
-                <div style="max-width: 400px; margin-bottom: 20px;">
-                    <h4 style="color: white; font-size: 18px; margin-bottom: 15px;">Quick Setup Assist</h4>
-                    <p>We are a team of certified independent technicians dedicated to helping home users connect their printing devices.</p>
-                    <p style="margin-top: 15px;"><i class="fa-solid fa-location-dot"></i> 123 Tech Park Avenue, Suite 400, New York, NY 10001</p>
-                </div>
-                <div>
-                    <h4 style="color: white; font-size: 18px; margin-bottom: 15px;">Legal</h4>
-                    <p><a href="privacy.html" style="color: #94a3b8; text-decoration: none;">Privacy Policy</a></p>
-                    <p><a href="terms.html" style="color: #94a3b8; text-decoration: none;">Terms of Service</a></p>
-                    <p><a href="contact.html" style="color: #94a3b8; text-decoration: none;">Contact Us</a></p>
-                </div>
-            </div>
+    <section class="services-section">
+        <div class="container">
+            <h2 class="section-title" style="text-align:center; margin-bottom:30px;">Issues We Resolve</h2>
+            <div class="services-grid">
+                <div class="service-card">
+                    <div class="s-icon"><i class="fa-solid fa-wifi"></i></div>
+                    <div><strong>WiFi Connection</strong><br><span style="font-size:14px; color:#64748b;">Printer not finding network</span></div>
+                </div>
+                <div class="service-card">
+                    <div class="s-icon"><i class="fa-solid fa-power-off"></i></div>
+                    <div><strong>Offline Status</strong><br><span style="font-size:14px; color:#64748b;">Computer says "Offline"</span></div>
+                </div>
+                <div class="service-card">
+                    <div class="s-icon"><i class="fa-solid fa-download"></i></div>
+                    <div><strong>Driver Errors</strong><br><span style="font-size:14px; color:#64748b;">Installation & updates</span></div>
+                </div>
+                <div class="service-card">
+                    <div class="s-icon"><i class="fa-solid fa-file-circle-xmark"></i></div>
+                    <div><strong>Scanner Setup</strong><br><span style="font-size:14px; color:#64748b;">Scan to Email or PC</span></div>
+                </div>
+            </div>
+        </div>
+    </section>
 
-            <div class="disclaimer">
-                <strong>DISCLAIMER:</strong> 
-                We are an independent third-party service provider for printer setup, configuration, and troubleshooting. 
-                We are not affiliated with, endorsed by, or sponsored by any third-party brands or trademarks, including HP, Canon, Epson, Brother, Dell, or others. 
-                All brand names, trademarks, logos, and company names used on this website are the property of their respective owners and are used strictly for descriptive purposes to demonstrate compatibility and to identify the products we support.
-            </div>
+    <footer>
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <h4 style="color: white; font-size: 18px; margin-bottom: 15px;">Quick Setup Assist</h4>
+                </div>
+                <div class="footer-links">
+                    <h4 style="color: white; font-size: 18px; margin-bottom: 15px;">Legal</h4>
+                    <a href="./pages/privacy.html">Privacy Policy</a>
+                    <a href="./pages/terms.html">Terms of Service</a>
+                    <a href="./pages/contact.html">Contact Us</a>
+                </div>
+            </div>
 
-            <div style="text-align: center; border-top: 1px solid #1e293b; padding-top: 20px;">
-                &copy; 2025 Quick Setup Assist. All Rights Reserved.
-            </div>
-        </div>
-    </footer>
-<script src="https://code.jivosite.com/widget/kmQyW9kmtz" async></script>
+            <div class="disclaimer-box">
+              <strong>DISCLAIMER:</strong>
+             We are an independent third-party service provider for printer setup, configuration, and troubleshooting. We are not affiliated with, endorsed by, or sponsored by any third-party brands or trademarks, including HP, Canon, Epson, Brother, Dell, or others. All brand names, trademarks, logos, and company names used on this website are the property of their respective owners and are used strictly for descriptive purposes to demonstrate compatibility and to identify the products we support.
+
+            <div style="text-align: center; border-top: 1px solid #1e293b; padding-top: 20px; color: #64748b;">
+                &copy; 2025 Quick Setup Assist. All Rights Reserved.
+            </div>
+        </div>
+    </footer>
+
+    <div class="mobile-sticky-footer">
+        <div class="sticky-btn-group">
+            <a href="tel:+17602740601" class="sticky-btn sticky-call"><i class="fa-solid fa-phone"></i> Call Now</a>
+            <a href="./pages/setup.html" class="sticky-btn sticky-setup"><i class="fa-solid fa-play"></i> Start Setup</a>
+        </div>
+    </div>
+
 </body>
 </html>
