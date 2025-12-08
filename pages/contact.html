@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Contact Us - Quick Setup Assist</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root { --primary: #0284c7; --secondary: #0f172a; --bg-light: #f8fafc; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+        body { background-color: var(--white); color: var(--secondary); line-height: 1.7; display: flex; flex-direction: column; min-height: 100vh; }
+        .container { max-width: 1000px; margin: 0 auto; padding: 0 20px; }
+        header { background: var(--white); border-bottom: 1px solid #e2e8f0; padding: 15px 0; }
+        .nav-wrapper { display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 24px; font-weight: 800; color: var(--primary); display: flex; align-items: center; gap: 10px; }
+        .main-content { padding: 40px 0; flex: 1; }
+        
+        .contact-section { text-align: center; max-width: 700px; margin: 0 auto; }
+        .contact-section h2 { font-size: 36px; font-weight: 900; margin-bottom: 30px; }
+        
+        .contact-box-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 30px; margin-bottom: 40px; }
+        .contact-box { background: var(--bg-light); padding: 30px; border-radius: 12px; border: 1px solid #e2e8f0; }
+        
+        .contact-box i { font-size: 30px; color: var(--primary); margin-bottom: 15px; }
+        .contact-box h3 { font-size: 22px; margin-bottom: 10px; }
+        
+        .phone-number { font-size: 32px; font-weight: 900; color: #a80000; text-decoration: none; transition: color 0.3s; }
+        .phone-number:hover { color: #d32f2f; }
+
+        /* Address & Email (Required for Google Ads Trust) */
+        .address-box { margin-top: 20px; border-top: 1px solid #eee; padding-top: 20px; }
+        .address-box p { color: #475569; font-size: 15px; margin-bottom: 10px; }
+
+        .footer { background: #0f172a; color: #94a3b8; padding: 40px 0 20px; font-size: 14px; margin-top: 40px; }
+        .disclaimer { background: #1e293b; padding: 20px; border-radius: 8px; margin-bottom: 30px; font-size: 12px; line-height: 1.6; }
+        @media (max-width: 768px) { .logo { font-size: 20px; } .contact-box-grid { grid-template-columns: 1fr; } .contact-section h2 { font-size: 30px; } }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container nav-wrapper">
+            <div class="logo">
+                <i class="fa-solid fa-print"></i> Quick Setup Assist
+            </div>
+            <a href="tel:+18001234567" class="phone-number" style="font-size: 24px;">Call: +1 (760) 274-0601</a>
+        </div>
+    </header>
+
+    <div class="main-content">
+        <div class="container contact-section">
+            <h2>Get Instant Assistance</h2>
+            <p style="font-size: 18px; color: #475569; margin-bottom: 40px;">
+                Our certified technicians are ready to assist you with your setup and connection needs. Contact us through the methods below.
+            </p>
+
+            <div class="contact-box-grid">
+                <div class="contact-box">
+                    <i class="fa-solid fa-phone-volume"></i>
+                    <h3>Call Assistance</h3>
+                    <p style="font-size: 16px; color: #475569; margin-bottom: 15px;">Get instant help from a technician now.</p>
+                    <a href="tel:+18001234567" class="phone-number">+1 (760) 274-0601</a>
+                </div>
+
+                <div class="contact-box">
+                    <i class="fa-solid fa-location-dot"></i>
+                    <h3>Our Registered Address</h3>
+                    <p style="font-size: 16px; color: #475569; margin-bottom: 15px;">(Required for legal and billing purposes)</p>
+                    <p style="font-weight: bold; color: var(--secondary);">123 Tech Park Avenue, Suite 400, New York, NY 10001</p>
+                </div>
+            </div>
+
+            <div class="address-box">
+                <h3>General Enquiries</h3>
+                <p><i class="fa-solid fa-envelope"></i> Email: <a href="mailto:contact@quicksetupassist.com" style="color: var(--primary);">contact@quicksetupassist.com</a></p>
+                <p><i class="fa-solid fa-clock"></i> Hours: Monday - Friday, 9:00 AM - 5:00 PM EST</p>
+            </div>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <div class="disclaimer">
+                <strong>DISCLAIMER:</strong> We are an independent third-party service provider for printer setup, configuration, and troubleshooting. We are not affiliated with, endorsed by, or sponsored by any third-party brands or trademarks. All brand names are the property of their respective owners and are used strictly for descriptive purposes.
+            </div>
+            <div style="text-align:center;">
+                &copy; 2025 Quick Setup Assist.
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
