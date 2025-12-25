@@ -3,296 +3,521 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Printer Configuration & Setup Assistant</title>
-    <meta name="description" content="Guidance for printer wireless setup, driver configuration, and connectivity. Independent setup assistants available.">
+    <title>SentinelX | Enterprise Endpoint Protection</title>
     
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js"></script>
 
     <style>
-        /* --- THEME --- */
         :root {
-            --primary: #0284c7;       
-            --primary-dark: #0369a1;
-            --secondary: #0f172a;     
-            --bg-light: #f8fafc;
-            --white: #ffffff;
-            --alert: #dc2626;         
+            --bg-core: #0b0d11;
+            --panel-bg: rgba(20, 24, 33, 0.75);
+            --border-color: rgba(255, 255, 255, 0.08);
+            --primary-blue: #3b82f6;
+            --primary-cyan: #06b6d4;
+            --danger-red: #ef4444;
+            --success-green: #10b981;
+            --text-main: #f8fafc;
+            --text-muted: #64748b;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
-        body { background-color: var(--white); color: var(--secondary); line-height: 1.6; padding-bottom: 80px; }
+        * { margin: 0; padding: 0; box-sizing: border-box; outline: none; }
+
+        body {
+            background-color: var(--bg-core);
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        /* 3D BG */
+        #webgl-layer {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1; opacity: 0.5; pointer-events: none;
+        }
+
+        /* LAYOUT */
+        .dashboard-container {
+            display: grid;
+            grid-template-columns: 260px 1fr;
+            height: 100vh;
+        }
+
+        /* SIDEBAR */
+        .sidebar {
+            background: rgba(11, 13, 17, 0.95);
+            border-right: 1px solid var(--border-color);
+            padding: 30px 20px;
+            backdrop-filter: blur(20px);
+            z-index: 10;
+        }
+
+        .brand {
+            font-size: 1.25rem; font-weight: 700; letter-spacing: 1px;
+            color: white; margin-bottom: 50px; display: flex; align-items: center; gap: 10px;
+        }
+        .brand span { color: var(--primary-cyan); }
+        .logo-mark {
+            width: 24px; height: 24px; border: 2px solid var(--primary-cyan); border-radius: 4px;
+            position: relative;
+        }
+        .logo-mark::after {
+            content:''; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+            width: 8px; height: 8px; background: var(--primary-cyan);
+        }
+
+        .menu-item {
+            padding: 14px 16px; border-radius: 8px; color: var(--text-muted);
+            font-size: 0.85rem; font-weight: 500; cursor: pointer; transition: 0.2s;
+            display: flex; align-items: center; gap: 12px; margin-bottom: 5px;
+        }
+        .menu-item:hover, .menu-item.active {
+            background: rgba(255, 255, 255, 0.03); color: white;
+        }
+        .menu-item.active { border-left: 3px solid var(--primary-cyan); }
+
+        /* MAIN CONTENT */
+        .content-area {
+            padding: 40px; overflow-y: auto; position: relative;
+        }
+
+        /* HEADER */
+        .header {
+            display: flex; justify-content: space-between; align-items: center; margin-bottom: 30px;
+        }
+        .status-pill {
+            display: flex; align-items: center; gap: 10px; padding: 8px 16px;
+            border-radius: 30px; font-family: 'Space Mono', monospace; font-size: 0.75rem;
+            border: 1px solid;
+            transition: 0.5s;
+        }
+        .status-pill.danger {
+            background: rgba(239, 68, 68, 0.1); color: var(--danger-red); border-color: rgba(239, 68, 68, 0.3);
+        }
+        .status-pill.secure {
+            background: rgba(16, 185, 129, 0.1); color: var(--success-green); border-color: rgba(16, 185, 129, 0.3);
+        }
+        .status-dot {
+            width: 8px; height: 8px; border-radius: 50%; background: currentColor;
+            box-shadow: 0 0 10px currentColor; animation: pulse 2s infinite;
+        }
+
+        /* GRID */
+        .grid {
+            display: grid; grid-template-columns: 2fr 1fr; gap: 24px;
+        }
+
+        .panel {
+            background: var(--panel-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 30px;
+            backdrop-filter: blur(12px);
+            position: relative;
+            overflow: hidden;
+        }
+
+        /* SCANNER UI */
+        .scanner-interface {
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            min-height: 400px;
+        }
+
+        .scan-ring-container {
+            width: 220px; height: 220px; position: relative;
+            display: flex; justify-content: center; align-items: center;
+            margin-bottom: 30px;
+        }
+
+        .scan-ring-bg {
+            position: absolute; width: 100%; height: 100%;
+            border: 2px solid rgba(255, 255, 255, 0.05); border-radius: 50%;
+        }
         
-        .container { max-width: 1000px; margin: 0 auto; padding: 0 20px; }
-
-        /* --- HEADER --- */
-        header { 
-            background: var(--white); 
-            border-bottom: 1px solid #e2e8f0; 
-            padding: 15px 0; 
-            position: sticky; top: 0; z-index: 1000; 
-        }
-        .nav-wrapper { display: flex; justify-content: space-between; align-items: center; }
-        .logo { font-size: 20px; font-weight: 800; color: var(--primary); display: flex; align-items: center; gap: 10px; }
-        .header-phone { font-size: 18px; font-weight: 800; color: var(--secondary); text-decoration: none; display: flex; align-items: center; gap: 8px; }
-        .header-phone i { color: var(--alert); } 
-
-        /* --- HERO --- */
-        .hero { padding: 40px 0 60px; background: linear-gradient(180deg, #f0f9ff 0%, #ffffff 100%); }
-        .hero-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
-
-        .hero-phone-box {
-            background: #fff; border: 2px dashed #cbd5e1; padding: 15px;
-            text-align: center; border-radius: 8px; margin-bottom: 25px;
-        }
-        .hero-phone-label { font-size: 13px; font-weight: 700; color: #64748b; text-transform: uppercase; }
-        .hero-phone-number { font-size: 34px; font-weight: 900; color: var(--alert); display: block; text-decoration: none; }
-
-        /* ANIMATED BUTTON */
-        @keyframes gentleShake {
-            0% { transform: translateX(0); }
-            5% { transform: translateX(-3px); }
-            10% { transform: translateX(3px); }
-            15% { transform: translateX(-3px); }
-            20% { transform: translateX(3px); }
-            25% { transform: translateX(0); }
-            100% { transform: translateX(0); }
+        .scan-ring-active {
+            position: absolute; width: 100%; height: 100%;
+            border: 2px solid transparent; border-top-color: var(--primary-cyan); border-radius: 50%;
+            animation: spin 1.5s linear infinite; display: none;
         }
 
-        .btn-setup { 
-            background-color: var(--primary); color: white; padding: 15px 30px; 
-            border-radius: 8px; font-size: 18px; font-weight: 700; 
-            text-decoration: none; display: block; text-align: center;
-            box-shadow: 0 4px 14px rgba(2, 132, 199, 0.4); 
-            animation: gentleShake 3s infinite;
+        .scan-val {
+            font-family: 'Space Mono'; font-size: 3rem; font-weight: 700; color: white;
+            z-index: 2;
         }
-        .btn-setup:hover { background-color: var(--primary-dark); animation: none; }
 
-        .hero-visual { background: white; padding: 15px; border-radius: 15px; border: 1px solid #e2e8f0; text-align: center; box-shadow: 0 10px 20px rgba(0,0,0,0.05); }
-        .tech-img { width: 100%; height: auto; border-radius: 8px; margin-bottom: 10px; border: 1px solid #e2e8f0; }
-
-        /* --- TRUST STRIP --- */
-        .trust-strip { background: var(--secondary); color: white; padding: 20px 0; text-align: center; }
-        .trust-grid { display: flex; justify-content: center; gap: 40px; flex-wrap: wrap; }
-        .trust-item { display: flex; align-items: center; gap: 10px; font-weight: 600; font-size: 14px; }
-
-        /* --- HOW IT WORKS --- */
-        .steps-section { padding: 60px 0; background: var(--bg-light); text-align: center; }
-        .section-title { font-size: 28px; font-weight: 800; margin-bottom: 40px; color: var(--secondary); }
-        .steps-container { display: grid; grid-template-columns: repeat(3, 1fr); gap: 30px; }
-        .step-box { background: white; padding: 30px 20px; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); }
-        .step-icon { font-size: 32px; color: var(--primary); margin-bottom: 15px; background: #e0f2fe; width: 60px; height: 60px; border-radius: 50%; display: flex; align-items: center; justify-content: center; margin-inline: auto; }
-        .step-title { font-weight: 700; font-size: 18px; margin-bottom: 5px; }
-        .step-desc { font-size: 14px; color: #64748b; }
-
-        /* --- SERVICES --- */
-        .services-section { padding: 60px 0; background: white; }
-        .services-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
-        .service-card { border: 1px solid #e2e8f0; padding: 25px; border-radius: 10px; display: flex; align-items: center; gap: 15px; transition: 0.2s; }
-        .s-icon { font-size: 24px; color: var(--primary); }
-
-        /* --- FOOTER (DETAILED) --- */
-        footer { background: #0f172a; color: #94a3b8; padding: 60px 0 20px; font-size: 13px; }
-        .footer-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 40px; margin-bottom: 40px; }
-        .footer-links a { color: #cbd5e1; text-decoration: none; display: block; margin-bottom: 10px; }
-        .footer-links a:hover { color: white; }
-        
-        .disclaimer-box { 
-            background: #1e293b; padding: 20px; border-radius: 8px; 
-            margin-bottom: 20px; font-size: 12px; line-height: 1.6; 
-            border-left: 4px solid #64748b; 
+        .scan-btn {
+            background: linear-gradient(135deg, var(--primary-blue), var(--primary-cyan));
+            color: #000; border: none; padding: 16px 40px; border-radius: 6px;
+            font-weight: 600; font-size: 0.9rem; letter-spacing: 0.5px;
+            cursor: pointer; transition: 0.3s;
+            box-shadow: 0 0 30px rgba(6, 182, 212, 0.3);
         }
-        .disclaimer-box strong { color: #e2e8f0; display: block; margin-bottom: 8px; text-transform: uppercase; }
+        .scan-btn:hover { transform: translateY(-2px); box-shadow: 0 0 50px rgba(6, 182, 212, 0.5); }
+        .scan-btn:disabled { background: #333; color: #777; cursor: not-allowed; box-shadow: none; }
 
-        /* --- MOBILE --- */
-        .mobile-sticky-footer {
-            display: none; position: fixed; bottom: 0; left: 0; width: 100%;
-            background: white; box-shadow: 0 -4px 10px rgba(0,0,0,0.1); z-index: 9999;
-            padding: 10px 15px; border-top: 1px solid #e2e8f0;
+        /* TERMINAL */
+        .terminal {
+            width: 100%; height: 120px; background: rgba(0,0,0,0.3);
+            border-radius: 6px; margin-top: 25px; padding: 15px;
+            font-family: 'Space Mono', monospace; font-size: 0.75rem;
+            color: var(--primary-cyan); overflow-y: auto; border: 1px solid var(--border-color);
         }
-        .sticky-btn-group { display: flex; gap: 10px; }
-        .sticky-btn {
-            flex: 1; padding: 12px; border-radius: 6px; font-weight: 700;
-            text-align: center; text-decoration: none; font-size: 16px;
-            display: flex; align-items: center; justify-content: center; gap: 8px;
-        }
-        .sticky-call { background: var(--alert); color: white; }
-        .sticky-setup { background: var(--primary); color: white; }
+        .term-line { margin-bottom: 4px; opacity: 0.8; }
+        .term-line.alert { color: var(--danger-red); }
+        .term-line.success { color: var(--success-green); }
 
-        @media (max-width: 900px) {
-            .hero-grid { grid-template-columns: 1fr; gap: 30px; }
-            .nav-wrapper { flex-direction: column; gap: 10px; }
-            .hero-visual { order: -1; } 
-            .mobile-sticky-footer { display: block; }
-            .steps-container, .services-grid, .footer-grid { grid-template-columns: 1fr; } 
-            .trust-grid { flex-direction: column; gap: 15px; }
+        /* STATS SIDEBAR */
+        .stat-row {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 15px 0; border-bottom: 1px solid var(--border-color);
+        }
+        .stat-label { font-size: 0.85rem; color: var(--text-muted); }
+        .stat-val { font-family: 'Space Mono'; font-weight: 700; color: white; }
+        .stat-val.exposed { color: var(--danger-red); }
+        .stat-val.secure { color: var(--success-green); }
+
+        /* CHECKLIST ANIMATION */
+        .task-list { margin-top: 20px; }
+        .task-item {
+            display: flex; align-items: center; gap: 15px; margin-bottom: 15px;
+            opacity: 0.5; transition: 0.3s;
+        }
+        .task-item.active { opacity: 1; }
+        .task-icon {
+            width: 18px; height: 18px; border: 1px solid var(--text-muted); border-radius: 50%;
+            display: flex; align-items: center; justify-content: center; font-size: 10px;
+        }
+        .task-item.completed .task-icon {
+            background: var(--success-green); border-color: var(--success-green); color: black;
+        }
+
+        @keyframes pulse { 0% { opacity: 1; box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.7); } 70% { box-shadow: 0 0 0 10px rgba(239, 68, 68, 0); } 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); } }
+        @keyframes pulse-green { 0% { opacity: 1; box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7); } 70% { box-shadow: 0 0 0 10px rgba(16, 185, 129, 0); } 100% { opacity: 1; box-shadow: 0 0 0 0 rgba(16, 185, 129, 0); } }
+        @keyframes spin { 100% { transform: rotate(360deg); } }
+
+        /* RESET BUTTON (Hidden mostly, for testing) */
+        .reset-link {
+            position: absolute; bottom: 20px; right: 20px; font-size: 0.7rem; color: #333; cursor: pointer;
         }
     </style>
-    
-    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17754747703"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-      gtag('config', 'AW-17754747703');
-    </script>
-    
-    <script src="//code.jivosite.com/widget/kmQyW9kmtz" async></script>
-    <script>
-        function openChat() {
-            if (typeof jivo_api !== 'undefined') { jivo_api.open(); } 
-            else { setTimeout(openChat, 500); }
-        }
-    </script>
 </head>
 <body>
 
-    <header>
-        <div class="container nav-wrapper">
-            <div class="logo"><i class="fa-solid fa-print"></i> &nbsp;Quick Setup Assist</div>
-            <a href="tel:+17602740601" class="header-phone"><i class="fa-solid fa-phone"></i> +1 (760) 274-0601</a>
-        </div>
-    </header>
+    <div id="webgl-layer"></div>
 
-    <section class="hero">
-        <div class="container hero-grid">
-            <div class="hero-content">
-                <span style="background:#dbeafe; color:#1e40af; padding:5px 12px; border-radius:50px; font-size:12px; font-weight:700; display:inline-block; margin-bottom:15px;">
-                    INDEPENDENT SETUP SERVICE
-                </span>
-
-                <h1 style="font-size: 26px; font-weight: 800; line-height: 1.3; margin-bottom: 20px; color:#0f172a;">
-                    Are you facing these Printer Issues?
-                </h1>
-
-                <div style="background:white; border:1px solid #cbd5e1; border-left:5px solid #0284c7; padding:20px; border-radius:8px; margin-bottom:25px; box-shadow:0 4px 6px rgba(0,0,0,0.05);">
-                    <div style="display:flex; align-items:center; gap:12px; margin-bottom:12px; font-weight:600; color:#334155; font-size:16px;">
-                        <i class="fa-solid fa-circle-xmark" style="color:#dc2626; font-size:18px;"></i> Printer is "Offline"
-                    </div>
-                    <div style="display:flex; align-items:center; gap:12px; margin-bottom:12px; font-weight:600; color:#334155; font-size:16px;">
-                        <i class="fa-solid fa-wifi" style="color:#dc2626; font-size:16px;"></i> Won't Connect to WiFi
-                    </div>
-                    <div style="display:flex; align-items:center; gap:12px; margin-bottom:12px; font-weight:600; color:#334155; font-size:16px;">
-                        <i class="fa-solid fa-triangle-exclamation" style="color:#dc2626; font-size:16px;"></i> Driver Unavailable / Error
-                    </div>
-                    <div style="display:flex; align-items:center; gap:12px; font-weight:600; color:#334155; font-size:16px;">
-                        <i class="fa-solid fa-print" style="color:#dc2626; font-size:16px;"></i> Scanner Not Working
-                    </div>
-                </div>
-
-                <div class="hero-phone-box" style="margin-bottom:20px;">
-                    <span class="hero-phone-label" style="display:block; margin-bottom:5px;">Need an Expert to Fix it?</span>
-                    <a href="tel:+17602740601" class="hero-phone-number">+1 (760) 274-0601</a>
-                </div>
-
-                <a href="./pages/setup.html" class="btn-setup">
-                    SETUP NOW <i class="fa-solid fa-arrow-right"></i>
-                </a>
+    <div class="dashboard-container">
+        
+        <div class="sidebar">
+            <div class="brand">
+                <div class="logo-mark"></div>
+                SENTINEL<span>X</span>
             </div>
-
-            <div class="hero-visual">
-                <img src="./images/cus.jpg" alt="Setup Assistant" class="tech-img">
-                <h3 style="margin-bottom:5px; font-size: 18px;">Live Human Assistant</h3>
-                <p style="color:#64748b; font-size: 14px; margin-bottom:10px;">
-                    Skip the confusion. Let a real person guide you.
-                </p>
-                <div style="border-top:1px solid #f1f5f9; padding-top:10px; display:flex; justify-content:center; gap:15px;">
-                    <div style="font-size:13px; font-weight:600;"><i class="fa-solid fa-star" style="color:#f59e0b;"></i> 4.9/5 Rating</div>
-                    <div style="font-size:13px; font-weight:600;"><i class="fa-solid fa-shield-halved" style="color:#16a34a;"></i> Verified</div>
-                </div>
+            
+            <div class="menu-item active">
+                <span>⚡</span> Dashboard
+            </div>
+            <div class="menu-item">
+                <span>🛡️</span> Threat Intelligence
+            </div>
+            <div class="menu-item">
+                <span>🔒</span> Network Shield
+            </div>
+            <div class="menu-item">
+                <span>⚙️</span> Configuration
+            </div>
+            
+            <div style="margin-top: auto; border-top: 1px solid var(--border-color); padding-top: 20px;">
+                <div style="font-size: 0.7rem; color: var(--text-muted);">LICENSE ID</div>
+                <div style="font-family: 'Space Mono'; font-size: 0.8rem; color: white; margin-top: 5px;">ENT-8842-X</div>
             </div>
         </div>
-    </section>
 
-    <section class="trust-strip">
-        <div class="container">
-            <div class="trust-grid">
-                <div class="trust-item"><i class="fa-solid fa-lock"></i> SSL Secure Connection</div>
-                <div class="trust-item"><i class="fa-solid fa-user-check"></i> Verified Experts</div>
-                <div class="trust-item"><i class="fa-solid fa-clock"></i> 24/7 Availability</div>
-            </div>
-        </div>
-    </section>
-
-    <section class="steps-section">
-        <div class="container">
-            <h2 class="section-title">Simple 3-Step Process</h2>
-            <div class="steps-container">
-                <div class="step-box">
-                    <div class="step-icon"><i class="fa-solid fa-mouse-pointer"></i></div>
-                    <div class="step-title">1. Start Guide</div>
-                    <div class="step-desc">Click the button or call us to begin the diagnostic.</div>
-                </div>
-                <div class="step-box">
-                    <div class="step-icon"><i class="fa-solid fa-headset"></i></div>
-                    <div class="step-title">2. Connect</div>
-                    <div class="step-desc">Our assistant will remotely help you configure settings.</div>
-                </div>
-                <div class="step-box">
-                    <div class="step-icon"><i class="fa-solid fa-print"></i></div>
-                    <div class="step-title">3. Print</div>
-                    <div class="step-desc">Your printer is online and ready to print documents.</div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section class="services-section">
-        <div class="container">
-            <h2 class="section-title" style="text-align:center; margin-bottom:30px;">Issues We Resolve</h2>
-            <div class="services-grid">
-                <div class="service-card">
-                    <div class="s-icon"><i class="fa-solid fa-wifi"></i></div>
-                    <div><strong>WiFi Connection</strong><br><span style="font-size:14px; color:#64748b;">Printer not finding network</span></div>
-                </div>
-                <div class="service-card">
-                    <div class="s-icon"><i class="fa-solid fa-power-off"></i></div>
-                    <div><strong>Offline Status</strong><br><span style="font-size:14px; color:#64748b;">Computer says "Offline"</span></div>
-                </div>
-                <div class="service-card">
-                    <div class="s-icon"><i class="fa-solid fa-download"></i></div>
-                    <div><strong>Driver Errors</strong><br><span style="font-size:14px; color:#64748b;">Installation & updates</span></div>
-                </div>
-                <div class="service-card">
-                    <div class="s-icon"><i class="fa-solid fa-file-circle-xmark"></i></div>
-                    <div><strong>Scanner Setup</strong><br><span style="font-size:14px; color:#64748b;">Scan to Email or PC</span></div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <footer>
-        <div class="container">
-            <div class="footer-grid">
+        <div class="content-area">
+            
+            <div class="header">
                 <div>
-                    <h4 style="color: white; font-size: 18px; margin-bottom: 15px;">Quick Setup Assist</h4>
+                    <h1 style="font-weight: 600; font-size: 1.5rem;">System Overview</h1>
+                    <p style="color: var(--text-muted); font-size: 0.85rem; margin-top: 5px;">Real-time endpoint telemetry</p>
                 </div>
-                <div class="footer-links">
-                    <h4 style="color: white; font-size: 18px; margin-bottom: 15px;">Legal</h4>
-                    <a href="./pages/privacy.html">Privacy Policy</a>
-                    <a href="./pages/terms.html">Terms of Service</a>
-                    <a href="./pages/contact.html">Contact Us</a>
+                <div class="status-pill danger" id="main-status">
+                    <div class="status-dot" id="status-dot"></div>
+                    <span id="status-text">SYSTEM VULNERABLE</span>
                 </div>
             </div>
 
-            <div class="disclaimer-box">
-              <strong>DISCLAIMER:</strong>
-             We are an independent third-party service provider for printer setup, configuration, and troubleshooting. We are not affiliated with, endorsed by, or sponsored by any third-party brands or trademarks, including HP, Canon, Epson, Brother, Dell, or others. All brand names, trademarks, logos, and company names used on this website are the property of their respective owners and are used strictly for descriptive purposes to demonstrate compatibility and to identify the products we support.
+            <div class="grid">
+                
+                <div class="panel scanner-interface">
+                    <div class="scan-ring-container">
+                        <div class="scan-ring-bg"></div>
+                        <div class="scan-ring-active" id="scan-spinner"></div>
+                        <div class="scan-val" id="scan-pct">0%</div>
+                    </div>
 
-            <div style="text-align: center; border-top: 1px solid #1e293b; padding-top: 20px; color: #64748b;">
-                &copy; 2025 Quick Setup Assist. All Rights Reserved.
+                    <h2 id="action-title" style="margin-bottom: 10px; font-weight: 500;">Attention Required</h2>
+                    <p id="action-desc" style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 30px; text-align: center; max-width: 400px;">
+                        System diagnostics indicate unoptimized registry hives, potential malware artifacts, and exposed network ports.
+                    </p>
+
+                    <button class="scan-btn" id="scan-btn" onclick="startProfessionalScan()">INITIATE DEEP SYSTEM AUDIT</button>
+
+                    <div class="terminal" id="terminal">
+                        <div class="term-line">> Terminal ready. Waiting for user authorization...</div>
+                    </div>
+                </div>
+
+                <div style="display: flex; flex-direction: column; gap: 20px;">
+                    
+                    <div class="panel">
+                        <h3 style="font-size: 1rem; font-weight: 600; margin-bottom: 20px;">Network Diagnostics</h3>
+                        <div class="stat-row">
+                            <span class="stat-label">PUBLIC IP</span>
+                            <span class="stat-val exposed" id="ip-display">---</span>
+                        </div>
+                        <div class="stat-row">
+                            <span class="stat-label">CONNECTION</span>
+                            <span class="stat-val exposed" id="conn-status">UNENCRYPTED</span>
+                        </div>
+                        <div class="stat-row">
+                            <span class="stat-label">FIREWALL</span>
+                            <span class="stat-val exposed" id="fw-status">INACTIVE</span>
+                        </div>
+                    </div>
+
+                    <div class="panel">
+                        <h3 style="font-size: 1rem; font-weight: 600; margin-bottom: 15px;">Audit Checklist</h3>
+                        <div class="task-list">
+                            <div class="task-item" id="task-1">
+                                <div class="task-icon">✓</div>
+                                <div style="font-size: 0.85rem;">Remove Junk Artifacts</div>
+                            </div>
+                            <div class="task-item" id="task-2">
+                                <div class="task-icon">✓</div>
+                                <div style="font-size: 0.85rem;">Isolate Malware Processes</div>
+                            </div>
+                            <div class="task-item" id="task-3">
+                                <div class="task-icon">✓</div>
+                                <div style="font-size: 0.85rem;">Fortify Network Ports</div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
             </div>
-        </div>
-    </footer>
-
-    <div class="mobile-sticky-footer">
-        <div class="sticky-btn-group">
-            <a href="tel:+17602740601" class="sticky-btn sticky-call"><i class="fa-solid fa-phone"></i> Call Now</a>
-            <a href="./pages/setup.html" class="sticky-btn sticky-setup"><i class="fa-solid fa-play"></i> Start Setup</a>
+            
+            <div class="reset-link" onclick="resetProtection()">[DEV: Reset Protection]</div>
         </div>
     </div>
 
+    <script>
+        // --- 1. CONFIGURATION ---
+        const PROTECTION_DURATION = 7 * 24 * 60 * 60 * 1000; // 7 Days in MS
+
+        // --- 2. THREE.JS BACKGROUND ---
+        const scene = new THREE.Scene();
+        const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
+        const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+        renderer.setSize(window.innerWidth, window.innerHeight);
+        document.getElementById('webgl-layer').appendChild(renderer.domElement);
+
+        // Particle System
+        const particlesGeo = new THREE.BufferGeometry();
+        const count = 1000;
+        const pos = new Float32Array(count * 3);
+        for(let i=0; i<count*3; i++) pos[i] = (Math.random()-0.5) * 30;
+        particlesGeo.setAttribute('position', new THREE.BufferAttribute(pos, 3));
+        const particlesMat = new THREE.PointsMaterial({ size: 0.04, color: 0x06b6d4, transparent: true, opacity: 0.6 });
+        const particles = new THREE.Points(particlesGeo, particlesMat);
+        scene.add(particles);
+
+        camera.position.z = 15;
+        function animate() {
+            requestAnimationFrame(animate);
+            particles.rotation.y += 0.0005;
+            renderer.render(scene, camera);
+        }
+        animate();
+        window.addEventListener('resize', () => {
+            camera.aspect = window.innerWidth/window.innerHeight;
+            camera.updateProjectionMatrix();
+            renderer.setSize(window.innerWidth, window.innerHeight);
+        });
+
+        // --- 3. CORE LOGIC ---
+        
+        // On Load: Check Status
+        window.addEventListener('load', () => {
+            fetchIP();
+            const expiry = localStorage.getItem('sentinel_expiry');
+            
+            if (expiry && Date.now() < parseInt(expiry)) {
+                // Still valid
+                renderProtectedState(true);
+            }
+        });
+
+        // Fake Data Fetch
+        async function fetchIP() {
+            try {
+                const res = await fetch('https://ipapi.co/json/');
+                const data = await res.json();
+                document.getElementById('ip-display').innerText = data.ip;
+            } catch {
+                document.getElementById('ip-display').innerText = "192.168.X.X";
+            }
+        }
+
+        // The Professional Scan Sequence
+        async function startProfessionalScan() {
+            const btn = document.getElementById('scan-btn');
+            const spinner = document.getElementById('scan-spinner');
+            const pct = document.getElementById('scan-pct');
+            
+            // Lock UI
+            btn.disabled = true;
+            btn.innerText = "AUDIT IN PROGRESS...";
+            spinner.style.display = "block";
+            
+            // STAGE 1: JUNK FILES (0-40%)
+            activateTask(1);
+            await simulateProgress(0, 40, 3000, [
+                "Analyzing C:/Windows/Temp...",
+                "Indexing Browser Cache (Chrome/Edge)...",
+                "Identifying Redundant Registry Keys...",
+                "Found 1.2GB of temporary artifacts."
+            ]);
+            completeTask(1);
+
+            // STAGE 2: MALWARE (40-75%)
+            activateTask(2);
+            await simulateProgress(40, 75, 4000, [
+                "Scanning Process Memory (PID 4102)...",
+                "Heuristic Analysis of System32...",
+                "WARNING: Suspicious signature detected in AppData.",
+                "Isolating threat: Trojan.Script.Generic...",
+                "Threat neutralized. Quarantine successful."
+            ]);
+            completeTask(2);
+
+            // STAGE 3: NETWORK (75-100%)
+            activateTask(3);
+            await simulateProgress(75, 100, 3000, [
+                "Verifying Network Handshake...",
+                "Closing Port 80 (HTTP). Enforcing Port 443 (HTTPS)...",
+                "Establishing VPN Tunnel...",
+                "Masking IP Address...",
+                "Finalizing Security Protocols..."
+            ]);
+            completeTask(3);
+
+            // FINISH
+            spinner.style.display = "none";
+            saveProtectionState();
+            renderProtectedState(false);
+        }
+
+        // Helper: Simulate Progress bar and Logs
+        function simulateProgress(start, end, duration, logs) {
+            return new Promise(resolve => {
+                let current = start;
+                const stepTime = duration / (end - start);
+                
+                const timer = setInterval(() => {
+                    current++;
+                    document.getElementById('scan-pct').innerText = current + "%";
+                    
+                    // Randomly push logs
+                    if (Math.random() > 0.7 && logs.length > 0) {
+                        const logText = logs.shift();
+                        pushLog(logText, logText.includes("WARNING") ? 'alert' : 'normal');
+                    }
+
+                    if (current >= end) {
+                        clearInterval(timer);
+                        resolve();
+                    }
+                }, stepTime);
+            });
+        }
+
+        function pushLog(msg, type) {
+            const term = document.getElementById('terminal');
+            const line = document.createElement('div');
+            line.className = `term-line ${type}`;
+            line.innerText = `> ${msg}`;
+            term.appendChild(line);
+            term.scrollTop = term.scrollHeight;
+        }
+
+        function activateTask(id) {
+            document.getElementById(`task-${id}`).classList.add('active');
+        }
+        function completeTask(id) {
+            document.getElementById(`task-${id}`).classList.add('completed');
+        }
+
+        // --- 4. STATE MANAGEMENT ---
+
+        function saveProtectionState() {
+            const expiryTime = Date.now() + PROTECTION_DURATION;
+            localStorage.setItem('sentinel_expiry', expiryTime);
+        }
+
+        function renderProtectedState(isInstant) {
+            // Update UI to Green/Secure
+            const statusPill = document.getElementById('main-status');
+            statusPill.className = "status-pill secure";
+            document.getElementById('status-text').innerText = "SYSTEM SECURE";
+            document.getElementById('status-dot').style.animation = "pulse-green 2s infinite";
+
+            // Update Center Console
+            document.getElementById('scan-pct').innerText = "100%";
+            document.getElementById('scan-pct').style.color = "var(--success-green)";
+            
+            document.getElementById('action-title').innerText = "Device Protected";
+            document.getElementById('action-title').style.color = "var(--success-green)";
+            
+            document.getElementById('action-desc').innerText = "Active protection enabled. Next automated scan scheduled in 7 days.";
+
+            const btn = document.getElementById('scan-btn');
+            btn.innerText = "NO THREATS FOUND";
+            btn.style.background = "rgba(16, 185, 129, 0.2)";
+            btn.style.color = "var(--success-green)";
+            btn.style.border = "1px solid var(--success-green)";
+            btn.style.boxShadow = "none";
+            btn.disabled = true;
+
+            // Update Stats
+            updateStat('conn-status', 'ENCRYPTED (AES-256)', 'secure');
+            updateStat('fw-status', 'ACTIVE', 'secure');
+            updateStat('ip-display', 'MASKED (Hidden)', 'secure');
+
+            // Complete checklist visually if instant load
+            if(isInstant) {
+                [1,2,3].forEach(id => {
+                    activateTask(id);
+                    completeTask(id);
+                });
+                pushLog("Restored protected session from local storage.", "success");
+            } else {
+                pushLog("System Audit Complete. All modules operational.", "success");
+            }
+        }
+
+        function updateStat(id, text, type) {
+            const el = document.getElementById(id);
+            el.innerText = text;
+            el.className = `stat-val ${type}`;
+        }
+
+        function resetProtection() {
+            localStorage.removeItem('sentinel_expiry');
+            location.reload();
+        }
+
+    </script>
 </body>
 </html>

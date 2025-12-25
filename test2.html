@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=0" />
+    <title>AEGIS | Enterprise Endpoint Security</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons+Round" rel="stylesheet">
+
+    <style>
+        :root {
+            /* Palette: Corporate Light */
+            --bg-body: #f1f5f9;       /* Slate 100 */
+            --bg-surface: #ffffff;    /* White */
+            --bg-sidebar: #ffffff;
+            
+            --border: #e2e8f0;        /* Slate 200 */
+            --border-hover: #cbd5e1;  /* Slate 300 */
+            
+            /* Typography */
+            --text-main: #0f172a;     /* Slate 900 */
+            --text-muted: #64748b;    /* Slate 500 */
+            
+            /* Brand Colors */
+            --primary: #0284c7;       /* Sky 600 - Trustworthy Blue */
+            --primary-dark: #0369a1;  /* Sky 700 */
+            --primary-light: #e0f2fe; /* Sky 100 */
+            
+            /* Status Colors */
+            --success: #059669;       /* Emerald 600 */
+            --success-bg: #ecfdf5;    /* Emerald 50 */
+            --danger: #dc2626;        /* Red 600 */
+            --danger-bg: #fef2f2;     /* Red 50 */
+            --warning: #d97706;       /* Amber 600 */
+
+            /* Shadows & Radius */
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+            --shadow-lg: 0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1);
+            --radius: 8px;
+            
+            --font-ui: 'Inter', system-ui, sans-serif;
+            --font-code: 'JetBrains Mono', monospace;
+        }
+
+        /* --- RESET & BASE --- */
+        * { box-sizing: border-box; outline: none; -webkit-tap-highlight-color: transparent; }
+        body { margin: 0; padding: 0; background-color: var(--bg-body); color: var(--text-main); font-family: var(--font-ui); height: 100vh; overflow: hidden; }
+        
+        /* Scrollbar */
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+
+        /* --- UTILITIES --- */
+        .mono { font-family: var(--font-code); }
+        .flex { display: flex; }
+        .flex-col { flex-direction: column; }
+        .items-center { align-items: center; }
+        .justify-between { justify-content: space-between; }
+        .gap-2 { gap: 0.5rem; }
+        .gap-4 { gap: 1rem; }
+        .text-sm { font-size: 0.875rem; }
+        .text-xs { font-size: 0.75rem; }
+        .text-muted { color: var(--text-muted); }
+        .text-success { color: var(--success); }
+        .text-danger { color: var(--danger); }
+        .font-bold { font-weight: 700; }
+        
+        /* --- BACKGROUND FX --- */
+        #canvas-layer { position: fixed; inset: 0; z-index: 0; pointer-events: none; opacity: 0.5; }
+
+        /* --- BOOT OVERLAY --- */
+        #boot-sequence {
+            position: fixed; inset: 0; background: #ffffff; z-index: 9999;
+            display: flex; flex-direction: column; align-items: center; justify-content: center;
+            font-family: var(--font-code); color: var(--primary);
+        }
+        .boot-log { width: 400px; height: 200px; overflow: hidden; font-size: 12px; color: #475569; margin-top: 20px; text-align: left; background: #f8fafc; padding: 10px; border-radius: 4px; border: 1px solid var(--border); }
+        
+        /* --- LAYOUT --- */
+        .app-root {
+            position: relative; z-index: 1; display: grid; grid-template-columns: 260px 1fr;
+            height: 100vh;
+        }
+
+        /* --- SIDEBAR --- */
+        .sidebar {
+            background: var(--bg-sidebar); border-right: 1px solid var(--border);
+            padding: 24px; display: flex; flex-direction: column;
+            box-shadow: var(--shadow-sm); z-index: 2;
+        }
+        
+        .brand { margin-bottom: 32px; display: flex; align-items: center; gap: 12px; }
+        .brand-icon { 
+            width: 32px; height: 32px; background: var(--primary); color: white;
+            border-radius: 6px; display: grid; place-items: center; font-weight: 700; font-size: 18px;
+            box-shadow: 0 4px 6px -1px rgba(2, 132, 199, 0.3);
+        }
+        .brand-text h1 { font-size: 16px; margin: 0; color: var(--text-main); font-weight: 700; }
+        .brand-text p { font-size: 11px; margin: 0; color: var(--text-muted); }
+
+        .nav-btn {
+            background: transparent; border: none; color: var(--text-muted);
+            width: 100%; padding: 10px 12px; text-align: left; border-radius: 6px;
+            cursor: pointer; transition: all 0.2s;
+            display: flex; align-items: center; gap: 12px; font-weight: 500; font-size: 14px;
+            margin-bottom: 4px;
+        }
+        .nav-btn:hover { background: #f1f5f9; color: var(--text-main); }
+        .nav-btn.active { background: var(--primary-light); color: var(--primary-dark); font-weight: 600; }
+        .nav-btn i { font-size: 20px; }
+
+        .license-card {
+            margin-top: auto; padding: 16px; background: #f8fafc; border-radius: var(--radius);
+            border: 1px solid var(--border);
+        }
+
+        /* --- MAIN AREA --- */
+        .main-view {
+            padding: 32px; overflow-y: auto; display: flex; flex-direction: column; gap: 24px;
+            max-width: 1400px; margin: 0 auto; width: 100%;
+        }
+
+        /* Header */
+        .header { display: flex; justify-content: space-between; align-items: flex-start; }
+        .page-title h2 { font-size: 24px; font-weight: 700; margin: 0 0 4px 0; color: var(--text-main); }
+        
+        .status-badge {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 8px 16px; border-radius: 99px; font-size: 12px; font-weight: 600;
+            border: 1px solid; letter-spacing: 0.5px; box-shadow: var(--shadow-sm);
+        }
+        .status-badge.secure { background: var(--success-bg); border-color: #d1fae5; color: var(--success); }
+        .status-badge.danger { background: var(--danger-bg); border-color: #fee2e2; color: var(--danger); }
+        .pulse-dot { width: 8px; height: 8px; border-radius: 50%; background: currentColor; animation: pulse 2s infinite; }
+
+        /* Dashboard Grid */
+        .dash-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 24px; }
+        
+        .panel { 
+            background: var(--bg-surface); border: 1px solid var(--border); border-radius: var(--radius); 
+            padding: 24px; position: relative; overflow: hidden; box-shadow: var(--shadow-sm);
+        }
+        
+        .panel-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; border-bottom: 1px solid #f1f5f9; padding-bottom: 16px; }
+        .panel-header h3 { margin: 0; font-size: 16px; font-weight: 600; }
+        
+        /* Scan Buttons */
+        .scan-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; }
+        .scan-card-btn {
+            background: #ffffff; border: 1px solid var(--border);
+            padding: 20px; border-radius: 8px; cursor: pointer; text-align: left;
+            transition: all 0.2s; position: relative; overflow: hidden;
+            box-shadow: var(--shadow-sm);
+        }
+        .scan-card-btn:hover { border-color: var(--primary); transform: translateY(-2px); box-shadow: var(--shadow-md); }
+        .scan-card-btn:active { transform: scale(0.98); }
+        .scan-card-btn h4 { margin: 0 0 6px 0; font-size: 14px; font-weight: 600; color: var(--text-main); }
+        .scan-card-btn p { margin: 0; font-size: 12px; color: var(--text-muted); }
+        .scan-card-btn i { position: absolute; top: 16px; right: 16px; color: #cbd5e1; font-size: 24px; }
+        .scan-card-btn:hover i { color: var(--primary); }
+
+        /* Stats & Logs */
+        .metric-row { display: flex; justify-content: space-between; margin-bottom: 16px; align-items: center; }
+        .metric-val { font-size: 18px; font-weight: 700; color: var(--text-main); }
+        .log-window {
+            height: 200px; background: #f8fafc; border-radius: 6px;
+            border: 1px solid var(--border); padding: 12px; font-size: 12px;
+            color: #475569; overflow-y: auto; white-space: pre-wrap;
+        }
+
+        /* --- MODAL --- */
+        .modal-overlay {
+            position: fixed; inset: 0; background: rgba(15, 23, 42, 0.4); backdrop-filter: blur(4px);
+            z-index: 100; display: none; align-items: center; justify-content: center;
+        }
+        .modal-window {
+            width: 600px; max-width: 90%; background: #ffffff; 
+            border-radius: 12px; box-shadow: var(--shadow-lg); display: flex; flex-direction: column;
+            overflow: hidden;
+        }
+        .modal-header {
+            padding: 16px 24px; border-bottom: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center;
+            background: #f8fafc;
+        }
+        .modal-body { padding: 24px; }
+        .progress-track { height: 8px; background: #e2e8f0; border-radius: 4px; overflow: hidden; margin: 24px 0; }
+        .progress-fill { height: 100%; width: 0%; background: var(--primary); transition: width 0.2s linear; }
+        
+        .scan-console {
+            height: 180px; background: #0f172a; border-radius: 6px; padding: 16px;
+            font-family: var(--font-code); font-size: 12px; color: #e2e8f0; overflow-y: auto;
+        }
+        .scan-console p { margin: 4px 0; opacity: 0.9; }
+
+        /* --- BUTTONS --- */
+        .btn {
+            padding: 10px 20px; border-radius: 6px; border: none; font-weight: 500; font-size: 14px;
+            cursor: pointer; transition: 0.2s; display: inline-flex; align-items: center; gap: 8px;
+            font-family: var(--font-ui);
+        }
+        .btn-primary { background: var(--primary); color: white; box-shadow: var(--shadow-sm); }
+        .btn-primary:hover { background: var(--primary-dark); }
+        .btn-ghost { background: transparent; border: 1px solid var(--border); color: var(--text-muted); }
+        .btn-ghost:hover { border-color: var(--text-main); color: var(--text-main); background: #f8fafc; }
+        .btn-danger { background: #fee2e2; color: #b91c1c; border: 1px solid #fecaca; }
+        .btn-danger:hover { background: #fecaca; }
+
+        /* Animations */
+        @keyframes pulse { 0% { opacity: 1; transform: scale(1); } 50% { opacity: 0.5; transform: scale(0.8); } 100% { opacity: 1; transform: scale(1); } }
+
+        /* Login Screen */
+        .login-screen { position: fixed; inset: 0; background: #f1f5f9; z-index: 200; display: flex; align-items: center; justify-content: center; }
+        .login-box { width: 400px; padding: 40px; background: #ffffff; border: 1px solid var(--border); border-radius: 16px; text-align: center; box-shadow: var(--shadow-lg); }
+        .input-field { 
+            width: 100%; background: #ffffff; border: 1px solid var(--border); 
+            padding: 12px; color: var(--text-main); border-radius: 6px; margin: 16px 0; font-family: var(--font-code); font-size: 14px;
+        }
+        .input-field:focus { border-color: var(--primary); box-shadow: 0 0 0 2px var(--primary-light); }
+
+    </style>
+</head>
+<body>
+
+    <canvas id="canvas-layer"></canvas>
+
+    <div id="boot-sequence">
+        <div style="font-size: 2rem; font-weight: 800; letter-spacing: -1px; color: #0f172a;">AEGIS<span style="color:var(--primary)">.Core</span></div>
+        <div class="text-muted text-sm" style="margin-top: 5px;">Enterprise Security Environment</div>
+        <div class="boot-log" id="boot-log"></div>
+    </div>
+
+    <div id="login-screen" class="login-screen" style="display: none;">
+        <div class="login-box">
+            <div class="brand-icon" style="margin: 0 auto 20px auto; width: 48px; height: 48px; font-size: 24px;">A</div>
+            <h2 style="margin: 0; color: var(--text-main);">Enterprise Login</h2>
+            <p class="text-muted text-sm" style="margin-top: 8px;">Secure gateway access</p>
+            <input type="text" id="license-input" class="input-field" placeholder="License Key" value="AEGIS-ENT-2025-X">
+            <button class="btn btn-primary" onclick="App.login()" style="width: 100%; justify-content: center;">Authenticate</button>
+            <div class="text-muted text-xs" style="margin-top: 24px;">Workstation ID: WS-8842-NY</div>
+        </div>
+    </div>
+
+    <div class="app-root" id="app-root">
+        
+        <aside class="sidebar">
+            <div class="brand">
+                <div class="brand-icon">A</div>
+                <div class="brand-text">
+                    <h1>AEGIS</h1>
+                    <p>Endpoint Security</p>
+                </div>
+            </div>
+
+            <nav class="flex-col flex gap-2">
+                <button class="nav-btn active" onclick="App.nav('dash')"><i class="material-icons-round">dashboard</i> Dashboard</button>
+                <button class="nav-btn" onclick="App.nav('protection')"><i class="material-icons-round">verified_user</i> Protection</button>
+                <button class="nav-btn" onclick="App.nav('network')"><i class="material-icons-round">lan</i> Network Map</button>
+                <button class="nav-btn" onclick="App.nav('settings')"><i class="material-icons-round">settings</i> Settings</button>
+            </nav>
+
+            <div class="license-card">
+                <div class="text-xs text-muted font-bold">LICENSE STATUS</div>
+                <div class="text-sm font-bold text-success" style="margin-top: 4px;">ACTIVE • ENTERPRISE</div>
+                <div class="text-xs text-muted mono" style="margin-top: 4px;" id="license-display">...</div>
+            </div>
+        </aside>
+
+        <main class="main-view" id="view-dash">
+            
+            <div class="header">
+                <div class="page-title">
+                    <h2>Dashboard</h2>
+                    <p class="text-muted text-sm">Overview of security posture</p>
+                </div>
+                <div id="global-status" class="status-badge danger">
+                    <div class="pulse-dot"></div>
+                    <span>SYSTEM VULNERABLE</span>
+                </div>
+            </div>
+
+            <div id="protection-banner" class="panel" style="background: var(--success-bg); border-color: #a7f3d0; display: none; align-items: center; gap: 16px; box-shadow: none;">
+                <div style="width: 40px; height: 40px; background: #ffffff; border: 1px solid #a7f3d0; border-radius: 50%; color: var(--success); display: grid; place-items: center; font-weight: bold;"><i class="material-icons-round">check</i></div>
+                <div style="flex: 1;">
+                    <h4 style="margin: 0; color: #064e3b;">Device Protected</h4>
+                    <p class="text-sm text-muted" style="margin: 4px 0 0 0; color: #065f46;">Next automated scan scheduled in <span class="mono font-bold" id="protect-timer">7d 00h 00m</span></p>
+                </div>
+                <button class="btn btn-ghost" style="background: white; border-color: #a7f3d0; color: #065f46;" onclick="Security.revoke()">Revoke Access</button>
+            </div>
+
+            <div class="dash-grid">
+                
+                <div class="panel">
+                    <div class="panel-header">
+                        <h3>Quick Actions</h3>
+                        <span class="text-xs text-muted mono" id="last-scan-time">LAST SCAN: NEVER</span>
+                    </div>
+
+                    <div class="scan-grid">
+                        <button class="scan-card-btn" onclick="Security.startScan('deep')">
+                            <h4>Deep Audit</h4>
+                            <p>Rootkits, Memory, Registry</p>
+                            <i class="material-icons-round">memory</i>
+                        </button>
+                        <button class="scan-card-btn" onclick="Security.startScan('malware')">
+                            <h4>Malware Removal</h4>
+                            <p>Isolate & Purge Threats</p>
+                            <i class="material-icons-round">bug_report</i>
+                        </button>
+                        <button class="scan-card-btn" onclick="Security.startScan('network')">
+                            <h4>Network Shield</h4>
+                            <p>Port Block & Firewall</p>
+                            <i class="material-icons-round">security</i>
+                        </button>
+                        <button class="scan-card-btn" onclick="Security.startScan('junk')">
+                            <h4>Optimizer</h4>
+                            <p>Cleanup Junk Files</p>
+                            <i class="material-icons-round">cleaning_services</i>
+                        </button>
+                    </div>
+                </div>
+
+                <div class="flex-col flex gap-4">
+                    <div class="panel">
+                        <div class="panel-header" style="margin-bottom: 12px; padding-bottom: 12px;">
+                            <h3>Health Metrics</h3>
+                        </div>
+                        <div class="metric-row">
+                            <span class="text-sm text-muted">CPU Load</span>
+                            <span class="metric-val mono" id="cpu-val">12%</span>
+                        </div>
+                        <div class="metric-row">
+                            <span class="text-sm text-muted">RAM Usage</span>
+                            <span class="metric-val mono" id="ram-val">4.2GB</span>
+                        </div>
+                        <div class="metric-row">
+                            <span class="text-sm text-muted">Network</span>
+                            <span class="metric-val mono text-success" id="net-val">SECURE</span>
+                        </div>
+                    </div>
+
+                    <div class="panel flex-col flex" style="flex: 1;">
+                        <h3 style="font-size: 14px; font-weight: 600; margin: 0 0 12px 0;">Activity Log</h3>
+                        <div class="log-window mono" id="mini-log">System initialized...</div>
+                    </div>
+                </div>
+
+            </div>
+        </main>
+
+    </div>
+
+    <div id="scan-modal" class="modal-overlay">
+        <div class="modal-window">
+            <div class="modal-header">
+                <div class="flex items-center gap-2">
+                    <i class="material-icons-round text-muted">radar</i>
+                    <span class="font-bold text-main" id="modal-title">System Scan</span>
+                </div>
+                <div class="mono text-xs text-muted" id="scan-timer">00:00</div>
+            </div>
+            <div class="modal-body">
+                <div class="flex justify-between text-sm">
+                    <span id="scan-stage" class="text-muted">Initializing engines...</span>
+                    <span class="mono font-bold text-primary" id="scan-pct">0%</span>
+                </div>
+                <div class="progress-track">
+                    <div class="progress-fill" id="scan-bar"></div>
+                </div>
+                <div class="scan-console" id="scan-console">
+                    <p>> Core initialized.</p>
+                </div>
+                <div class="flex justify-between" style="margin-top: 24px;">
+                    <button class="btn btn-danger" onclick="Security.cancelScan()">Cancel</button>
+                    <button class="btn btn-primary" style="display: none;" id="scan-finish-btn" onclick="Security.closeModal()">Close & Report</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<script>
+/**
+ * AEGIS ENTERPRISE CORE
+ * Light/Professional Edition
+ */
+
+// --- UTILS ---
+const $ = (id) => document.getElementById(id);
+const wait = (ms) => new Promise(r => setTimeout(r, ms));
+const rng = (min, max) => Math.floor(Math.random() * (max - min + 1)) + min;
+
+// --- STATE MANAGEMENT ---
+const State = {
+    protectedUntil: localStorage.getItem('aegis_prot_date') || 0,
+    license: localStorage.getItem('aegis_license') || null,
+    
+    isProtected() {
+        return Date.now() < this.protectedUntil;
+    },
+
+    setProtected(days) {
+        this.protectedUntil = Date.now() + (days * 24 * 60 * 60 * 1000);
+        localStorage.setItem('aegis_prot_date', this.protectedUntil);
+    },
+
+    revoke() {
+        this.protectedUntil = 0;
+        localStorage.removeItem('aegis_prot_date');
+    }
+};
+
+// --- SECURITY ENGINE ---
+const Security = {
+    isScanning: false,
+
+    async startScan(type) {
+        if(this.isScanning) return;
+        this.isScanning = true;
+        
+        const config = this.getScanConfig(type);
+        
+        // UI Setup
+        $('scan-modal').style.display = 'flex';
+        $('modal-title').innerText = config.title;
+        $('scan-finish-btn').style.display = 'none';
+        $('scan-console').innerHTML = `<p>> Initializing ${config.title} protocol...</p>`;
+        
+        // Simulation Loop
+        let progress = 0;
+        const duration = 5000 + (Math.random() * 3000); // Random duration
+        const step = 50; // ms
+        const increment = 100 / (duration / step);
+
+        const timer = setInterval(() => {
+            progress += increment;
+            
+            // Updates
+            $('scan-bar').style.width = `${Math.min(progress, 100)}%`;
+            $('scan-pct').innerText = `${Math.floor(Math.min(progress, 100))}%`;
+            $('scan-timer').innerText = `00:${Math.floor(progress/3).toString().padStart(2,'0')}`;
+
+            // Random Logs
+            if(Math.random() > 0.7) {
+                this.addScanLog(config.logs[rng(0, config.logs.length-1)]);
+            }
+
+            // Logic at specific percentages
+            if(progress > 40 && progress < 42) {
+                $('scan-stage').innerText = "Analyzing file structure...";
+            }
+            if(progress > 80 && progress < 82) {
+                $('scan-stage').innerText = "Finalizing & Cleaning...";
+            }
+
+            // Completion
+            if(progress >= 100) {
+                clearInterval(timer);
+                this.completeScan(config);
+            }
+        }, step);
+    },
+
+    completeScan(config) {
+        $('scan-bar').style.width = '100%';
+        $('scan-pct').innerText = '100%';
+        $('scan-stage').innerText = 'Completed Successfully';
+        $('scan-stage').className = 'text-success font-bold';
+        
+        this.addScanLog('> RESULT: SUCCESS.');
+        this.addScanLog(`> ${config.finishMsg}`);
+        
+        $('scan-finish-btn').style.display = 'inline-flex';
+        
+        // Set Protection
+        State.setProtected(7);
+        UIManager.updateStatus();
+        UIManager.addLog(`${config.title} completed successfully.`);
+        $('last-scan-time').innerText = "LAST: JUST NOW";
+    },
+
+    closeModal() {
+        $('scan-modal').style.display = 'none';
+        this.isScanning = false;
+    },
+
+    cancelScan() {
+        $('scan-modal').style.display = 'none';
+        this.isScanning = false;
+        UIManager.addLog("Scan aborted by user.");
+    },
+
+    revoke() {
+        if(confirm("Disabling protection will expose this device to threats. Continue?")) {
+            State.revoke();
+            UIManager.updateStatus();
+            UIManager.addLog("Protection manually revoked.");
+        }
+    },
+
+    addScanLog(msg) {
+        const p = document.createElement('p');
+        p.innerText = `> ${msg}`;
+        const c = $('scan-console');
+        c.appendChild(p);
+        c.scrollTop = c.scrollHeight;
+    },
+
+    getScanConfig(type) {
+        const configs = {
+            deep: {
+                title: 'Deep System Audit',
+                finishMsg: '0 Rootkits, 0 Malware found. Integrity Verified.',
+                logs: [
+                    'Checking C:\\Windows\\System32\\drivers\\...',
+                    'Verifying Digital Signatures...',
+                    'Scanning Memory Address 0x8842F...',
+                    'Analyzing Registry Hive HKCU...',
+                ]
+            },
+            malware: {
+                title: 'Malware Purge',
+                finishMsg: '3 Threats Isolated & Removed.',
+                logs: [
+                    'Scanning Process PID 4420...',
+                    'WARNING: Suspicious pattern in AppData',
+                    'Quarantining Trojan.Script.Generic...',
+                    'Checking Startup Items...',
+                ]
+            },
+            network: {
+                title: 'Network Fortification',
+                finishMsg: 'Ports 80/443 Secured. Firewall Active.',
+                logs: [
+                    'Pinging remote DNS...',
+                    'Closing unused Port 21 (FTP)...',
+                    'Analyzing packet headers...',
+                    'Establishing Encrypted VPN Tunnel...',
+                ]
+            },
+            junk: {
+                title: 'System Optimization',
+                finishMsg: '420MB Temp Files Removed.',
+                logs: [
+                    'Emptying Recycle Bin...',
+                    'Clearing Browser Cache (Chrome)...',
+                    'Deleting Temp Files...',
+                    'Optimizing Database...',
+                ]
+            }
+        };
+        return configs[type];
+    }
+};
+
+// --- UI MANAGER ---
+const UIManager = {
+    init() {
+        // Particles
+        ParticleEngine.init();
+        
+        // Boot Check
+        if(!sessionStorage.getItem('booted')) {
+            this.runBootSequence();
+        } else {
+            $('boot-sequence').style.display = 'none';
+            this.checkLogin();
+        }
+
+        // Live Metrics Loop
+        setInterval(this.simulateMetrics, 2000);
+        setInterval(this.updateTimer, 60000); // Check expiry every min
+    },
+
+    async runBootSequence() {
+        const log = $('boot-log');
+        const logs = [
+            "Mounting Volume C: [OK]", "Loading Security Modules...", "Verifying License...", "Network Interface: UP", "Starting AEGIS Daemon..."
+        ];
+
+        for(const l of logs) {
+            log.innerText += `> ${l}\n`;
+            await wait(rng(200, 600));
+        }
+        await wait(500);
+        $('boot-sequence').style.opacity = '0';
+        sessionStorage.setItem('booted', 'true');
+        setTimeout(() => {
+            $('boot-sequence').style.display = 'none';
+            this.checkLogin();
+        }, 1000);
+    },
+
+    checkLogin() {
+        if(!State.license) {
+            $('login-screen').style.display = 'flex';
+        } else {
+            this.revealApp();
+        }
+    },
+
+    revealApp() {
+        $('app-root').style.opacity = '1';
+        $('license-display').innerText = State.license;
+        this.updateStatus();
+    },
+
+    updateStatus() {
+        const statusBadge = $('global-status');
+        const banner = $('protection-banner');
+        
+        if(State.isProtected()) {
+            // Protected UI
+            statusBadge.className = 'status-badge secure';
+            statusBadge.innerHTML = `<div class="pulse-dot"></div><span>SYSTEM SECURE</span>`;
+            banner.style.display = 'flex';
+            
+            const daysLeft = Math.ceil((State.protectedUntil - Date.now()) / (1000 * 60 * 60 * 24));
+            $('protect-timer').innerText = `${daysLeft} days remaining`;
+            $('net-val').className = 'metric-val mono text-success';
+            $('net-val').innerText = 'ENCRYPTED';
+        } else {
+            // Vulnerable UI
+            statusBadge.className = 'status-badge danger';
+            statusBadge.innerHTML = `<div class="pulse-dot"></div><span>VULNERABLE</span>`;
+            banner.style.display = 'none';
+            $('net-val').className = 'metric-val mono text-danger';
+            $('net-val').innerText = 'EXPOSED';
+        }
+    },
+
+    simulateMetrics() {
+        // Sine wave simulation for smoother values
+        const time = Date.now() / 1000;
+        const cpu = Math.floor(15 + Math.sin(time) * 10 + Math.random() * 5);
+        const ram = (4.2 + Math.sin(time + 10) * 0.2).toFixed(1);
+        
+        $('cpu-val').innerText = `${cpu}%`;
+        $('ram-val').innerText = `${ram}GB`;
+    },
+
+    addLog(msg) {
+        const t = new Date().toLocaleTimeString();
+        const l = $('mini-log');
+        l.innerText = `[${t}] ${msg}\n` + l.innerText;
+    },
+
+    updateTimer() {
+        if(State.isProtected()) UIManager.updateStatus();
+    }
+};
+
+// --- APP CONTROLLER ---
+const App = {
+    login() {
+        const key = $('license-input').value;
+        if(key.length > 5) {
+            localStorage.setItem('aegis_license', key);
+            State.license = key;
+            $('login-screen').style.display = 'none';
+            UIManager.revealApp();
+        }
+    },
+
+    nav(page) {
+        const btns = document.querySelectorAll('.nav-btn');
+        btns.forEach(b => b.classList.remove('active'));
+        event.currentTarget.classList.add('active');
+    }
+};
+
+// --- PARTICLE ENGINE (Subtle) ---
+const ParticleEngine = {
+    init() {
+        const canvas = $('canvas-layer');
+        const ctx = canvas.getContext('2d');
+        let width, height;
+        const particles = [];
+
+        const resize = () => {
+            width = canvas.width = window.innerWidth;
+            height = canvas.height = window.innerHeight;
+        };
+        
+        class P {
+            constructor() { this.reset(); }
+            reset() {
+                this.x = Math.random() * width;
+                this.y = Math.random() * height;
+                this.vx = (Math.random() - 0.5) * 0.5;
+                this.vy = (Math.random() - 0.5) * 0.5;
+                this.alpha = Math.random() * 0.1 + 0.05; // Very subtle gray
+            }
+            update() {
+                this.x += this.vx; this.y += this.vy;
+                if(this.x < 0 || this.x > width) this.vx *= -1;
+                if(this.y < 0 || this.y > height) this.vy *= -1;
+            }
+            draw() {
+                ctx.fillStyle = `rgba(0, 0, 0, ${this.alpha})`;
+                ctx.fillRect(this.x, this.y, 2, 2);
+            }
+        }
+
+        window.addEventListener('resize', resize);
+        resize();
+
+        for(let i=0; i<40; i++) particles.push(new P());
+
+        const loop = () => {
+            ctx.clearRect(0,0,width,height);
+            particles.forEach(p => { p.update(); p.draw(); });
+            requestAnimationFrame(loop);
+        };
+        loop();
+    }
+};
+
+// Init
+window.onload = () => UIManager.init();
+
+</script>
+</body>
+</html>
