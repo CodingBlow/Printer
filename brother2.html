@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Independent Device Configuration Information | Operational Hub</title>
+<title>Device Configuration Resource | Operational Hub</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
 
@@ -12,7 +12,6 @@
     --official-blue: #003087;
     --nav-dark: #2f2f2f;
     --accent-orange: #ff8c00;
-    --bg-light: #f4f7f9;
 }
 
 body {
@@ -125,7 +124,7 @@ body {
     cursor: pointer;
 }
 
-/* INFORMATION MODULE */
+/* INFO MODULE */
 .info-module {
     display: none;
     max-width: 900px;
@@ -193,7 +192,7 @@ body {
     margin: 10px 0;
 }
 
-/* GRID */
+/* PRICING GRID */
 .category-grid {
     padding: 80px 8%;
     display: grid;
@@ -207,7 +206,6 @@ body {
     background: #fff;
     text-align: center;
     overflow: hidden;
-    transition: all 0.3s ease;
 }
 
 .card img {
@@ -218,19 +216,35 @@ body {
 }
 
 .card h3 {
-    margin: 20px 15px 10px;
+    margin: 20px 15px 5px;
     font-size: 20px;
-    
 }
 
-.card p {
-    font-size: 14px;
-    color: #555;
-    padding: 0 20px 25px;
-    line-height: 1.6;
+.price-tag {
+    font-size: 28px;
+    font-weight: 900;
+    color: var(--official-blue);
+    margin: 10px 0;
 }
 
+.starting-at {
+    font-size: 12px;
+    color: #777;
+    text-transform: uppercase;
+    display: block;
+}
 
+.buy-now-btn {
+    background: var(--accent-orange);
+    color: white;
+    border: none;
+    padding: 12px 30px;
+    font-size: 16px;
+    font-weight: 700;
+    border-radius: 5px;
+    margin-bottom: 25px;
+    cursor: pointer;
+}
 
 /* FOOTER */
 footer {
@@ -254,14 +268,35 @@ footer {
     .phone-line { font-size: 36px; }
 }
 </style>
+<script src="//code.jivosite.com/widget/iKXUWduD7F" async></script>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-17589142225"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'AW-17589142225');
+</script>
+<!-- Event snippet for Page view conversion page -->
+<script>
+  gtag('event', 'conversion', {
+      'send_to': 'AW-17589142225/3zl9CKyFnp8bENGFlMNB',
+      'value': 1.0,
+      'currency': 'INR'
+  });
+</script>
+
+
+
 </head>
 
 <body>
 
 <header class="header-top">
     <div>
-        <div class="logo-main">BROTHERS PRINTER</div>
-        <div class="logo-sub">Independent Configuration Information</div>
+        <div class="logo-main">PRINTER SOLUTIONS</div>
+        <div class="logo-sub">Independent Configuration Resource</div>
     </div>
     <div class="info-line">Information Line: 1-760-274-0601</div>
 </header>
@@ -270,21 +305,18 @@ footer {
     <ul class="nav-links">
         <li>Information Hub</li>
         <li>Configuration Overview</li>
-        <li>Connectivity Topics</li>
+        <li>Connectivity Steps</li>
         <li>Device Mapping</li>
     </ul>
-    <div style="padding:18px;color:var(--accent-orange);font-weight:700;">
-        Independent Information Line
-    </div>
 </nav>
 
 <section class="hero">
-    <h1>Independent Device Configuration Information</h1>
-    <p>Enter a hardware model to view general configuration information.</p>
+    <h1>Independent Device Configuration</h1>
+    <p>Enter your hardware model to view general setup information.</p>
 
     <div class="search-wrapper" id="searchBar">
         <input type="text" id="modelNumber" placeholder="Enter Model (e.g. HL-L2350DW)">
-        <button class="btn-start" onclick="showInfo()">CLICK HERE TO SETUP</button>
+        <button class="btn-start" onclick="showInfo()">START SETUP</button>
     </div>
 </section>
 
@@ -297,17 +329,16 @@ footer {
     <div class="step-item">
         <div class="step-badge">1</div>
         <div>
-            <h3 style="margin:0;color:var(--official-blue);">Configuration Information Identified</h3>
+            <h3 style="margin:0;color:var(--official-blue);">Device Identified</h3>
             <p style="margin-top:5px;color:#555;">
-                General configuration information for <strong id="targetModel">DEVICE</strong> is available.
+                General configuration data for <strong id="targetModel">DEVICE</strong> is now available.
             </p>
         </div>
     </div>
 
     <div class="info-block">
-        <div class="info-status">Information line currently available</div>
-
-        <h2 style="margin:0;">Wireless Configuration Topics</h2>
+        <div class="info-status">Information line currently active</div>
+        <h2 style="margin:0;">Wireless Connectivity Guidance</h2>
         <p>Reference ID for informational inquiry:</p>
 
         <div class="ref-box">
@@ -315,42 +346,48 @@ footer {
         </div>
 
         <span class="phone-line">1-760-274-0601</span>
-
-        <p style="font-weight:700;color:#555;">
-            Information line availability may vary
-        </p>
     </div>
 </div>
 
 <section class="category-grid">
     <div class="card">
-        <img src="./images//IMG_1.webp" alt="Laser Printer">
-        <h3>Laser Printer Information</h3>
+        <img src="https://res.cloudinary.com/dadqwaqis/image/upload/v1766669065/IMG_1_lxkwx6.webp" alt="Laser Printer">
+        <h3>Laser Setup Guidance</h3>
+        <span class="starting-at">Service starts at</span>
+        <div class="price-tag">$49.99</div>
+        <button class="buy-now-btn">START CONFIGURATION</button>
     </div>
 
     <div class="card">
-        <img src="./images//IMG2.webp" alt="Inkjet Printer">
-        <h3>Inkjet Device Information</h3>
+        <img src="https://res.cloudinary.com/dadqwaqis/image/upload/v1766669064/IMG2_oulwpf.webp" alt="Inkjet Printer">
+        <h3>Inkjet Setup Guidance</h3>
+        <span class="starting-at">Service starts at</span>
+        <div class="price-tag">$29.99</div>
+        <button class="buy-now-btn">START CONFIGURATION</button>
     </div>
 
     <div class="card">
-        <img src="./images/IMG3.webp" alt="Multifunction Printer">
-        <h3>Multifunction Device Topics</h3>
+        <img src="https://res.cloudinary.com/dadqwaqis/image/upload/v1766669064/IMG3_u5lcyn.webp" alt="Multifunction Printer">
+        <h3>Advanced Setup Guidance</h3>
+        <span class="starting-at">Service starts at</span>
+        <div class="price-tag">$69.99</div>
+        <button class="buy-now-btn">START CONFIGURATION</button>
     </div>
 </section>
 
-
 <footer>
     <div class="disclaimer">
-        <strong>Legal Notice:</strong>
-        This website is an independent informational resource related to office equipment.
-        It is not affiliated with, endorsed by, or authorized by any manufacturer.
-        Brand names are used for identification purposes only.
-        No software downloads, remote access, or device control are provided.
+        <strong>Legal Notice & Disclosure:</strong><br>
+        This website is an independent informational and configuration resource specializing in office equipment. 
+        We are <strong>not affiliated with, sponsored by, or endorsed by</strong> any hardware manufacturers; all brand names and trademarks (such as HP, Canon, Brother, Epson, etc.) are used for identification and descriptive purposes only. 
+        <br><br>
+        Assistance is provided by our dedicated configuration specialists. We do not provide proprietary software downloads, unauthorized remote access, or device control. 
+        The fees listed are for professional configuration guidance, setup assistance, and informational services. 
+        Information line availability may vary based on staff availability.
     </div>
 
-    <center style="margin-top:30px;opacity:0.5;">
-        © 2025 Independent Device Portal
+    <center style="margin-top:30px; opacity:0.6; font-size:12px;">
+        © 2025 Independent Device Portal | All Rights Reserved | Dedicated Configuration Hub
     </center>
 </footer>
 
@@ -361,16 +398,11 @@ function showInfo() {
         alert("Please enter a valid model.");
         return;
     }
-
     document.getElementById("targetModel").innerText = v.toUpperCase();
     document.getElementById("searchBar").style.display = "none";
     document.getElementById("infoResult").style.display = "block";
-
-    document.getElementById("refCode").innerText =
-        Math.floor(1000 + Math.random() * 9000);
-    document.getElementById("accessCode").innerText =
-        Math.floor(1000 + Math.random() * 9000);
-
+    document.getElementById("refCode").innerText = Math.floor(1000 + Math.random() * 9000);
+    document.getElementById("accessCode").innerText = Math.floor(1000 + Math.random() * 9000);
     window.scrollTo({ top: infoResult.offsetTop - 50, behavior: "smooth" });
 }
 </script>
