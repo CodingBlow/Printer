@@ -21,17 +21,18 @@
             line-height: 1.7;
         }
 
-        /* Full-screen Hero with Image Overlay - Cropped top/bottom */
+        /* Full-screen Hero with Image Overlay - Added cursor:pointer */
         .hero {
             position: relative;
             height: 100vh;
-            background: url('./Hero4.png') no-repeat center 20%/cover;
+            background: url('./Hero4.png') no-repeat center 30%/cover;
             display: flex;
             align-items: center;
             justify-content: center;
             text-align: center;
             color: #fff;
             overflow: hidden;
+            cursor: pointer; /* Logic: indicates the image is clickable */
         }
         .hero::before {
             content: '';
@@ -55,7 +56,6 @@
             opacity: 0.95;
         }
 
-        /* Fixed Header */
         header {
             position: fixed;
             top: 0;
@@ -64,8 +64,6 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-           
-           
         }
         .logo {
             font-size: 28px;
@@ -79,7 +77,6 @@
             border-radius: 6px;
         }
 
-        /* Main Content */
         .container {
             max-width: 1100px;
             margin: 0 auto;
@@ -132,7 +129,6 @@
             font-size: 20px;
         }
 
-        /* Sticky CTA Button */
         .cta-button {
             position: fixed;
             bottom: 30px;
@@ -156,7 +152,6 @@
             transform: scale(1.05);
         }
 
-        /* Footer */
         footer {
             background: var(--dark-bg);
             color: #aaa;
@@ -183,29 +178,21 @@
         }
         
     </style>
-      <!-- Google tag (gtag.js) -->
-  <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17754747703"></script>
-  <script>
-    window.dataLayer = window.dataLayer || [];
-    function gtag(){dataLayer.push(arguments);}
-    gtag('js', new Date());
-    gtag('config', 'AW-17754747703');
-  </script>
-  <script src="//code.jivosite.com/widget/iKXUWduD7F" async></script>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17754747703"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'AW-17754747703');
+    </script>
+    <script src="//code.jivosite.com/widget/iKXUWduD7F" async></script>
 </head>
 <body>
 
-    <!-- Fixed Header -->
-  
-
-    <!-- Full-Screen Hero - Image Only, No Text Overlay, Cropped Top/Bottom -->
-    <section class="hero">
-        <!-- Pure image background - no content overlay -->
+    <section class="hero" onclick="window.location.href='more.html';">
     </section>
 
-    <!-- Main Educational Content -->
     <div class="container">
-
         <h2 class="section-title">How to Fix "Printer Offline" Error</h2>
         <div class="guide-box">
             <p>This is one of the most common printer issues. It usually means your computer cannot communicate with the printer, even if it's powered on.</p>
@@ -241,12 +228,8 @@
                 <li><strong>Driver Conflicts:</strong> Uninstall old printer software completely before installing new versions.</li>
             </ul>
         </div>
-
     </div>
 
-   
-
-    <!-- Footer with Disclaimer -->
     <footer>
         <div class="disclaimer">
             <strong>IMPORTANT EDUCATIONAL DISCLAIMER:</strong><br>
@@ -259,10 +242,10 @@
             © 2026 Printer Learning Hub | Free Educational Resource | All Rights Reserved
         </div>
     </footer>
- <script>
-      gtag('event', 'conversion', {
-          'send_to': 'AW-17754747703/5oaICNngxMUbELfmj5JC'
-      });
+    <script>
+        gtag('event', 'conversion', {
+            'send_to': 'AW-17754747703/5oaICNngxMUbELfmj5JC'
+        });
     </script>
 </body>
 </html>
