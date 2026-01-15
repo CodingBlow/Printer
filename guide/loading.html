@@ -10,196 +10,288 @@
 
 <style>
 :root {
-  --primary:#005fcc;
+  --primary:     #005fcc;
   --primary-dark:#0047a3;
-  --danger:#c53030;
-  --bg:#f4f6f8;
-  --panel:#ffffff;
-  --border:#d1d5db;
-  --text:#111827;
-  --sub:#374151;
-  --mono:'JetBrains Mono', monospace;
+  --danger:      #c53030;
+  --bg:          #f4f6f8;
+  --panel:       #ffffff;
+  --border:      #d1d5db;
+  --text:        #111827;
+  --sub:         #374151;
+  --mono:        'JetBrains Mono', monospace;
 }
 
-*{box-sizing:border-box;margin:0;padding:0}
-
-body{
-  font-family:'Inter',system-ui,-apple-system;
-  background:var(--bg);
-  min-height:100vh;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  padding:24px;
-  color:var(--text);
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
-.installer-window{
-  width:100%;
-  max-width:880px;
-  height:540px;
-  background:var(--panel);
-  border:1px solid var(--border);
-  border-radius:12px;
-  box-shadow:0 20px 30px rgba(0,0,0,.12);
-  display:flex;
-  overflow:hidden;
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background: var(--bg);
+  min-height: 100vh;
+  color: var(--text);
+  padding: 16px;
+  display: grid;
+  place-items: center;
 }
 
-/* SIDEBAR */
-.sidebar{
-  width:300px;
-  background:#f9fafb;
-  border-right:1px solid var(--border);
-  padding:2.5rem;
+.installer-window {
+  width: 100%;
+  max-width: 920px;
+  min-height: 560px;
+  background: var(--panel);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
 }
 
-.brand{
-  display:flex;
-  align-items:center;
-  gap:14px;
-  font-size:1.25rem;
-  font-weight:600;
-  margin-bottom:3rem;
+/* ── SIDEBAR ── */
+.sidebar {
+  background: #f9fafb;
+  border-bottom: 1px solid var(--border);
+  padding: 1.8rem 1.5rem;
 }
 
-.brand-icon{
-  width:42px;
-  height:42px;
-  background:var(--primary);
-  color:white;
-  border-radius:8px;
-  display:flex;
-  align-items:center;
-  justify-content:center;
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  font-size: clamp(1.1rem, 4vw, 1.3rem);
+  font-weight: 600;
+  margin-bottom: 2rem;
 }
 
-/* STEPS */
-.step-list{display:flex;flex-direction:column;gap:26px}
-.step-item{display:flex;gap:14px;opacity:.6;font-size:1.05rem}
-.step-item.active,.step-item.done{opacity:1}
-.step-dot{
-  width:22px;
-  height:22px;
-  border-radius:50%;
-  border:2px solid #9ca3af;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:12px;
-}
-.step-item.done .step-dot{background:#16a34a;border-color:#16a34a;color:white}
-.step-item.active .step-dot{border-color:var(--primary)}
-
-/* MAIN */
-.main{flex:1}
-.section{
-  padding:3.8rem;
-  height:100%;
-  display:flex;
-  flex-direction:column;
+.brand-icon {
+  width: 44px;
+  height: 44px;
+  background: var(--primary);
+  color: white;
+  border-radius: 8px;
+  display: grid;
+  place-items: center;
+  font-size: 1.4rem;
 }
 
-h1{
-  font-size:1.9rem;
-  margin-bottom:.8rem;
+.step-list {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 1.4rem 2rem;
 }
 
-.sub{
-  font-size:1.15rem;
-  line-height:1.7;
-  color:var(--sub);
-  max-width:460px;
+.step-item {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 0.95rem;
+  opacity: 0.65;
+  white-space: nowrap;
 }
 
-/* PROGRESS */
-.progress-track{
-  height:10px;
-  background:#e5e7eb;
-  border-radius:5px;
-  margin:3rem 0 1rem;
-}
-.progress-fill{
-  height:100%;
-  width:0%;
-  background:var(--primary);
-  transition:width .6s linear;
+.step-item.active,
+.step-item.done {
+  opacity: 1;
 }
 
-.status-row{
-  display:flex;
-  justify-content:space-between;
-  font-size:1.05rem;
-  color:var(--sub);
+.step-dot {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 2px solid #9ca3af;
+  display: grid;
+  place-items: center;
+  font-size: 0.68rem;
+  flex-shrink: 0;
 }
 
-/* LOG */
-.console-log{
-  margin-top:2.5rem;
-  background:#f9fafb;
-  border:1px solid var(--border);
-  border-radius:6px;
-  padding:1rem;
-  font-family:var(--mono);
-  font-size:.85rem;
-  height:90px;
-  color:#475569;
+.step-item.done .step-dot {
+  background: #16a34a;
+  border-color: #16a34a;
+  color: white;
 }
 
-/* ERROR */
-.error-icon{
-  width:70px;
-  height:70px;
-  background:#fef2f2;
-  color:var(--danger);
-  border-radius:50%;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  font-size:2rem;
-  margin-bottom:1.8rem;
+.step-item.active .step-dot {
+  border-color: var(--primary);
 }
 
-.error h2{
-  font-size:1.7rem;
-  margin-bottom:1rem;
+/* ── MAIN CONTENT ── */
+.main {
+  flex: 1;
+  display: flex;
 }
 
-.error p{
-  font-size:1.15rem;
-  line-height:1.7;
-  color:var(--sub);
-  margin-bottom:2rem;
+.section {
+  padding: clamp(1.5rem, 5vw, 3rem);
+  width: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
-.error-details{
-  background:#fff;
-  border:1px solid var(--border);
-  border-left:5px solid var(--danger);
-  padding:1rem;
-  font-family:var(--mono);
-  font-size:.9rem;
-  margin-bottom:2.5rem;
+h1 {
+  font-size: clamp(1.6rem, 5.5vw, 2.1rem);
+  margin-bottom: 0.9rem;
+  line-height: 1.2;
 }
 
-.support-footer{
-  margin-top:auto;
-  border-top:1px solid var(--border);
-  padding-top:1.8rem;
-  font-size:1.05rem;
-  display:flex;
-  justify-content:space-between;
+.sub {
+  font-size: clamp(1rem, 3.8vw, 1.18rem);
+  line-height: 1.65;
+  color: var(--sub);
+  max-width: 520px;
 }
 
-.support-number{
-  font-size:1.3rem;
-  font-weight:600;
-  color:var(--primary);
+/* Progress */
+.progress-track {
+  height: 10px;
+  background: #e5e7eb;
+  border-radius: 5px;
+  margin: 2.2rem 0 1rem;
 }
 
-.hidden{display:none!important}
+.progress-fill {
+  height: 100%;
+  width: 0%;
+  background: var(--primary);
+  border-radius: 5px;
+  transition: width 0.6s linear;
+}
+
+.status-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.98rem;
+  color: var(--sub);
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+/* Console */
+.console-log {
+  margin-top: 2rem;
+  background: #f9fafb;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  padding: 1rem;
+  font-family: var(--mono);
+  font-size: clamp(0.78rem, 2.8vw, 0.86rem);
+  color: #475569;
+  min-height: 80px;
+  line-height: 1.5;
+}
+
+/* ERROR STATE */
+.error-icon {
+  width: 64px;
+  height: 64px;
+  background: #fef2f2;
+  color: var(--danger);
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  font-size: 2rem;
+  margin-bottom: 1.6rem;
+}
+
+.error h2 {
+  font-size: clamp(1.4rem, 5vw, 1.8rem);
+  margin-bottom: 1rem;
+}
+
+.error p {
+  font-size: clamp(1rem, 3.8vw, 1.15rem);
+  line-height: 1.7;
+  color: var(--sub);
+  margin-bottom: 1.8rem;
+}
+
+.error-details {
+  background: white;
+  border: 1px solid var(--border);
+  border-left: 5px solid var(--danger);
+  padding: 1rem;
+  font-family: var(--mono);
+  font-size: 0.86rem;
+  margin-bottom: 2rem;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+
+.support-footer {
+  margin-top: auto;
+  padding-top: 1.8rem;
+  border-top: 1px solid var(--border);
+  font-size: 1rem;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.support-number {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--primary);
+}
+
+.hidden {
+  display: none !important;
+}
+
+/* ── RESPONSIVE BREAKPOINTS ── */
+
+@media (min-width: 768px) {
+  body {
+    padding: 24px;
+  }
+
+  .installer-window {
+    flex-direction: row;
+    height: 580px;
+    min-height: auto;
+  }
+
+  .sidebar {
+    width: 300px;
+    border-bottom: none;
+    border-right: 1px solid var(--border);
+    padding: 2.5rem;
+  }
+
+  .step-list {
+    flex-direction: column;
+    gap: 1.8rem;
+  }
+
+  .step-item {
+    font-size: 1.05rem;
+  }
+
+  .section {
+    padding: 3.5rem 3.8rem;
+  }
+
+  .support-footer {
+    font-size: 1.05rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .installer-window {
+    max-width: 960px;
+    height: 600px;
+  }
+
+  .section {
+    padding: 4rem 4.5rem;
+  }
+}
 </style>
-<script src="//code.jivosite.com/widget/5VrgL2v5j3" async></script>
 </head>
 
 <body>
@@ -228,7 +320,7 @@ h1{
     <div class="section" id="loadingView">
       <h1>Installing printer software</h1>
       <p class="sub">
-        Please wait while your printer driver is being installed.  
+        Please wait while your printer driver is being installed.<br>
         This may take a few minutes. Your printer is safe.
       </p>
 
@@ -251,23 +343,22 @@ h1{
       <div class="error-icon"><i class="fa-solid fa-triangle-exclamation"></i></div>
 
       <div class="error">
-        <h2>Printer driver installation could not be completed</h2>
+        <h2>Action Required: Printer Driver Installation Failed</h2>
         <p>
-          The printer software stopped during setup because of a temporary
-          internet or system connection issue.
-          <br><br>
-          <strong>Your printer is not damaged.</strong>
+          The printer driver installation was interrupted due to a connection issue.<br><br>
+          <strong>Printing cannot continue until this is fixed.</strong><br>
+          <strong>Your printer hardware is safe.</strong>
         </p>
 
         <div class="error-details">
-          Error Code : 0x80072EFE<br>
-          Reason     : Connection interrupted during download
+Error Code : 0x80072EFE
+Reason     : Download connection interrupted
         </div>
       </div>
 
       <div class="support-footer">
         <span>For help setting up your printer:</span>
-        <div class="support-number">1-877-419-4506</div>
+        <div class="support-number">+1 (760) 274-0601</div>
       </div>
     </div>
 
@@ -275,49 +366,50 @@ h1{
 </div>
 
 <script>
-let progress=0;
-const bar=document.getElementById("bar");
-const percent=document.getElementById("percent");
-const status=document.getElementById("statusText");
-const log=document.getElementById("log");
+// Same animation script (unchanged)
+let progress = 0;
+const bar = document.getElementById("bar");
+const percent = document.getElementById("percent");
+const status = document.getElementById("statusText");
+const log = document.getElementById("log");
 
-const messages=[
+const messages = [
   "Downloading printer driver files",
   "Checking printer compatibility",
   "Installing printer components",
   "Finalizing printer setup"
 ];
 
-function run(){
+function run() {
   let speed =
     progress < 40 ? 0.18 :
     progress < 70 ? 0.08 :
     progress < 90 ? 0.04 : 0.02;
 
   progress += speed + Math.random()*0.04;
-  if(progress>94) progress=94;
+  if (progress > 94) progress = 94;
 
-  bar.style.width=progress+"%";
-  percent.textContent=Math.floor(progress)+"%";
+  bar.style.width = progress + "%";
+  percent.textContent = Math.floor(progress) + "%";
 
-  if(Math.random()>0.93){
-    const msg=messages[Math.floor(Math.random()*messages.length)];
-    status.textContent=msg+"…";
-    log.textContent=msg;
+  if (Math.random() > 0.93) {
+    const msg = messages[Math.floor(Math.random()*messages.length)];
+    status.textContent = msg + "…";
+    log.textContent = msg;
   }
 
-  if(progress>=94){
-    setTimeout(()=>{
+  if (progress >= 94) {
+    setTimeout(() => {
       loadingView.classList.add("hidden");
       errorView.classList.remove("hidden");
-    },1200);
+    }, 1200);
     return;
   }
 
   requestAnimationFrame(run);
 }
 
-setTimeout(run,2000);
+setTimeout(run, 2000);
 </script>
 
 </body>
