@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Printer Setup Assistance | Driver Install & Setup</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f9fafb;
+            color: #111827;
+            margin: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .brand-rect {
+            background: white;
+            border: 1px solid #d1d5db;
+            border-radius: 0.75rem;
+            padding: 1.25rem 1.5rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            min-width: 160px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+        }
+
+        .brand-rect:hover {
+            border-color: #3b82f6;
+            box-shadow: 0 6px 16px rgba(59,130,246,0.18);
+            transform: translateY(-3px);
+        }
+
+        .brand-logo-img {
+            height: 52px;
+            margin-bottom: 0.75rem;
+            object-fit: contain;
+        }
+
+        .setup-banner {
+            background: linear-gradient(135deg, #1e40af 0%, #1e3a8a 100%);
+            color: white;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Professional Driver Setup Banner at Top -->
+    <div class="setup-banner py-10 px-6 text-center shadow-lg">
+        <div class="max-w-5xl mx-auto">
+            <div class="inline-flex items-center justify-center gap-4 mb-4">
+                <i class="fas fa-download text-5xl text-yellow-300"></i>
+                <i class="fas fa-cog text-5xl text-white opacity-80"></i>
+            </div>
+            <h1 class="text-3xl md:text-4xl font-bold mb-4">
+                Driver Install & Printer Setup Assistance
+            </h1>
+            <p class="text-xl md:text-2xl opacity-90 max-w-3xl mx-auto">
+                Select your printer brand below to get the correct drivers, setup guide, and live help
+            </p>
+            <div class="mt-6 inline-flex items-center gap-3 bg-white/15 backdrop-blur-sm px-6 py-3 rounded-full text-base font-medium border border-white/20">
+                <i class="fas fa-shield-alt text-lg"></i>
+                <span>Secure • No payment required • Real person support</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Header (kept minimal and professional) -->
+    <header class="bg-white border-b border-gray-200 shadow-sm sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+            <div class="flex items-center gap-4">
+                <div class="bg-blue-700 w-11 h-11 rounded-lg flex items-center justify-center">
+                    <i class="fas fa-print text-xl text-white"></i>
+                </div>
+                <div>
+                    <h1 class="text-2xl font-bold text-blue-900">Printer Support</h1>
+                    <p class="text-sm text-gray-600">Driver & Setup Help</p>
+                </div>
+            </div>
+
+            <a href="tel:+17602740601" class="hidden sm:flex items-center gap-3 bg-yellow-400 hover:bg-yellow-500 text-blue-900 px-6 py-3 rounded-lg font-bold shadow-md">
+                <i class="fas fa-phone-volume"></i>
+                1-760-274-0601
+            </a>
+        </div>
+    </header>
+
+    <!-- Main Content – Brand Selection -->
+    <main class="flex-grow py-12 px-5 bg-gray-50">
+        <div class="max-w-7xl mx-auto">
+            <div class="text-center mb-12">
+                <h2 class="text-3xl font-bold text-gray-900 mb-3">
+                    Select Your Printer Brand to Begin
+                </h2>
+                <p class="text-lg text-gray-600 max-w-2xl mx-auto">
+                    Click your brand — we’ll guide you through driver download and setup
+                </p>
+            </div>
+
+            <!-- Single row – compact professional buttons -->
+            <div class="flex flex-wrap justify-center gap-5 md:gap-6 lg:gap-8 max-w-5xl mx-auto">
+                <div onclick="redirectToNext('Canon')" class="brand-rect">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/2/28/Canon_wordmark.svg/1200px-Canon_wordmark.svg.png" alt="Canon" class="brand-logo-img">
+                    <div class="text-lg font-semibold text-gray-800">Canon</div>
+                </div>
+
+                <div onclick="redirectToNext('HP')" class="brand-rect">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/HP_logo_2012.svg/1200px-HP_logo_2012.svg.png" alt="HP" class="brand-logo-img">
+                    <div class="text-lg font-semibold text-gray-800">HP</div>
+                </div>
+
+                <div onclick="redirectToNext('Epson')" class="brand-rect">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/78/Epson_logo.svg/1200px-Epson_logo.svg.png" alt="Epson" class="brand-logo-img">
+                    <div class="text-lg font-semibold text-gray-800">Epson</div>
+                </div>
+
+                <div onclick="redirectToNext('Brother')" class="brand-rect">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/3/31/Brother_Industries_logo.svg/1200px-Brother_Industries_logo.svg.png" alt="Brother" class="brand-logo-img">
+                    <div class="text-lg font-semibold text-gray-800">Brother</div>
+                </div>
+
+                <div onclick="redirectToNext('Other')" class="brand-rect">
+                    <i class="fas fa-print text-5xl text-gray-500 mb-3"></i>
+                    <div class="text-lg font-semibold text-gray-800">Other Brand</div>
+                </div>
+            </div>
+
+            <!-- Call fallback -->
+            <div class="mt-16 text-center">
+                <p class="text-xl text-gray-700 mb-5 font-medium">
+                    Need help choosing or installing? Call us now
+                </p>
+                <a href="tel:+17602740601" class="inline-flex items-center gap-4 bg-blue-600 hover:bg-blue-700 text-white px-10 py-5 rounded-xl text-xl font-bold shadow-lg">
+                    <i class="fas fa-phone-volume text-2xl"></i>
+                    Call Free: 1-760-274-0601
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-gray-400 py-8 mt-auto">
+        <div class="max-w-7xl mx-auto px-6 text-center text-sm">
+            <p>Independent printer driver & setup support • Not affiliated with any manufacturer</p>
+            <p class="mt-2">© 2025 Printer Setup Assistance</p>
+        </div>
+    </footer>
+
+    <script>
+        function redirectToNext(brand) {
+            // You can store brand in localStorage or URL param if needed on next page
+            localStorage.setItem('selectedPrinterBrand', brand);
+            
+            // Redirect to your next page (change this URL)
+            window.location.href = "next-step.html";   // ← your actual next page (e.g. driver-download.html, setup-guide.html, thank-you.html)
+        }
+    </script>
+</body>
+</html>

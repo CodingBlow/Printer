@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Official Store | Laptop Computers, Desktops, Printers, Servers, and more</title>
+    <!-- Tailwind CSS for rapid, professional styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@300;400;500;600;700&display=swap');
+
+        body {
+            font-family: 'Hanken Grotesk', sans-serif;
+            color: #333;
+        }
+
+        /* Specific Colors */
+        .blue { color: #0096D6; }
+        .bg-blue { background-color: #0096D6; }
+        .hover-blue:hover { color: #0096D6; }
+        
+        .dark { background-color: #212121; }
+
+        /* Custom underline animation for nav links */
+        .nav-link {
+            position: relative;
+            padding-bottom: 4px;
+        }
+        .nav-link::after {
+            content: '';
+            position: absolute;
+            width: 0;
+            height: 2px;
+            bottom: 0;
+            left: 0;
+            background-color: #0096D6;
+            transition: width 0.3s ease;
+        }
+        .nav-link:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Image Overlay Gradient */
+        .hero-overlay {
+            background: linear-gradient(to right, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.3) 50%, rgba(0,0,0,0) 100%);
+        }
+
+        .btn-primary {
+            background-color: #0096D6;
+            color: white;
+            transition: all 0.3s ease;
+        }
+        .btn-primary:hover {
+            background-color: #0077aa;
+        }
+
+        .btn-outline {
+            border: 2px solid #333;
+            color: #333;
+            transition: all 0.3s ease;
+        }
+        .btn-outline:hover {
+            background-color: #333;
+            color: white;
+        }
+
+        /* Floating Contact Number */
+        .floating-contact {
+            position: fixed;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%);
+            background-color: #0096D6;
+            color: white;
+            padding: 12px 16px;
+            writing-mode: vertical-rl;
+            text-orientation: mixed;
+            font-weight: bold;
+            font-size: 18px;
+            z-index: 1000;
+            box-shadow: 2px 2px 10px rgba(0,0,0,0.3);
+        }
+
+/* Slow & smooth shake animation */
+@keyframes shake {
+    0%   { transform: translateX(0); }
+    10%  { transform: translateX(-3px); }
+    20%  { transform: translateX(3px); }
+    30%  { transform: translateX(-3px); }
+    40%  { transform: translateX(3px); }
+    50%  { transform: translateX(0); }
+    100% { transform: translateX(0); } /* pause */
+}
+
+.shake {
+    animation: shake 2.5s ease-in-out infinite;
+}
+
+    </style>
+</head>
+<body class="bg-gray-50 flex flex-col min-h-screen">
+
+    <!-- Floating Mobile Number -->
+    <div class="floating-contact">
+        Call: +1-760-274-0601
+    </div>
+
+    <!-- Promo Banner -->
+    <div class="bg-gray-100 text-xs text-center py-2 font-medium text-gray-800">
+        <p>Save up to 40% on select products | <a href="#" class="underline hover:blue">Shop Now</a></p>
+    </div>
+
+    <!-- Header -->
+    <header class="bg-white shadow-sm sticky top-0 z-50">
+        <div class="container mx-auto px-4 lg:px-8 h-20 flex items-center justify-between">
+            
+            <!-- Mobile Menu & Logo -->
+            <div class="flex items-center gap-4">
+                <button class="lg:hidden text-2xl text-gray-600">
+                    <i class="fas fa-bars"></i>
+                </button>
+                
+                <!-- Logo  -->
+                <a href="#" class="flex-shrink-0">
+                    <svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+                         viewBox="0 0 100 100" style="enable-background:new 0 0 100 100; width: 50px; height: 50px;" xml:space="preserve">
+                    <circle style="fill:#0096D6;" cx="50" cy="50" r="48"/>
+                    <g>
+                        <path style="fill:#FFFFFF;" d="M37.3,64.6l3.5-17.7h-5.2l-3.5,17.7H37.3z M43.4,35.4l-3.3,16.5h5.2l3.3-16.5H43.4z M58.4,46.9
+                            c0-2.8,0.5-4.8,1.4-6.1c0.9-1.3,2.4-1.9,4.4-1.9c1.6,0,3.3,0.3,5.1,1l0.9-4.3c-1.8-0.7-3.6-1.1-5.6-1.1c-3.7,0-6.4,1.1-8.2,3.3
+                            c-1.8,2.2-2.7,5.5-2.7,9.8c0,2.1,0.1,4.2,0.3,6.5h-5.3l-2.3,11.5h5.2l1.6-8c1.3,1.9,3.8,2.8,7.3,2.8c3.2,0,5.6-0.8,7.3-2.5
+                            c1.7-1.7,2.5-4.3,2.5-7.8c0-0.6,0-1.1-0.1-1.7l-5.2,0C63.6,50.7,62.1,51.9,60.6,51.9C59.1,51.9,58.4,50.3,58.4,46.9z"/>
+                    </g>
+                    </svg>
+                </a>
+            </div>
+
+            <!-- Desktop Navigation -->
+            <nav class="hidden lg:flex items-center gap-8 font-medium text-sm text-gray-700">
+                <a href="#" class="nav-link hover:text-black">Laptops</a>
+                <a href="#" class="nav-link hover:text-black">Desktops</a>
+                <a href="#" class="nav-link hover:text-black">Printers</a>
+                <a href="#" class="nav-link hover:text-black">Ink & Toner</a>
+                <a href="#" class="nav-link hover:text-black">Monitors</a>
+                <a href="#" class="nav-link hover:text-black">Accessories</a>
+                <a href="#" class="nav-link hover:text-black text-red-600">Business</a>
+            </nav>
+
+            <!-- Utility Icons -->
+            <div class="flex items-center gap-6 text-gray-600">
+                <button class="hover:blue transition">
+                    <i class="fas fa-search text-lg"></i>
+                </button>
+                <button class="hidden sm:block hover:blue transition">
+                    <i class="fas fa-shopping-cart text-lg"></i>
+                </button>
+                <button class="hidden sm:block hover:blue transition">
+                    <i class="far fa-user text-lg"></i>
+                </button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="flex-grow">
+
+        <!-- Hero Section -->
+        <section class="relative bg-gray-900 text-white overflow-hidden h-[500px] lg:h-[600px] flex items-center">
+       
+            
+            <div class="absolute inset-0 hero-overlay"></div>
+
+            <div class="container mx-auto px-4 lg:px-8 relative z-10 grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div class="flex flex-col justify-center space-y-6">
+                    <span class="blue font-bold tracking-wider uppercase text-sm">Independent Printer Educational Guide</span>
+                    <h1 class="text-4xl lg:text-6xl font-light leading-tight">
+                        123 Printer Setup Easily<br>
+                        <span class="font-bold">WiFi Connection, Drivers & More</span>
+                    </h1>
+                    <p class="text-gray-200 text-lg max-w-md">
+                        Having trouble with WiFi connection, driver installation, printer showing offline, or general setup? This independent educational guide provides step-by-step information to help you get your printer working smoothly.
+                    </p>
+                    <div class="flex flex-col sm:flex-row gap-4 pt-4">
+                        <a href="#"
+   class="btn-primary px-12 py-5 text-center rounded font-semibold text-xl shake inline-block">
+   Click Here for Printer Setup
+</a>
+
+                    </div>
+                </div>
+                <div class="flex items-center justify-center">
+                    <img src="../images/Prin1.png"  
+                         class="max-h-96 object-contain drop-shadow-2xl">
+                </div>
+            </div>
+        </section>
+
+        <!-- Categories Section -->
+        <section class="py-16 bg-white">
+            <div class="container mx-auto px-4 lg:px-8">
+                <h2 class="text-3xl font-light mb-10 text-center">Explore Our Products</h2>
+                
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+                    <!-- Category 1 -->
+                    <a href="#" class="group flex flex-col items-center text-center">
+                        <div class="w-full aspect-square bg-gray-100 rounded-lg mb-4 overflow-hidden flex items-center justify-center p-6">
+                            <img src="https://images.unsplash.com/photo-1496181133206-80ce9b88a853?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60"  class="group-hover:scale-105 transition duration-300 object-contain h-full">
+                        </div>
+                        <h3 class="font-semibold text-lg group-hover:blue transition">Laptops</h3>
+                    </a>
+                    
+                    <!-- Category 2 -->
+                    <a href="#" class="group flex flex-col items-center text-center">
+                        <div class="w-full aspect-square bg-gray-100 rounded-lg mb-4 overflow-hidden flex items-center justify-center p-6">
+                            <img src="../images/pri.png" class="group-hover:scale-105 transition duration-300 object-contain h-full">
+                        </div>
+                        <h3 class="font-semibold text-lg group-hover:blue transition">Printers</h3>
+                    </a>
+
+                    <!-- Category 3 -->
+                    <a href="#" class="group flex flex-col items-center text-center">
+                        <div class="w-full aspect-square bg-gray-100 rounded-lg mb-4 overflow-hidden flex items-center justify-center p-6">
+                            <img src="../images/mon.png"  class="group-hover:scale-105 transition duration-300 object-contain h-full">
+                        </div>
+                        <h3 class="font-semibold text-lg group-hover:blue transition">Monitors</h3>
+                    </a>
+
+                    <!-- Category 4 -->
+                    <a href="#" class="group flex flex-col items-center text-center">
+                        <div class="w-full aspect-square bg-gray-100 rounded-lg mb-4 overflow-hidden flex items-center justify-center p-6">
+                            <img src="https://images.unsplash.com/photo-1610465299996-30f240ac2b1c?ixlib=rb-4.0.3&auto=format&fit=crop&w=500&q=60" alt="Accessories" class="group-hover:scale-105 transition duration-300 object-contain h-full">
+                        </div>
+                        <h3 class="font-semibold text-lg group-hover:blue transition">Accessories</h3>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-[#212121] text-gray-400 text-sm pt-16 pb-8">
+        <div class="border-t border-gray-800 py-6 text-center text-gray-500 text-xs">
+            <p class="max-w-4xl mx-auto uppercase tracking-wide">
+                <strong>Disclaimer:</strong> This website is an independent educational resource and for informational purposes only. We do not provide official technical support or warranty services for any products. All brand names, logos, and trademarks are the property of their respective owners and are used here for informational and compatibility reference only.
+            </p>
+        </div>
+    </footer>
+
+</body>
+</html>

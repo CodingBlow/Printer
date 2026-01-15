@@ -1,251 +1,408 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Printer Troubleshooting Guide 2026 | Free Educational Resources</title>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700;900&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --primary-blue: #0056b3;
-            --accent-green: #28a745;
-            --light-bg: #f8f9fa;
-            --text-gray: #444;
-            --dark-bg: #1a1a1a;
-        }
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-        body {
-            font-family: 'Roboto', sans-serif;
-            background: #fff;
-            color: #333;
-            line-height: 1.7;
-        }
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Printer Assist – Independent Printer Support</title>
+  <meta name="description" content="Expert independent help for printer setup, Wi-Fi issues, drivers and more. Call our team today."/>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-        /* Full-screen Hero with Image Overlay - Added cursor:pointer */
-        .hero {
-            position: relative;
-            height: 100vh;
-            background: url('./guide/Hero4.png') no-repeat center 30%/cover;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-            color: #fff;
-            overflow: hidden;
-            cursor: pointer; /* Logic: indicates the image is clickable */
-        }
-        .hero::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; right: 0; bottom: 0;
-        }
-        .hero-content {
-            position: relative;
-            z-index: 2;
-            max-width: 900px;
-            padding: 0 20px;
-        }
-        .hero h1 {
-            font-size: 48px;
-            font-weight: 700;
-            margin-bottom: 20px;
-        }
-        .hero p {
-            font-size: 22px;
-            margin-bottom: 40px;
-            opacity: 0.95;
-        }
+  <style>
+    :root {
+      --primary: #2563eb;
+      --primary-dark: #1e40af;
+      --secondary: #eff6ff;
+      --text-main: #1f2937;
+      --text-light: #4b5563;
+      --accent: #dc2626;
+      --white: #ffffff;
+      --shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    }
 
-        header {
-            position: fixed;
-            top: 0;
-            width: 100%; 
-            padding: 15px 8%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .logo {
-            font-size: 28px;
-            font-weight: 900;
-        }
-        .helpline {
-            font-size: 18px;
-            font-weight: 600;
-            background: rgba(255,255,255,0.2);
-            padding: 10px 20px;
-            border-radius: 6px;
-        }
+    * { margin: 0; padding: 0; box-sizing: border-box; }
 
-        .container {
-            max-width: 1100px;
-            margin: 0 auto;
-            padding: 80px 20px;
-            background: #fff;
-        }
-        .section-title {
-            font-size: 36px;
-            color: var(--primary-blue);
-            text-align: center;
-            margin-bottom: 50px;
-        }
-        .guide-box {
-            background: #fff;
-            padding: 40px;
-            border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-            margin-bottom: 50px;
-        }
-        .guide-box h2 {
-            font-size: 28px;
-            color: var(--primary-blue);
-            margin-bottom: 20px;
-        }
-        .step-list {
-            counter-reset: step-counter;
-            list-style: none;
-        }
-        .step-list li {
-            position: relative;
-            padding-left: 60px;
-            margin-bottom: 30px;
-            font-size: 18px;
-        }
-        .step-list li::before {
-            content: counter(step-counter);
-            counter-increment: step-counter;
-            position: absolute;
-            left: 0;
-            top: 0;
-            width: 45px;
-            height: 45px;
-            background: var(--primary-blue);
-            color: #fff;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-weight: 900;
-            font-size: 20px;
-        }
+    body {
+      font-family: 'Inter', system-ui, -apple-system, sans-serif;
+      background-color: #f9fafb;
+      color: var(--text-main);
+      line-height: 1.6;
+      font-size: 18px;
+    }
 
-        .cta-button {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            background: var(--accent-green);
-            color: #fff;
-            padding: 18px 30px;
-            border-radius: 50px;
-            font-size: 18px;
-            font-weight: 700;
-            text-decoration: none;
-            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
-            z-index: 1000;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            transition: all 0.3s;
-        }
-        .cta-button:hover {
-            background: #218838;
-            transform: scale(1.05);
-        }
+    a { text-decoration: none; transition: 0.2s; }
+    
+    /* Header */
+    header {
+      background: var(--white);
+      border-bottom: 1px solid #e5e7eb;
+      padding: 1rem 0;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    }
 
-        footer {
-            background: var(--dark-bg);
-            color: #aaa;
-            padding: 70px 8% 40px;
-            text-align: center;
-            font-size: 14px;
-        }
-        .disclaimer {
-            max-width: 1000px;
-            margin: 0 auto 40px;
-            padding: 30px;
-            border: 1px solid #444;
-            border-radius: 8px;
-            line-height: 1.8;
-        }
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
 
-        @media (max-width: 768px) {
-            .hero h1 { font-size: 36px; }
-            .hero p { font-size: 18px; }
-            header { flex-direction: column; gap: 10px; padding: 15px 20px; }
-            .step-list li { padding-left: 50px; font-size: 16px; }
-            .step-list li::before { width: 40px; height: 40px; font-size: 18px; }
-            .cta-button { bottom: 20px; right: 20px; padding: 15px 25px; font-size: 16px; }
-        }
-        
-    </style>
-    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17754747703"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-        function gtag(){dataLayer.push(arguments);}
-        gtag('js', new Date());
-        gtag('config', 'AW-17754747703');
-    </script>
-    <script src="//code.jivosite.com/widget/iKXUWduD7F" async></script>
+    .header-content {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .logo-area {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo-icon {
+      width: 44px;
+      height: 44px;
+      background: var(--primary);
+      border-radius: 8px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 700;
+      font-size: 24px;
+    }
+
+    .brand-name {
+      font-size: 1.6rem;
+      font-weight: 700;
+      color: var(--primary-dark);
+    }
+
+    .phone-btn {
+      background-color: var(--accent);
+      color: white;
+      padding: 0.85rem 1.75rem;
+      border-radius: 50px;
+      font-weight: 600;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 1.25rem;
+    }
+    
+    .phone-btn:hover {
+      background-color: #b91c1c;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(220, 38, 38, 0.3);
+    }
+
+    /* Hero Section */
+    .hero {
+      background: linear-gradient(180deg, var(--secondary) 0%, #ffffff 100%);
+      padding: 4rem 0 5rem;
+      text-align: center;
+    }
+
+    .hero h1 {
+      font-size: 3rem;
+      font-weight: 800;
+      color: var(--primary-dark);
+      margin-bottom: 1.5rem;
+      line-height: 1.2;
+    }
+
+    .hero p {
+      font-size: 1.4rem;
+      color: var(--text-light);
+      max-width: 750px;
+      margin: 0 auto 3.5rem;
+      font-weight: 500;
+    }
+
+    /* Brand Logo / Button Row */
+    .brand-section { margin-bottom: 2rem; }
+    
+    .brand-title {
+      font-size: 1.5rem;
+      color: var(--text-main);
+      margin-bottom: 2rem;
+      font-weight: 700;
+    }
+
+    .brand-row {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 2rem;
+      align-items: stretch;
+    }
+
+    /* BIG BUTTON STYLING FOR LOGOS */
+    .brand-card {
+      background: white;
+      border: 2px solid #e5e7eb;
+      border-radius: 16px;
+      padding: 2rem;
+      width: 240px;
+      height: 180px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+      cursor: pointer;
+      text-decoration: none;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    }
+
+    .brand-card img {
+      max-width: 100%;
+      max-height: 80px;
+      object-fit: contain;
+      margin-bottom: 1rem;
+    }
+
+    /* "Click to Setup" Text styling - SMALLER NOW */
+    .brand-action-text {
+      color: var(--primary);
+      font-weight: 700;
+      font-size: 0.9rem; /* Reduced from 1.1rem */
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      border: 2px solid var(--primary);
+      padding: 0.4rem 0.8rem; /* Slightly reduced padding */
+      border-radius: 50px;
+      transition: 0.3s;
+    }
+
+    /* Hover State */
+    .brand-card:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 15px 30px rgba(37, 99, 235, 0.15);
+      border-color: var(--primary);
+      background-color: #f8fbff;
+    }
+
+    .brand-card:hover .brand-action-text {
+      background-color: var(--primary);
+      color: white;
+    }
+
+    /* Services Grid */
+    .services {
+      padding: 5rem 0;
+      background: white;
+      border-top: 1px solid #f1f5f9;
+    }
+
+    .section-title {
+      text-align: center;
+      font-size: 2.5rem;
+      margin-bottom: 3.5rem;
+      color: var(--text-main);
+      font-weight: 700;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 2.5rem;
+    }
+
+    .card {
+      background: #ffffff;
+      border: 2px solid #f3f4f6;
+      border-radius: 16px;
+      padding: 2.5rem;
+      text-align: left;
+      transition: 0.3s;
+    }
+
+    .card-icon {
+      width: 60px;
+      height: 60px;
+      background: var(--secondary);
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 1.5rem;
+      color: var(--primary);
+      font-size: 2rem;
+    }
+
+    .card h3 { font-size: 1.5rem; margin-bottom: 1rem; color: var(--text-main); }
+    .card p { color: var(--text-light); font-size: 1.15rem; }
+
+    /* CTA Section */
+    .cta-bar {
+      background: var(--primary-dark);
+      color: white;
+      text-align: center;
+      padding: 5rem 1.5rem;
+    }
+
+    .cta-bar h2 { font-size: 2.8rem; margin-bottom: 1rem; }
+    
+    .cta-phone-large {
+      font-size: 3.5rem;
+      font-weight: 800;
+      display: block;
+      margin: 1.5rem 0;
+      color: #fbbf24; 
+      text-decoration: none;
+    }
+    
+    .cta-phone-large:hover { text-decoration: underline; }
+
+    .btn-white {
+      background: white;
+      color: var(--primary-dark);
+      padding: 1.25rem 3rem;
+      border-radius: 50px;
+      font-weight: 700;
+      font-size: 1.5rem;
+      display: inline-block;
+    }
+
+    /* Footer */
+    footer {
+      background: #0f172a;
+      color: #94a3b8;
+      padding: 4rem 0 2rem;
+      font-size: 1rem;
+    }
+    .disclaimer {
+      border-top: 1px solid #1e293b;
+      padding-top: 2rem;
+      text-align: center;
+      font-size: 0.9rem;
+      color: #64748b;
+      margin: 3rem auto 0;
+      max-width: 900px;
+    }
+
+    /* Mobile Responsive */
+    @media (max-width: 768px) {
+      .hero h1 { font-size: 2.2rem; }
+      .brand-card { width: 100%; height: auto; flex-direction: row; justify-content: space-between; padding: 1.5rem; }
+      .brand-card img { margin-bottom: 0; max-height: 50px; max-width: 120px; }
+      .brand-action-text { font-size: 0.8rem; padding: 0.3rem 0.6rem; }
+      .cta-phone-large { font-size: 2.2rem; }
+      .header-content { flex-direction: column; gap: 1rem; }
+    }
+  </style>
 </head>
 <body>
 
-    <section class="hero" onclick="window.location.href='./guide/more.html';">
-    </section>
-
-    <div class="container">
-        <h2 class="section-title">How to Fix "Printer Offline" Error</h2>
-        <div class="guide-box">
-            <p>This is one of the most common printer issues. It usually means your computer cannot communicate with the printer, even if it's powered on.</p>
-            <ul class="step-list">
-                <li><strong>Restart Everything:</strong> Turn off your printer, unplug it for 60 seconds, then plug it back in and turn it on. Also restart your computer and router.</li>
-                <li><strong>Check Physical Connections:</strong> If using USB, ensure the cable is securely connected. Try a different USB port or cable.</li>
-                <li><strong>Set as Default Printer:</strong> Go to Settings > Devices > Printers & Scanners (Windows) or System Preferences > Printers & Scanners (Mac). Select your printer and set it as default.</li>
-                <li><strong>Clear Print Queue:</strong> Open the printer queue, cancel all pending jobs, and uncheck "Use Printer Offline" if visible.</li>
-                <li><strong>Run Troubleshooter:</strong> On Windows, go to Settings > Update & Security > Troubleshoot > Additional troubleshooters > Printer > Run the troubleshooter.</li>
-                <li><strong>Update or Reinstall Drivers:</strong> Visit the official manufacturer website, search for your exact model, and download the latest drivers.</li>
-            </ul>
-        </div>
-
-        <h2 class="section-title">Wireless (Wi-Fi) Connection Problems</h2>
-        <div class="guide-box">
-            <p>Wireless printers often lose connection due to network changes or signal interference.</p>
-            <ul class="step-list">
-                <li><strong>Verify Network:</strong> Confirm your computer and printer are on the same Wi-Fi network (same SSID).</li>
-                <li><strong>Check Signal Strength:</strong> Move the printer closer to the router if the signal is weak.</li>
-                <li><strong>Reconnect to Wi-Fi:</strong> Use the printer's control panel to forget the network and re-enter the password.</li>
-                <li><strong>Restart Router:</strong> Unplug your router for 30 seconds and plug it back in.</li>
-                <li><strong>Avoid Band Conflict:</strong> Most printers work best on 2.4GHz band. If your router has dual bands, connect both devices to 2.4GHz.</li>
-                <li><strong>Disable VPN/Firewall Temporarily:</strong> Some security software blocks printer communication.</li>
-            </ul>
-        </div>
-
-        <h2 class="section-title">Other Common Issues & Solutions</h2>
-        <div class="guide-box">
-            <ul class="step-list">
-                <li><strong>Printer Not Printing:</strong> Check ink/toner levels, paper tray, and for any error lights on the printer panel.</li>
-                <li><strong>Paper Jams:</strong> Gently remove jammed paper following the printer's access doors. Never force it.</li>
-                <li><strong>Poor Print Quality:</strong> Run cleaning cycle from printer settings and align print heads if needed.</li>
-                <li><strong>Driver Conflicts:</strong> Uninstall old printer software completely before installing new versions.</li>
-            </ul>
-        </div>
+  <header>
+    <div class="container header-content">
+      <div class="logo-area">
+        <div class="logo-icon">P</div>
+        <span class="brand-name">Printer Assist</span>
+      </div>
+      <div class="header-cta">
+        <a href="tel:+18774194506" class="phone-btn">
+          <span>📞</span> +1 (877) 419-4506
+        </a>
+      </div>
     </div>
+  </header>
 
-    <footer>
-        <div class="disclaimer">
-            <strong>IMPORTANT EDUCATIONAL DISCLAIMER:</strong><br>
-            This website provides <strong>free educational guides and troubleshooting information</strong> for common printer issues. All content is for <strong>learning and informational purposes only</strong>.<br><br>
-            We are an <strong>independent educational resource</strong> and are <strong>not affiliated with, endorsed by, or sponsored by</strong> any printer manufacturer including HP, Canon, Epson, Brother, or any other brand.<br><br>
-            Brand and model references are used solely for educational compatibility examples. We do not provide official software downloads or remote technical services.<br><br>
-            The help line is offered as a free community resource for users needing clarification on these educational steps.
+  <section class="hero">
+    <div class="container">
+      <h1>Select Your Printer Brand to Start</h1>
+      <p>Click on your printer brand below to start the setup or troubleshooting process.</p>
+
+      <div class="brand-section">
+        <div class="brand-row">
+          
+          <a href="setup.html?brand=HP" class="brand-card">
+            <img src="../Images/h.png" alt="HP Printer">
+            <span class="brand-action-text">Click to Setup</span>
+          </a>
+          
+          <a href="setup.html?brand=Canon" class="brand-card">
+            <img src="../Images/ca.png" alt="Canon Printer">
+            <span class="brand-action-text">Click to Setup</span>
+          </a>
+          
+          <a href="setup.html?brand=Epson" class="brand-card">
+            <img src="../Images/ep.png" alt="Epson Printer">
+            <span class="brand-action-text">Click to Setup</span>
+          </a>
+          
+          <a href="setup.html?brand=Brother" class="brand-card">
+            <img src="../Images/br.png" alt="Brother Printer">
+            <span class="brand-action-text">Click to Setup</span>
+          </a>
+          
+
         </div>
-        <div style="margin-top:40px; opacity:0.7;">
-            © 2026 Printer Learning Hub | Free Educational Resource | All Rights Reserved
+      </div>
+      
+    </div>
+  </section>
+
+  <section class="services">
+    <div class="container">
+      <h2 class="section-title">What We Help You With</h2>
+      <div class="grid">
+        <div class="card">
+          <div class="card-icon">⚙️</div>
+          <h3>Easy Setup Guide</h3>
+          <p>We help you unbox and set up your printer step-by-step without confusion.</p>
         </div>
-    </footer>
-    <script>
-        gtag('event', 'conversion', {
-            'send_to': 'AW-17754747703/5oaICNngxMUbELfmj5JC'
-        });
-    </script>
+        <div class="card">
+          <div class="card-icon">📶</div>
+          <h3>Wi-Fi Connection</h3>
+          <p>Printer not connecting? We fix wireless issues so you can print from any room.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">🚫</div>
+          <h3>Printer is Offline?</h3>
+          <p>If your computer says "Offline", we can get it back online quickly.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">📄</div>
+          <h3>Paper Jams</h3>
+          <p>Safe removal of jammed paper and tips to prevent it from happening again.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">💾</div>
+          <h3>Driver Install</h3>
+          <p>We install the correct software so your printer talks to your computer properly.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">🩸</div>
+          <h3>Ink Issues</h3>
+          <p>Help with changing cartridges, cleaning printheads, and fixing ink errors.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cta-bar">
+    <div class="container">
+      <h2>Prefer to talk to a person?</h2>
+      <p>We are available right now to help you.</p>
+      <a href="tel:+18774194506" class="cta-phone-large">+1 (877) 419-4506</a>
+      <a href="tel:+18774194506" class="btn-white">Call Now</a>
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <div class="disclaimer">
+        <p><strong>Disclaimer:</strong> Printer Assist is an independent third-party service provider. We are not affiliated with HP, Canon, Epson, Brother, or any other brand. Brand names and logos are used for reference only.</p>
+        <p style="margin-top: 1rem;">&copy; 2025 Printer Assist. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
 </body>
 </html>
