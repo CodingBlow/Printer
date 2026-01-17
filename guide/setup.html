@@ -317,7 +317,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
   currentBrand = brandParam || "generic";
 
-  if (brandParam.includes('hp') || brandParam.includes('hewlett')) {
+  if (brandParam.includes('h') || brandParam.includes('hewlett')) {
     logoSrc    = "../Image/h.png";
     bgClass    = "https://sb.kaleidousercontent.com/67418/800x533/fe745b9915/cars.jpg";
     sideImgSrc = "../images/IMG1.png";
@@ -326,16 +326,7 @@ document.addEventListener('DOMContentLoaded', () => {
     placeholder = "Example: OfficeJet 9010, DeskJet 2700, Envy 6055e";
     btnClass   = "btn-hp";
   } 
-  else if (brandParam.includes('canon')) {
-    logoSrc    = "../Image/ca.png";
-    bgClass    = "canon";
-    sideImgSrc = "";
-    titleText  = "Set up your Canon printer";
-    descText   = "Download Canon drivers, IJ Scan Utility, and wireless setup tools.";
-    placeholder = "Example: PIXMA G7020, MG3620, TS9520";
-    btnClass   = "btn-canon";
-  } 
-  else if (brandParam.includes('epson')) {
+  else if (brandParam.includes('ep')) {
     logoSrc    = "../Image/ep.png";
     bgClass    = "epson";
     sideImgSrc = "../Images/ep.png";
@@ -344,7 +335,7 @@ document.addEventListener('DOMContentLoaded', () => {
     placeholder = "Example: EcoTank ET-2800, L3250, ET-8550";
     btnClass   = "btn-epson";
   } 
-  else if (brandParam.includes('brother')) {
+  else if (brandParam.includes('br')) {
     logoSrc    = "../Image/br.png";
     bgClass    = "brother";
     sideImgSrc = "../images/brother-printer.png";
