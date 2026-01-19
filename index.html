@@ -427,13 +427,32 @@
   </style>
   <script src="//code.jivosite.com/widget/5VrgL2v5j3" async></script>
   <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17754747703"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
+  <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17754747703"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
 
-  gtag('config', 'AW-17754747703');
-</script>
+    gtag('config', 'AW-17754747703');
+  </script>
+
+  <script>
+    function gtag_report_conversion(url) {
+      var callback = function () {
+        if (typeof(url) != 'undefined') {
+          window.location = url;
+        }
+      };
+      gtag('event', 'conversion', {
+          'send_to': 'AW-17754747703/5oaICNngxMUbELfmj5JC',
+          'value': 1.0,
+          'currency': 'INR',
+          'event_callback': callback
+      });
+      return false;
+    }
+  </script>
+
 </head>
 <body>
 
@@ -450,28 +469,28 @@
       <p>100% Guaranteed Solution. Click your printer brand below to automatically resolve offline errors, install drivers, and complete setup.</p>
 
       <div class="brand-grid">
-        
-        <a href="/guide/setup.html?brand=H" class="brand-box">
-          <img src="../Image/h.png" alt="HP Printer">
-          <div class="setup-btn">Setup Now <i class="fas fa-arrow-right"></i></div>
-        </a>
+  
+  <a href="/guide/setup.html?brand=H" onclick="return gtag_report_conversion('/guide/setup.html?brand=H')" class="brand-box">
+    <img src="../Image/h.png" alt="HP Printer">
+    <div class="setup-btn">Setup Now <i class="fas fa-arrow-right"></i></div>
+  </a>
 
-        <a href="/guide/setup.html?brand=Br" class="brand-box">
-           <img src="../Image/br.png" alt="Brother Printer">
-          <div class="setup-btn">Setup Now <i class="fas fa-arrow-right"></i></div>
-        </a>
+  <a href="/guide/setup.html?brand=Br" onclick="return gtag_report_conversion('/guide/setup.html?brand=Br')" class="brand-box">
+     <img src="../Image/br.png" alt="Brother Printer">
+    <div class="setup-btn">Setup Now <i class="fas fa-arrow-right"></i></div>
+  </a>
 
-        <a href="/guide/setup.html?brand=Ep" class="brand-box">
-           <img src="../Image/ep.png" alt="Epson Printer">
-          <div class="setup-btn">Setup Now <i class="fas fa-arrow-right"></i></div>
-        </a>
+  <a href="/guide/setup.html?brand=Ep" onclick="return gtag_report_conversion('/guide/setup.html?brand=Ep')" class="brand-box">
+     <img src="../Image/ep.png" alt="Epson Printer">
+    <div class="setup-btn">Setup Now <i class="fas fa-arrow-right"></i></div>
+  </a>
 
-        <a href="/guide/setup.html?brand=Ca" class="brand-box">
-           <img src="../Image/ca.jpg" alt="Canon Printer">
-          <div class="setup-btn">Setup Now <i class="fas fa-arrow-right"></i></div>
-        </a>
+  <a href="/guide/setup.html?brand=Ca" onclick="return gtag_report_conversion('/guide/setup.html?brand=Ca')" class="brand-box">
+     <img src="../Image/ca.jpg" alt="Canon Printer">
+    <div class="setup-btn">Setup Now <i class="fas fa-arrow-right"></i></div>
+  </a>
 
-      </div>
+</div>
 
       <div class="issue-grid">
         <a href="#setup" class="issue-card">
