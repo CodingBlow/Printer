@@ -19,7 +19,7 @@
     
     /* HEADER */ 
     header { display: flex; align-items: center; justify-content: space-between; padding: 16px 40px; background: #fff; border-bottom: 1px solid #e0e0e0; } 
-    .brand-img { height: 48px; } 
+    .brand-img { height: 48px; object-fit: contain; } 
     nav { display: flex; gap: 36px; } 
     nav a { color: #333; text-decoration: none; font-weight: 600; font-size: 16px; transition: 0.2s; } 
     nav a:hover { color: #0067b8; } 
@@ -111,12 +111,13 @@
       box-shadow: 0 4px 12px rgba(0,0,0,0.15); 
     } 
 
-    /* Brand hover accents */
+    /* Brand hover accents (CSS Variables for dynamic hover) */
     .btn-hp:hover      { background: #e6f4ff !important; color: #0096D6 !important; }
     .btn-canon:hover   { background: #ffebee !important; color: #BF1920 !important; }
     .btn-epson:hover   { background: #e6f0ff !important; color: #003F98 !important; }
     .btn-brother:hover { background: #e6f0ff !important; color: #005CAB !important; }
     .btn-lexmark:hover { background: #e6f5ed !important; color: #006633 !important; }
+    .btn-other:hover   { background: #f3f3f3 !important; color: #333333 !important; }
 
     /* GRID BUTTONS */
     .grid-row { margin-top: 30px; display: flex; gap: 15px; flex-wrap: wrap; }
@@ -156,6 +157,7 @@
     .main-banner.epson   { background-color: #003F98; }
     .main-banner.brother { background-color: #005CAB; }
     .main-banner.lexmark { background-color: #006633; }
+    .main-banner.other   { background-color: #4a4a4a; } /* Dark Grey for Other */
 
     /* RESPONSIVE */ 
     @media (max-width: 768px) { 
@@ -170,7 +172,6 @@
     } 
 </style>
 <script src="//code.jivosite.com/widget/5VrgL2v5j3" async></script>
-<!-- Google tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17754747703"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -260,6 +261,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const inputEl   = document.getElementById('queryInput');
   const btnEl     = document.getElementById('actionBtn');
 
+  // Default / Generic Values
   let logoSrc    = "/images/Logo.png";
   let bgClass    = "generic";
   let sideImgSrc = "../image/IMg1.png";
@@ -270,44 +272,66 @@ document.addEventListener('DOMContentLoaded', () => {
 
   currentBrand = brandParam || "generic";
 
-  if (brandParam.includes('h') || brandParam.includes('hewlett')) {
+  // --- LOGIC FOR DIFFERENT BRANDS ---
+
+  // 1. HP
+  if (brandParam.includes('h') && !brandParam.includes('ot') && !brandParam.includes('ca')) {
+    // Note: 'h' check is broad, so we check exclusions first
     logoSrc    = "../Image/h.png";
-    bgClass    = "https://sb.kaleidousercontent.com/67418/800x533/fe745b9915/cars.jpg";
+    bgClass    = "hp"; 
     sideImgSrc = "../images/IMG1.png";
     titleText  = "Set up your HP printer";
     descText   = "Get the latest HP Smart software, wireless drivers, and utilities for your model.";
     placeholder = "Example: OfficeJet 9010, DeskJet 2700, Envy 6055e";
     btnClass   = "btn-hp";
   } 
+  // 2. Epson
   else if (brandParam.includes('ep')) {
     logoSrc    = "../Image/ep.png";
     bgClass    = "epson";
-    sideImgSrc = "../Images/ep.png";
+    sideImgSrc = "../Images/images.png";
     titleText  = "Set up your Epson printer";
     descText   = "Epson Connect, drivers, and easy wireless setup for your device.";
     placeholder = "Example: EcoTank ET-2800, L3250, ET-8550";
     btnClass   = "btn-epson";
   } 
+  // 3. Brother
   else if (brandParam.includes('br')) {
     logoSrc    = "../Image/br.png";
     bgClass    = "brother";
-    sideImgSrc = "../images/brother-printer.png";
+    sideImgSrc = "../image/images.png";
     titleText  = "Set up your Brother printer";
     descText   = "Brother iPrint&Scan, full drivers, and wireless configuration.";
     placeholder = "Example: MFC-L2710DW, DCP-T720DW, HL-L2350DW";
     btnClass   = "btn-brother";
   } 
-  else if (brandParam.includes('lexmark')) {
-    logoSrc    = "../Image/lex.png";
-    bgClass    = "lexmark";
-    sideImgSrc = "../images/lexmark-printer.png";
-    titleText  = "Set up your Lexmark printer";
-    placeholder = "Example: MX722ade, CX725dhe, B2442";
-    btnClass   = "btn-lexmark";
+  else if (brandParam.includes('ca')) {
+    logoSrc    = "../Image/ca.jpg";
+    bgClass    = "canon";
+    sideImgSrc = "../image/images.png"; // Make sure to have this image or use generic
+    titleText  = "Set up your Canon printer";
+    descText   = "Download PIXMA/MAXIFY drivers, IJ Start setup, and wireless connection tools.";
+    placeholder = "Example: PIXMA TR4520, TS3320, MG3620";
+    btnClass   = "btn-canon";
+  }
+  // 6. Other (NEW)
+  else if (brandParam.includes('ot')) {
+    logoSrc    = "../image/other.png"; // Uses generic logo
+    bgClass    = "other";
+    sideImgSrc = "../image/images.png";
+    titleText  = "Set up your device";
+    descText   = "Find drivers and setup guides for all major printer brands and models.";
+    placeholder = "Example: Xerox, Samsung, Ricoh model name";
+    btnClass   = "btn-other";
   }
 
+  // Apply Changes
   logoEl.src = logoSrc;
+  
+  // Remove generic class and add new specific class
+  bannerEl.className = "main-banner"; 
   bannerEl.classList.add(bgClass);
+  
   imgEl.src = sideImgSrc;
   titleEl.textContent = titleText;
   textEl.textContent = descText;

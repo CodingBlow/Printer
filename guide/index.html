@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Printer Configuration Portal | Official Setup & Drivers</title>
-  <meta name="description" content="Official device configuration portal. Setup guides, driver installation, Wi-Fi connection fixes, and expert troubleshooting for all major printer models."/>
+  <title>Printer Configuration Portal |  Setup & Drivers</title>
+  <meta name="description" content=" device configuration portal. Setup guides, driver installation, Wi-Fi connection fixes, and expert troubleshooting for all major printer models."/>
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -13,7 +13,7 @@
 
   <style>
     :root {
-      /* Official Palette */
+      /*  Palette */
       --primary: #0f172a;       
       --highlight: #2563eb;     /* Action Blue */
       --highlight-hover: #1d4ed8;
@@ -36,55 +36,99 @@
       color: var(--text);
       line-height: 1.6;
       position: relative;
+      /* Padding for top sticky bar */
+      padding-top: 60px; 
     }
 
     a { text-decoration: none; color: inherit; transition: all 0.2s ease; }
-    
+
     .container {
       max-width: 1200px;
       margin: 0 auto;
       padding: 0 1.5rem;
     }
 
-    /* --- FLOATING PHONE NUMBER --- */
+    /* --- PROFESSIONAL STICKY HEADER (Top) --- */
     .top-contact-line {
-      position: absolute;
-      top: 1.5rem;
-      right: 2rem;
-      font-weight: 700;
-      font-size: 1.1rem;
-      color: var(--primary);
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
+      background-color: var(--highlight); 
+      color: #ffffff;
+      padding: 14px 0;
       display: flex;
+      justify-content: center;
       align-items: center;
-      gap: 12px;
-      z-index: 100;
-      background: white;
-      padding: 8px 20px;
-      border-radius: 50px;
-      border: 1px solid var(--border);
-      box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+      gap: 15px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
+      letter-spacing: 0.02em;
     }
 
     .live-indicator {
       height: 10px;
       width: 10px;
-      background-color: #22c55e;
+      background-color: #4ade80; /* Bright Green */
       border-radius: 50%;
       display: inline-block;
-      box-shadow: 0 0 0 3px #dcfce7;
+      box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.3);
       animation: pulse 2s infinite;
     }
 
     @keyframes pulse {
-      0% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0.4); }
-      70% { box-shadow: 0 0 0 10px rgba(34, 197, 94, 0); }
-      100% { box-shadow: 0 0 0 0 rgba(34, 197, 94, 0); }
+      0% { box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.7); }
+      70% { box-shadow: 0 0 0 10px rgba(74, 222, 128, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(74, 222, 128, 0); }
+    }
+
+    /* --- FLOATING BOTTOM-LEFT CONTACT (New) --- */
+    .bottom-floating-contact {
+      position: fixed;
+      bottom: 30px;
+      left: 30px;
+      z-index: 9999;
+      background-color: var(--highlight);
+      color: white;
+      padding: 12px 24px;
+      border-radius: 50px;
+      font-weight: 700;
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      box-shadow: 0 4px 20px rgba(37, 99, 235, 0.4);
+      transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .bottom-floating-contact:hover {
+      transform: scale(1.05) translateY(-3px);
+      background-color: var(--highlight-hover);
+    }
+
+    .bottom-pulse {
+        height: 8px;
+        width: 8px;
+        background-color: #fff;
+        border-radius: 50%;
+        display: inline-block;
+        animation: simplePulse 1.5s infinite;
+    }
+    
+    @keyframes simplePulse {
+        0% { opacity: 1; transform: scale(1); }
+        50% { opacity: 0.5; transform: scale(1.2); }
+        100% { opacity: 1; transform: scale(1); }
     }
 
     /* --- HERO SECTION --- */
     .hero {
       background: var(--surface);
-      padding: 6rem 0 4rem;
+      padding: 2rem 0 4rem;
       border-bottom: 1px solid var(--border);
       text-align: center;
       position: relative;
@@ -115,7 +159,7 @@
     .hero p {
       font-size: 1.25rem;
       color: #64748b;
-      max-width: 700px;
+      max-width: 750px;
       margin: 0 auto 3rem;
     }
 
@@ -123,8 +167,8 @@
     .brand-grid {
       display: flex;
       justify-content: center;
-      flex-wrap: wrap;
-      gap: 2rem;
+      flex-wrap: wrap; /* Allows wrapping on very small mobile screens */
+      gap: 1rem;      /* Compact gap */
       margin-bottom: 4rem;
     }
 
@@ -132,10 +176,15 @@
       background: var(--surface);
       border: 2px solid var(--border);
       border-radius: 16px;
-      width: 300px;  
+      
+      /* --- CHANGED for Single Row Fit --- */
+      flex: 1;           
+      min-width: 140px;  /* Small min-width ensures they fit in one row */
+      padding: 1.5rem;   
+      /* ---------------------------------- */
+      
       height: auto; 
       min-height: 280px;
-      padding: 2rem;
       display: flex;
       flex-direction: column;
       align-items: center;
@@ -147,14 +196,14 @@
     }
 
     .brand-box img {
-      height: 80px; 
+      height: 70px;  
       width: auto;
       object-fit: contain;
       margin-bottom: 1rem;
       filter: drop-shadow(0 4px 3px rgba(0,0,0,0.07));
       transition: transform 0.3s ease;
     }
-    
+
     .brand-title {
         font-size: 1.4rem;
         font-weight: 800;
@@ -166,17 +215,17 @@
       background-color: var(--highlight);
       color: white;
       width: 100%;
-      padding: 1rem;
+      padding: 0.8rem; 
       border-radius: 8px;
       font-weight: 700;
-      font-size: 1rem;
+      font-size: 0.95rem;
       text-align: center;
       letter-spacing: 0.02em;
       transition: background 0.2s;
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 10px;
+      gap: 8px;
       margin-top: auto; 
     }
 
@@ -186,7 +235,12 @@
       box-shadow: var(--shadow-hover);
     }
 
-    .brand-box:hover img { transform: scale(1.1); }
+    /* Hover effect for both Images AND Icons inside brand-box */
+    .brand-box:hover img, 
+    .brand-box:hover i.fa-print { 
+      transform: scale(1.1); 
+      transition: transform 0.3s ease;
+    }
 
     .brand-box:hover .setup-btn {
       background-color: var(--highlight-hover);
@@ -260,7 +314,7 @@
       padding: 5rem 0;
       background-color: var(--bg-page);
     }
-    
+
     .section-title {
       text-align: center;
       font-size: 2rem;
@@ -322,7 +376,7 @@
 
     .contact-text h2 { font-size: 2rem; margin-bottom: 1rem; }
     .contact-text p { color: #cbd5e1; font-size: 1.1rem; max-width: 600px; margin-bottom: 1.5rem; }
-    
+
     .keyword-tags { display: flex; flex-wrap: wrap; gap: 10px; }
     .kw-tag { background: rgba(255,255,255,0.1); padding: 5px 12px; border-radius: 4px; font-size: 0.85rem; color: #e2e8f0; }
 
@@ -359,9 +413,11 @@
     .disclaimer { max-width: 800px; margin: 0 auto; line-height: 1.6; color: #94a3b8; }
 
     @media (max-width: 768px) {
-      .top-contact-line { position: relative; top: auto; right: auto; justify-content: center; margin: 1rem auto; width: 90%; }
+      .top-contact-line { font-size: 0.95rem; padding: 12px 0; }
+      .bottom-floating-contact { left: 20px; bottom: 20px; font-size: 0.9rem; padding: 10px 18px; }
       .hero { padding-top: 2rem; }
-      .brand-box { width: 100%; height: auto; padding: 1.5rem; }
+      /* On mobile, allow them to wrap naturally */
+      .brand-box { width: 100%; height: auto; padding: 1.5rem; flex: auto; }
       .brand-box img { height: 60px; }
       .faq-grid { grid-template-columns: 1fr; }
       .issue-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
@@ -383,29 +439,40 @@
 
   <div class="top-contact-line">
     <span class="live-indicator"></span>
-    <span><strong>Helpline:</strong> +1 (800) 123-4567</span>
+    <span><strong> Helpline:</strong> +1 (760) 274-0601</span>
   </div>
 
   <section class="hero">
     <div class="container">
-      <div class="secure-badge"><i class="fas fa-shield-check"></i> Official System Configurator</div>
-      <h1>Select Your Device</h1>
-      <p>Identify your printer model below to automatically detect drivers, configure Wi-Fi, and initialize setup.</p>
+      <div class="secure-badge"><i class="fas fa-shield-check"></i>  System Configurator</div>
+      
+      <h1>Select Your Brand for Instant Fix</h1>
+      <p>100% Guaranteed Solution. Click your printer brand below to automatically resolve offline errors, install drivers, and complete setup.</p>
 
       <div class="brand-grid">
         
         <a href="/guide/setup.html?brand=H" class="brand-box">
-          <img src="../Image/h.png" alt="Setup H Printer">
+          <img src="../Image/h.png" alt="HP Printer">
           <div class="setup-btn">Setup Now <i class="fas fa-arrow-right"></i></div>
         </a>
 
         <a href="/guide/setup.html?brand=Br" class="brand-box">
-           <img src="../Image/br.png" alt="Setup Br Printer">
+           <img src="../Image/br.png" alt="Brother Printer">
           <div class="setup-btn">Setup Now <i class="fas fa-arrow-right"></i></div>
         </a>
 
         <a href="/guide/setup.html?brand=Ep" class="brand-box">
-           <img src="../Image/ep.png" alt="Setup Ep Printer">
+           <img src="../Image/ep.png" alt="Epson Printer">
+          <div class="setup-btn">Setup Now <i class="fas fa-arrow-right"></i></div>
+        </a>
+
+        <a href="/guide/setup.html?brand=Ca" class="brand-box">
+           <img src="../Image/ca.jpg" alt="Canon Printer">
+          <div class="setup-btn">Setup Now <i class="fas fa-arrow-right"></i></div>
+        </a>
+
+        <a href="/guide/setup.html?brand=Ot" class="brand-box">
+           <i class="fas fa-print" style="font-size: 4rem; color: var(--primary); margin-bottom: 1rem;"></i>
           <div class="setup-btn">Setup Now <i class="fas fa-arrow-right"></i></div>
         </a>
 
@@ -614,6 +681,11 @@
       </div>
     </div>
   </footer>
+
+  <a href="tel:+17602740601" class="bottom-floating-contact">
+      <span class="bottom-pulse"></span>
+      <span>Helpline: +1 (760) 274-0601</span>
+  </a>
 
 </body>
 </html>
