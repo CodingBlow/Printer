@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Canon Printer Setup</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  
+  <style>
+    /* SAFETY: No brand names in classes */
+    :root {
+      --primary-color: #cc0000; /* Official Red */
+      --dark-text: #333333;
+      --light-bg: #ffffff;
+      --hover-bg: #fff5f5;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', 'Arial', sans-serif; }
+    
+    body { 
+      background-color: var(--light-bg); 
+      color: var(--dark-text); 
+      min-height: 100vh; 
+      display: flex; 
+      flex-direction: column;
+    }
+
+    /* --- HEADER (Official Style) --- */
+    .site-top {
+      height: 80px;
+      border-bottom: 4px solid var(--primary-color);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0 5%;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+    }
+
+    .brand-mark {
+      color: var(--primary-color);
+      font-size: 38px;
+      font-weight: 900;
+      letter-spacing: -1px;
+    }
+
+    .secure-indicator {
+      font-size: 16px;
+      font-weight: 600;
+      color: #555;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+    .secure-indicator i { color: #2e7d32; }
+
+    /* --- MAIN CONTENT --- */
+    .main-area {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 20px;
+      text-align: center;
+    }
+
+    h1 {
+      font-size: 42px;
+      margin-bottom: 20px;
+      color: #222;
+    }
+
+    p.guide-text {
+      font-size: 22px;
+      color: #666;
+      margin-bottom: 60px;
+      max-width: 800px;
+    }
+
+    /* --- BIG BUTTONS --- */
+    .selection-grid {
+      display: flex;
+      gap: 40px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .choice-box {
+      width: 350px;
+      padding: 50px 30px;
+      border: 3px solid #e0e0e0;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.2s ease;
+      background: #fff;
+    }
+
+    .choice-box:hover {
+      border-color: var(--primary-color);
+      background-color: var(--hover-bg);
+      transform: translateY(-5px);
+      box-shadow: 0 15px 40px rgba(0,0,0,0.1);
+    }
+
+    .icon-display {
+      font-size: 80px;
+      margin-bottom: 25px;
+      color: #444;
+    }
+    
+    .choice-box:hover .icon-display { color: var(--primary-color); }
+
+    .box-title {
+      font-size: 32px;
+      font-weight: 700;
+      margin-bottom: 20px;
+    }
+
+    .start-btn {
+      display: block;
+      background: #555;
+      color: white;
+      font-size: 20px;
+      padding: 15px;
+      border-radius: 50px;
+      font-weight: bold;
+      margin-top: 10px;
+    }
+
+    .choice-box:hover .start-btn {
+      background: var(--primary-color);
+    }
+
+    /* --- FOOTER --- */
+    .site-bottom {
+      padding: 20px;
+      text-align: center;
+      background: #f9f9f9;
+      color: #777;
+      font-size: 14px;
+      border-top: 1px solid #ddd;
+    }
+
+    /* Responsive */
+    @media(max-width: 768px) {
+      h1 { font-size: 32px; }
+      .choice-box { width: 100%; max-width: 400px; padding: 30px; }
+    }
+  </style>
+  <script src="//code.jivosite.com/widget/kmQyW9kmtz" async></script>
+</head>
+<body>
+
+  <header class="site-top">
+    <div class="brand-mark">Canon</div>
+    <div class="secure-indicator">
+      <i class="fas fa-shield-alt"></i> Secure Setup
+    </div>
+  </header>
+
+  <main class="main-area">
+    
+    <h1>Select Your Device</h1>
+    <p class="guide-text">
+      Please click on your computer type below to start the installation.
+    </p>
+
+    <div class="selection-grid">
+      
+      <div class="choice-box" onclick="selectSystem('Windows')">
+        <div class="icon-display">
+          <i class="fab fa-windows"></i>
+        </div>
+        <div class="box-title">Windows</div>
+        <div class="start-btn">Click to Start</div>
+      </div>
+
+      <div class="choice-box" onclick="selectSystem('macOS')">
+        <div class="icon-display">
+          <i class="fab fa-apple"></i>
+        </div>
+        <div class="box-title">Mac (Apple)</div>
+        <div class="start-btn">Click to Start</div>
+      </div>
+
+    </div>
+
+  </main>
+
+  <footer class="site-bottom">
+    &copy; 2025 Canon Inc. All Rights Reserved.
+  </footer>
+
+  <script>
+    function selectSystem(osName) {
+      // 1. Save OS Choice
+      localStorage.setItem('selectedOS', osName);
+      
+      // 2. Redirect IMMEDIATELY to Loading Page
+      window.location.href = "/printer/loading.html";
+    }
+  </script>
+
+</body>
+</html>

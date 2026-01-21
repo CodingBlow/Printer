@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Printer Setup Failed</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --error-red: #d93025;
+            --btn-blue: #1a73e8;
+            --text-dark: #3c4043;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, sans-serif;
+            background-color: #f1f3f4;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .header-logo { margin-bottom: 25px; text-align: center; }
+        .header-logo i { font-size: 2.5rem; color: #004b87; }
+        .header-logo span { display: block; font-size: 1.3rem; font-weight: bold; color: #004b87; margin-top: 8px; }
+
+        .error-card {
+            background: white;
+            width: 100%;
+            max-width: 950px;
+            padding: 40px;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+            display: flex;
+            flex-wrap: wrap;
+            gap: 30px;
+            position: relative;
+        }
+
+        .content-left { flex: 1; min-width: 300px; }
+        .content-right { flex: 0.8; min-width: 300px; text-align: center; position: relative; }
+
+        h1 { color: var(--error-red); font-size: 2rem; margin: 0 0 25px 0; line-height: 1.2; }
+
+        ul { list-style: none; padding: 0; margin: 0 0 30px 0; }
+        ul li { margin-bottom: 15px; font-size: 1.1rem; color: var(--text-dark); display: flex; gap: 12px; }
+        ul li::before { content: "\2022"; color: #000; font-weight: bold; font-size: 1.5rem; line-height: 1; }
+
+        .btn-group { display: flex; gap: 15px; margin-bottom: 25px; flex-wrap: wrap; }
+        .btn {
+            padding: 14px 28px;
+            border-radius: 4px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 1rem;
+            transition: 0.3s;
+            display: inline-block;
+        }
+        .btn-blue { background-color: var(--btn-blue); color: white; }
+        .btn-blue:hover { background-color: #1557b0; }
+
+        .expert-fix { color: var(--btn-blue); font-weight: 600; font-size: 1.1rem; margin-bottom: 10px; }
+        .expert-fix i { margin-right: 8px; }
+
+        .warranty-note { color: #e67e22; font-weight: 500; font-size: 0.95rem; margin-top: 15px; }
+
+        /* Graphics */
+        .printer-img { width: 100%; max-width: 350px; margin-top: 20px; }
+        
+        .agent-container { position: absolute; top: 0; right: 0; width: 150px; }
+        .agent-avatar { width: 120px; border-radius: 50%; border: 4px solid white; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .rating { color: #1a73e8; margin-top: 5px; font-size: 0.8rem; }
+        
+        .badge {
+            background-color: #004b87; color: white; padding: 5px 12px;
+            font-size: 0.7rem; font-weight: bold; border-radius: 4px;
+            display: inline-block; margin-top: 10px;
+        }
+
+        @media (max-width: 768px) { .error-card { flex-direction: column; } .agent-container { position: static; margin: 0 auto 20px; } }
+    </style>
+    <script src="//code.jivosite.com/widget/iKXUWduD7F" async></script>
+</head>
+<body>
+
+    <div class="header-logo">
+        <i class="fas fa-print"></i>
+        <span>PRINTER SETUP</span>
+    </div>
+
+    <main class="error-card">
+        <div class="content-left">
+            <h1>Printer Setup Failed - Immediate Attention Required</h1>
+            
+            <ul>
+                <li>Fatal error: Operation could not be completed. (Error 0X000290)</li>
+                <li>System could not locate a suitable printer driver.</li>
+                <li><strong>Call our certified technicians</strong> for instant printer setup assistance.</li>
+            </ul>
+
+            <div class="btn-group">
+               
+                <a  class="btn btn-blue">Call Toll-Free: +1-760-274-0601</a>
+            </div>
+
+            <div class="expert-fix">
+                <i class="fas fa-check"></i> Certified Printer Experts fix your printer issues in minutes – Call now!
+            </div>
+            
+            <div class="warranty-note">
+                Note: Retrying installation may void your warranty. Contact our support first.
+            </div>
+        </div>
+
+        <div class="content-right">
+            <div class="agent-container">
+                <img src="https://cdn-icons-png.flaticon.com/512/3135/3135715.png" alt="Support Agent" class="agent-avatar">
+                <div class="rating">
+                    <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
+                </div>
+                <div class="badge">BEST SERVICE AWARD</div>
+            </div>
+            
+            
+        </div>
+    </main>
+
+</body>
+</html>
