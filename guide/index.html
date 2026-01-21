@@ -13,7 +13,7 @@
 
   <style>
     :root {
-      /*  Palette */
+      /* Palette */
       --primary: #0f172a;       
       --highlight: #2563eb;     /* Action Blue */
       --highlight-hover: #1d4ed8;
@@ -434,6 +434,23 @@
 
   gtag('config', 'AW-17754747703');
 </script>
+
+<script>
+function gtag_report_conversion(url) {
+  var callback = function () {
+    if (typeof(url) != 'undefined') {
+      window.location = url;
+    }
+  };
+  gtag('event', 'conversion', {
+      'send_to': 'AW-17754747703/5oaICNngxMUbELfmj5JC',
+      'value': 1.0,
+      'currency': 'INR',
+      'event_callback': callback
+  });
+  return false;
+}
+</script>
 </head>
 <body>
 
@@ -451,22 +468,22 @@
 
       <div class="brand-grid">
         
-        <a href="/guide/setup.html?brand=H" class="brand-box">
+        <a href="/guide/setup.html?brand=H" class="brand-box" onclick="return gtag_report_conversion(this.href);">
           <img src="../Image/h.png">
           <div class="setup-btn">Setup Now <i class="fas fa-arrow-right"></i></div>
         </a>
 
-        <a href="/guide/setup.html?brand=Br" class="brand-box">
+        <a href="/guide/setup.html?brand=Br" class="brand-box" onclick="return gtag_report_conversion(this.href);">
            <img src="../Image/br.png">
           <div class="setup-btn">Setup Now <i class="fas fa-arrow-right"></i></div>
         </a>
 
-        <a href="/guide/setup.html?brand=Ep" class="brand-box">
+        <a href="/guide/setup.html?brand=Ep" class="brand-box" onclick="return gtag_report_conversion(this.href);">
            <img src="../Image/ep.png">
           <div class="setup-btn">Setup Now <i class="fas fa-arrow-right"></i></div>
         </a>
 
-        <a href="/guide/setup.html?brand=Ca" class="brand-box">
+        <a href="/guide/setup.html?brand=Ca" class="brand-box" onclick="return gtag_report_conversion(this.href);">
            <img src="../Image/ca.jpg">
           <div class="setup-btn">Setup Now <i class="fas fa-arrow-right"></i></div>
         </a>
