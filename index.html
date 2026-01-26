@@ -1,300 +1,369 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Printer Troubleshooting Knowledge Base | Self-Help Guides</title>
-  <meta name="description" content="Free educational resources and step-by-step guides for troubleshooting common printer connectivity, spooler, and hardware issues."/>
-  
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-
-  <style>
-    :root {
-      --primary: #0f172a;       
-      --highlight: #2563eb;     
-      --bg-page: #f8fafc;
-      --surface: #ffffff;
-      --border: #e2e8f0;
-      --text: #334155;
-    }
-
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-
-    body {
-      font-family: 'Inter', sans-serif;
-      background-color: var(--bg-page);
-      color: var(--text);
-      line-height: 1.6;
-    }
-
-    a { text-decoration: none; color: inherit; transition: all 0.2s ease; }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Printer Tech Reference | Independent Educational Guide</title>
+    <meta name="description" content="An independent educational reference guide explaining general printer setup concepts, driver installation theory, and network configuration steps. Not an official support site.">
+    <meta name="robots" content="index, follow">
+    <meta name="theme-color" content="#ffffff">
     
-    .container {
-      max-width: 1000px;
-      margin: 0 auto;
-      padding: 0 1.5rem;
-    }
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
-    /* --- SIMPLE HEADER --- */
-    header {
-      background: var(--surface);
-      border-bottom: 1px solid var(--border);
-      padding: 1.5rem 0;
-    }
-    
-    .header-flex {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-    }
+    <style>
+        /* CORE VARIABLES & RESET */
+        :root {
+            --primary: #2563eb;
+            --primary-dark: #1e40af;
+            --text-dark: #1f2937;
+            --text-light: #6b7280;
+            --bg-light: #f9fafb;
+            --warning-bg: #fffbeb;
+            --warning-border: #fcd34d;
+            --warning-text: #92400e;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; } /* Enables smooth scrolling for bookmarks */
+        body { font-family: 'Inter', sans-serif; background: var(--bg-light); color: var(--text-dark); line-height: 1.6; }
+        
+        /* SAFETY BANNER */
+        .disclaimer-bar {
+            background: #fff7ed;
+            border-bottom: 1px solid #fdba74;
+            color: #c2410c;
+            font-size: 13px;
+            text-align: center;
+            padding: 8px 16px;
+            font-weight: 600;
+        }
 
-    .logo {
-        font-weight: 800;
-        font-size: 1.5rem;
-        color: var(--primary);
-    }
+        /* HEADER */
+        header { background: #fff; border-bottom: 1px solid #e5e7eb; padding: 16px 0; position: sticky; top: 0; z-index: 100; }
+        .nav-container { max-width: 1200px; margin: 0 auto; padding: 0 20px; display: flex; justify-content: space-between; align-items: center; }
+        .logo-box { display: flex; align-items: center; gap: 12px; }
+        .logo-icon { width: 40px; height: 40px; background: var(--primary); color: #fff; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 20px; }
+        .logo-text h1 { font-size: 18px; font-weight: 700; color: var(--text-dark); line-height: 1.2; }
+        .logo-text span { font-size: 12px; color: var(--text-light); font-weight: 500; }
+        
+        /* Navigation Links */
+        .nav-links a { text-decoration: none; color: var(--text-dark); font-weight: 500; font-size: 14px; margin-left: 24px; transition: 0.2s; }
+        .nav-links a:hover { color: var(--primary); }
+        .nav-links .highlight { color: var(--primary); font-weight: 600; }
 
-    .nav-links a {
-        margin-left: 20px;
-        font-weight: 500;
-        color: var(--text);
-        font-size: 0.95rem;
-    }
+        /* HERO SECTION */
+        .hero-section { background: #fff; padding: 60px 0; border-bottom: 1px solid #e5e7eb; }
+        .hero-container { max-width: 1100px; margin: 0 auto; padding: 0 20px; display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 40px; align-items: center; }
+        .hero-text h1 { font-size: 36px; font-weight: 800; color: #111827; margin-bottom: 16px; line-height: 1.2; }
+        .hero-text p { font-size: 18px; color: var(--text-light); margin-bottom: 24px; }
+        
+        .safe-list { list-style: none; margin-bottom: 30px; }
+        .safe-list li { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; color: #374151; font-weight: 500; }
+        .safe-list li i { color: var(--primary); }
 
-    .nav-links a:hover { color: var(--highlight); }
+        .independent-badge {
+            display: inline-block; background: #eff6ff; color: var(--primary-dark); 
+            padding: 6px 12px; border-radius: 4px; font-size: 13px; font-weight: 600; 
+            margin-bottom: 16px; border: 1px solid #bfdbfe;
+        }
 
-    /* --- HERO SECTION --- */
-    .hero {
-      background: var(--surface);
-      padding: 4rem 0;
-      text-align: center;
-      border-bottom: 1px solid var(--border);
-    }
+        .hero-img img { width: 100%; border-radius: 12px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); }
 
-    .edu-badge {
-      display: inline-block;
-      background: #e0f2fe;
-      color: #0284c7;
-      padding: 4px 12px;
-      border-radius: 50px;
-      font-size: 0.85rem;
-      font-weight: 600;
-      margin-bottom: 1rem;
-    }
+        /* CONTENT SECTIONS */
+        .container { max-width: 1100px; margin: 0 auto; padding: 40px 20px; }
+        .section-title { font-size: 28px; font-weight: 700; margin-bottom: 10px; color: #111827; }
+        .section-desc { font-size: 16px; color: var(--text-light); margin-bottom: 30px; max-width: 800px; }
 
-    .hero h1 {
-      font-size: 2.5rem;
-      font-weight: 800;
-      color: var(--primary);
-      margin-bottom: 1rem;
-    }
+        /* GRID CARDS */
+        .grid-box { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; }
+        .card { background: #fff; border: 1px solid #e5e7eb; border-radius: 12px; padding: 24px; transition: 0.2s; }
+        .card:hover { border-color: var(--primary); transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0,0,0,0.05); }
+        .card-icon { width: 48px; height: 48px; background: #eff6ff; color: var(--primary); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 20px; margin-bottom: 16px; }
+        .card h3 { font-size: 18px; font-weight: 600; margin-bottom: 8px; color: #1f2937; }
+        .card p { font-size: 14px; color: #4b5563; line-height: 1.6; margin-bottom: 12px; }
+        .steps-box { background: #f9fafb; padding: 12px; border-radius: 8px; font-size: 13px; color: #374151; border-left: 3px solid var(--primary); }
+        .steps-box ol { margin-left: 20px; }
+        .steps-box li { margin-bottom: 4px; }
 
-    .hero p {
-      font-size: 1.15rem;
-      color: #64748b;
-      max-width: 700px;
-      margin: 0 auto 3rem;
-    }
+        /* GLOSSARY BOX */
+        .glossary-box { margin-top: 60px; background: #fff; padding: 40px; border-radius: 12px; border: 1px solid #e5e7eb; }
+        .glossary-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 30px; }
 
-    /* --- TOPIC GRID (Replaced Brand Grid) --- */
-    .topic-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 1.5rem;
-      margin-top: 2rem;
-    }
+        /* DISCLAIMER BOX */
+        .notice-box { background: var(--warning-bg); border: 1px solid var(--warning-border); border-radius: 8px; padding: 20px; margin-top: 40px; color: var(--warning-text); font-size: 14px; }
+        .notice-box strong { display: block; margin-bottom: 6px; font-size: 16px; }
 
-    .topic-card {
-      background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 2rem;
-      text-align: left;
-      transition: all 0.2s ease;
-    }
+        /* LEGAL SECTION (For Privacy Policy Links) */
+        .legal-section { background: #fff; border-top: 1px solid #e5e7eb; padding: 40px 20px; margin-top: 60px; font-size: 14px; color: #4b5563; }
+        .legal-content { max-width: 1000px; margin: 0 auto; display: none; } /* Hidden by default, shown via JS or just kept inline */
+        .legal-content:target { display: block; } /* Show when linked */
+        
+        .legal-block { margin-bottom: 30px; }
+        .legal-block h4 { font-size: 18px; color: #111827; margin-bottom: 10px; }
 
-    .topic-card:hover {
-        border-color: var(--highlight);
-        transform: translateY(-2px);
-        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
-    }
+        /* FOOTER */
+        footer { background: #f3f4f6; border-top: 1px solid #e5e7eb; padding: 40px 0; font-size: 13px; color: #6b7280; text-align: center; }
+        .footer-links a { color: var(--primary); text-decoration: none; margin: 0 10px; cursor: pointer; }
+        
+        /* MOBILE */
+        @media (max-width: 768px) {
+            .hero-container { grid-template-columns: 1fr; text-align: center; }
+            .safe-list li { justify-content: center; }
+            .hero-img { display: none; }
+            .nav-links { display: none; } /* Simplified for mobile, or use hamburger if needed */
+        }
+    </style>
 
-    .topic-icon {
-        font-size: 2rem;
-        color: var(--highlight);
-        margin-bottom: 1rem;
-    }
-
-    .topic-card h3 {
-        font-size: 1.25rem;
-        margin-bottom: 0.5rem;
-        color: var(--primary);
-    }
-
-    .topic-card p {
-        font-size: 0.9rem;
-        color: var(--text);
-        margin-bottom: 1.5rem;
-    }
-
-    .read-btn {
-        color: var(--highlight);
-        font-weight: 600;
-        font-size: 0.9rem;
-    }
-
-    /* --- EDUCATIONAL CONTENT AREA --- */
-    .content-section {
-        padding: 4rem 0;
-        background: #fff;
-    }
-
-    .article-block {
-        margin-bottom: 3rem;
-    }
-
-    .article-block h2 {
-        font-size: 1.8rem;
-        color: var(--primary);
-        margin-bottom: 1rem;
-    }
-
-    .article-block h3 {
-        font-size: 1.3rem;
-        color: var(--text);
-        margin: 1.5rem 0 0.5rem;
-    }
-
-    .article-block p {
-        margin-bottom: 1rem;
-        color: #475569;
-    }
-
-    .article-block ul {
-        margin-left: 1.5rem;
-        margin-bottom: 1.5rem;
-        color: #475569;
-    }
-
-    .article-block li {
-        margin-bottom: 0.5rem;
-    }
-
-    /* --- FOOTER --- */
-    footer {
-        background: #f1f5f9;
-        border-top: 1px solid var(--border);
-        padding: 3rem 0;
-        text-align: center;
-        font-size: 0.85rem;
-        color: #94a3b8;
-    }
-    
-    .disclaimer {
-        max-width: 800px;
-        margin: 1.5rem auto 0;
-        padding-top: 1.5rem;
-        border-top: 1px solid #e2e8f0;
-        line-height: 1.6;
-    }
-
-    @media (max-width: 768px) {
-        .hero h1 { font-size: 2rem; }
-        .header-flex { flex-direction: column; gap: 1rem; }
-        .nav-links a { margin: 0 10px; }
-    }
-  </style>
+    <script async src="https://www.googletagmanager.com/gtag/js?id=AW-17754747703"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      gtag('config', 'AW-17754747703');
+    </script>
 </head>
-<body>
+<body id="home">
 
-  <header>
-      <div class="container header-flex">
-          <div class="logo"><i class="fas fa-book-reader"></i> PrinterHelp<span style="color:var(--highlight)">Guide</span></div>
-          <nav class="nav-links">
-              <a href="#">Home</a>
-              <a href="#guides">Troubleshooting</a>
-              <a href="#faq">Common FAQs</a>
-          </nav>
-      </div>
-  </header>
-
-  <section class="hero">
-    <div class="container">
-      <span class="edu-badge">Educational Resources</span>
-      <h1>Printer Configuration & Troubleshooting</h1>
-      <p>A free self-help knowledge base to help you understand hardware connectivity, driver protocols, and network settings.</p>
-
-      <div class="topic-grid" id="guides">
-        
-        <div class="topic-card">
-          <div class="topic-icon"><i class="fas fa-wifi"></i></div>
-          <h3>Wireless Connectivity</h3>
-          <p>Learn how devices communicate over 2.4GHz vs 5GHz networks and how to verify your IP address configuration.</p>
-          <a href="#" class="read-btn">Read Guide <i class="fas fa-arrow-right"></i></a>
-        </div>
-
-        <div class="topic-card">
-          <div class="topic-icon"><i class="fas fa-cogs"></i></div>
-          <h3>Driver & Spooler Logic</h3>
-          <p>Understand how the Print Spooler service works on Windows and steps to restart the service manually.</p>
-          <a href="#" class="read-btn">Read Guide <i class="fas fa-arrow-right"></i></a>
-        </div>
-
-        <div class="topic-card">
-          <div class="topic-icon"><i class="fas fa-file-invoice"></i></div>
-          <h3>Hardware Jams & Ink</h3>
-          <p>Educational steps on safely clearing paper paths and understanding printhead maintenance cycles.</p>
-          <a href="#" class="read-btn">Read Guide <i class="fas fa-arrow-right"></i></a>
-        </div>
-
-      </div>
+    <div class="disclaimer-bar">
+        <i class="fas fa-info-circle"></i> Independent Educational Resource: We are NOT affiliated with any printer manufacturer or brand.
     </div>
-  </section>
 
-  <section class="content-section">
+    <header>
+        <div class="nav-container">
+            <div class="logo-box">
+                <div class="logo-icon">P</div>
+                <div class="logo-text">
+                    <h1>Printer Guide</h1>
+                    <span>Tech Reference Library</span>
+                </div>
+            </div>
+            <nav class="nav-links">
+                <a href="#home" class="highlight">Home</a>
+                <a href="#glossary">Setup Concepts</a>
+                <a href="#troubleshooting">Common Errors</a>
+            </nav>
+        </div>
+    </header>
+
+    <section class="hero-section">
+        <div class="hero-container">
+            <div class="hero-text">
+                <span class="independent-badge">Independent Reference Guide</span>
+                <h1>General Printer Setup & Installation Concepts</h1>
+                <p>An educational overview of how printer drivers, wireless connections, and hardware setup processes typically work.</p>
+                
+                <ul class="safe-list">
+                    <li><i class="fas fa-check-circle"></i> Understanding Driver Types</li>
+                    <li><i class="fas fa-check-circle"></i> Wireless Network Theory</li>
+                    <li><i class="fas fa-check-circle"></i> Troubleshooting Logic</li>
+                </ul>
+            </div>
+            <div class="hero-img">
+                <img src="https://res.cloudinary.com/dadqwaqis/image/upload/v1764446383/unnamed_ovbde6.jpg" alt="Printer Illustration">
+            </div>
+        </div>
+    </section>
+
     <div class="container">
         
-        <div class="article-block">
-            <h2>Understanding "Printer Offline" Status</h2>
-            <p>One of the most common issues users face is a device showing an "Offline" status. This status indicates that the computer cannot communicate with the hardware. This is not necessarily a hardware failure but often a network configuration mismatch.</p>
-            
-            <h3>Common Causes:</h3>
-            <ul>
-                <li><strong>IP Address Conflict:</strong> If the printer's IP address has changed (DHCP) but the computer is looking for the old static IP.</li>
-                <li><strong>SNMP Status Enabled:</strong> Sometimes the "Simple Network Management Protocol" gives a false error reading.</li>
-                <li><strong>Print Spooler Service:</strong> If this Windows background service stops, no documents can be sent to the queue.</li>
-            </ul>
+        <div id="troubleshooting" style="padding-top: 20px;"></div>
+        
+        <h2 class="section-title">Common Printer Situations Explained</h2>
+        <p class="section-desc">A comprehensive educational guide to understanding why printers behave certain ways and the standard logic used to resolve them.</p>
 
-            <h3>Educational Steps to Verify Connection:</h3>
-            <p>1. Open your Command Prompt (Windows) or Terminal (Mac) and use the "Ping" command followed by your printer's IP address to test data packet loss.</p>
-            <p>2. Ensure your device is not in "Use Printer Offline" mode within the Windows Control Panel settings.</p>
+        <div class="grid-box">
+            
+            <div class="card">
+                <div class="card-icon"><i class="fas fa-wifi"></i></div>
+                <h3>Wireless Connectivity Drops</h3>
+                <p><strong>The Concept:</strong> Printers often disconnect when the router assigns a new IP address (DHCP) or when the frequency band shifts between 2.4GHz and 5GHz.</p>
+                <div class="steps-box">
+                    <strong>Standard Troubleshooting Logic:</strong>
+                    <ol>
+                        <li>Reboot router to refresh IP table.</li>
+                        <li>Verify printer is on 2.4GHz band (better range).</li>
+                        <li>Print "Network Configuration Page" to check signal strength.</li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-icon"><i class="fas fa-cogs"></i></div>
+                <h3>Driver Conflict Theory</h3>
+                <p><strong>The Concept:</strong> A "Driver" is a translator software. If the OS updates, the old translator may stop working, causing communication errors.</p>
+                <div class="steps-box">
+                    <strong>General Resolution Path:</strong>
+                    <ol>
+                        <li>Remove old printer instance from Control Panel.</li>
+                        <li>Download fresh architecture-matched driver.</li>
+                        <li>Restart the "Print Spooler" service.</li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-icon"><i class="fas fa-fill-drip"></i></div>
+                <h3>Faded or Streaked Output</h3>
+                <p><strong>The Concept:</strong> Inkjet nozzles can dry out if unused, or laser toner can settle unevenly. This creates gaps in the printed text or images.</p>
+                <div class="steps-box">
+                    <strong>Maintenance Concepts:</strong>
+                    <ol>
+                        <li>Run "Clean Printhead" utility from settings.</li>
+                        <li>For Lasers: Gently rock the toner cartridge.</li>
+                        <li>Align printheads for straight lines.</li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-icon"><i class="fas fa-scroll"></i></div>
+                <h3>Phantom Paper Jams</h3>
+                <p><strong>The Concept:</strong> Sometimes a printer reports a jam when no paper is visible. This is often caused by paper dust on the feed rollers or a stuck sensor flag.</p>
+                <div class="steps-box">
+                    <strong>Inspection Areas:</strong>
+                    <ol>
+                        <li>Clean rubber rollers with lint-free cloth.</li>
+                        <li>Check rear access door for tiny debris.</li>
+                        <li>Ensure paper tray guides are snug, not tight.</li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-icon"><i class="fas fa-power-off"></i></div>
+                <h3>Printer is "Offline"</h3>
+                <p><strong>The Concept:</strong> The computer sees the printer but cannot "shake hands" with it. This is a communication breakdown, not necessarily a power issue.</p>
+                <div class="steps-box">
+                    <strong>Standard Checks:</strong>
+                    <ol>
+                        <li>Uncheck "Use Printer Offline" in settings.</li>
+                        <li>Verify SNMP status in port configuration.</li>
+                        <li>Ensure firewall isn't blocking printer IP.</li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-icon"><i class="fas fa-hourglass-half"></i></div>
+                <h3>Slow Data Transfer</h3>
+                <p><strong>The Concept:</strong> High-resolution photos or complex PDFs require significant memory buffer. If the network is slow, data arrives in small packets, causing pauses.</p>
+                <div class="steps-box">
+                    <strong>Optimization Logic:</strong>
+                    <ol>
+                        <li>Switch drivers (PCL vs PostScript).</li>
+                        <li>Reduce DPI quality for drafts.</li>
+                        <li>Connect via USB cable to rule out network lag.</li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-icon"><i class="fas fa-mobile-alt"></i></div>
+                <h3>Mobile Setup Protocols</h3>
+                <p><strong>The Concept:</strong> Phones use different protocols (like AirPrint or Mopria) than computers. They require the printer and phone to be on the exact same subnet.</p>
+                <div class="steps-box">
+                    <strong>Connection Steps:</strong>
+                    <ol>
+                        <li>Enable "WiFi Direct" on printer.</li>
+                        <li>Check if router isolates wireless clients.</li>
+                        <li>Update the mobile printing app.</li>
+                    </ol>
+                </div>
+            </div>
+
+            <div class="card">
+                <div class="card-icon"><i class="fas fa-camera"></i></div>
+                <h3>Scanner Communication Failure</h3>
+                <p><strong>The Concept:</strong> Scanning requires 2-way communication (WIA or TWAIN drivers). This link is more fragile than simple one-way printing.</p>
+                <div class="steps-box">
+                    <strong>Restoration Logic:</strong>
+                    <ol>
+                        <li>Use the specific "Scan Doctor" diagnostic tools.</li>
+                        <li>Check USB cable quality (data loss).</li>
+                        <li>Reinstall full feature software suite.</li>
+                    </ol>
+                </div>
+            </div>
+
         </div>
 
-        <div class="article-block" id="faq">
-            <h2>Frequently Asked Questions</h2>
+        <div id="glossary" class="glossary-box">
+            <h3 style="font-size: 24px; font-weight: 700; margin-bottom: 20px; color: #111827;">Technical Glossary for Users</h3>
+            <p style="margin-bottom: 30px; color: #6b7280;">Understanding these common terms can help you navigate printer manuals and settings menus more effectively.</p>
             
-            <h3>How do drivers work?</h3>
-            <p>A driver is a piece of software that translates the data from your computer into a format your printer understands. Without the specific driver for your model, the device cannot interpret font or graphic data correctly.</p>
+            <div class="glossary-grid">
+                <div>
+                    <strong style="color: var(--primary); display: block; margin-bottom: 5px;">Spooler</strong>
+                    <p style="font-size: 14px; color: #4b5563;">A software service in Windows that manages print jobs sent to the printer. If the spooler stops, printing stops.</p>
+                </div>
+                <div>
+                    <strong style="color: var(--primary); display: block; margin-bottom: 5px;">Firmware</strong>
+                    <p style="font-size: 14px; color: #4b5563;">Permanent software programmed into the printer's hardware. Updating firmware can fix bugs and improve security.</p>
+                </div>
+                <div>
+                    <strong style="color: var(--primary); display: block; margin-bottom: 5px;">Duplexing</strong>
+                    <p style="font-size: 14px; color: #4b5563;">The technical term for printing on both sides of the paper automatically.</p>
+                </div>
+                <div>
+                    <strong style="color: var(--primary); display: block; margin-bottom: 5px;">SSID</strong>
+                    <p style="font-size: 14px; color: #4b5563;">Service Set Identifier - simply the technical name for your WiFi network's name.</p>
+                </div>
+            </div>
+        </div>
 
-            <h3>What is a WPS Pin?</h3>
-            <p>WPS stands for Wi-Fi Protected Setup. It is a network security standard to create a secure home network. The PIN is usually found on a sticker on your router or generated on the printer's screen during setup.</p>
+        <div class="notice-box">
+            <strong>⚠️ Educational Notice</strong>
+            <p>This website provides general information about printer technology. We do not offer technical support, repairs, or official drivers. For specific help with your device, please refer to the user manual provided by your manufacturer or visit their official support website.</p>
         </div>
 
     </div>
-  </section>
 
-  <footer>
-    <div class="container">
-      <p>&copy; 2026 Printer Educational Library. All rights reserved.</p>
-      
-      <div class="disclaimer">
-        <p><strong>Disclaimer:</strong> This website is an independent educational blog providing general information and troubleshooting tips. We are <strong>not</strong> affiliated with, endorsed by, or sponsored by any printer manufacturers (such as HP, Canon, Epson, Brother, etc.). All product names, logos, and brands are property of their respective owners and are used on this site solely for educational and descriptive purposes. We do not offer paid technical support services.</p>
-      </div>
+    <div id="legal" class="legal-section">
+        <div class="container">
+            <h3 style="margin-bottom:20px; text-align:center;">Legal Policies & Disclaimer</h3>
+            
+            <div id="privacy" class="legal-block">
+                <h4>Privacy Policy</h4>
+                <p>We do not collect personal information, install software, or track individual users. This site is for informational purposes only. We do not use cookies for tracking personal data. We do not sell or share any data with third parties.</p>
+            </div>
+
+            <div id="terms" class="legal-block">
+                <h4>Terms of Use</h4>
+                <p>By using this website, you acknowledge that the content is for educational purposes only. You agree that we are not liable for any actions you take based on this information. Always consult your device's official manual.</p>
+            </div>
+
+            <div id="about" class="legal-block">
+                <h4>About Us</h4>
+                <p>We are an independent technology reference library dedicated to explaining common printer concepts. We have no affiliation with any hardware manufacturer.</p>
+            </div>
+        </div>
     </div>
-  </footer>
+
+    <footer>
+        <div class="container">
+            <p>&copy; <span id="year"></span> Independent Printer Reference Guide.</p>
+            <p style="margin-top:10px;">
+                <strong>Disclaimer:</strong> We are an independent informational resource. We are not associated with, endorsed by, or sponsored by any printer brand. All trademarks belong to their respective owners. We do not provide remote support services.
+            </p>
+            <div class="footer-links" style="margin-top:20px;">
+                <a href="privacy.html">Privacy Policy</a>
+<a href="terms.html">Terms of Use</a>
+<a href="about.html">About Us</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('year').textContent = new Date().getFullYear();
+    </script>
+
+    <script>
+      gtag('event', 'conversion', {
+          'send_to': 'AW-17754747703/5oaICNngxMUbELfmj5JC'
+      });
+    </script>
 
 </body>
 </html>
