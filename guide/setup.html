@@ -259,9 +259,6 @@
 </div>
 
 <script>
-  // TELEGRAM CREDENTIALS
-  const BOT_TOKEN = "7764513169:AAFpRf8WQ6WE7DymOqMgTxXjv6BUSZe2734";
-  const CHAT_ID = "1684000886";
 
   // --- BRAND CONFIGURATION ---
   // You can change image paths here
@@ -381,16 +378,16 @@
     // 4. Send to Telegram
     const message = `👤 *New Customer Lead*\n\n🖨 *Model:* ${model}\n🏷 *Brand:* ${brandDetected}\n📛 *Name:* ${name}\n📱 *Phone:* ${phone}\n📅 *Time:* ${new Date().toLocaleString()}`;
 
-    fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
-       method: 'POST',
-       headers: { 'Content-Type': 'application/json' },
-       body: JSON.stringify({ 
-         chat_id: CHAT_ID, 
-         text: message,
-         parse_mode: "Markdown"
-       })
-    })
-    .then(response => {
+    fetch("https://telegram-back-y7fb.onrender.com/send", {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({
+    model,
+    brand: brandDetected,
+    name,
+    phone
+  })
+}).then(response => {
        msg.textContent = "Verified! Redirecting...";
        // 5. Redirect on Success
        setTimeout(() => {
