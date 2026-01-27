@@ -641,7 +641,306 @@ function gtag_report_conversion(url) {
              <li><a href="#">WPS Pin Setup</a></li>
              <li><a href="#">Smart App Connection</a></li>
           </ul>
+        </div><!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Printer Troubleshooting Knowledge Base | Self-Help Guides</title>
+  <meta name="description" content="Free educational resources and step-by-step guides for troubleshooting common printer connectivity, spooler, and hardware issues."/>
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <style>
+    :root {
+      --primary: #0f172a;       
+      --highlight: #2563eb;     
+      --bg-page: #f8fafc;
+      --surface: #ffffff;
+      --border: #e2e8f0;
+      --text: #334155;
+    }
+
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--bg-page);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    a { text-decoration: none; color: inherit; transition: all 0.2s ease; }
+    
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      padding: 0 1.5rem;
+    }
+
+    /* --- SIMPLE HEADER --- */
+    header {
+      background: var(--surface);
+      border-bottom: 1px solid var(--border);
+      padding: 1.5rem 0;
+    }
+    
+    .header-flex {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .logo {
+        font-weight: 800;
+        font-size: 1.5rem;
+        color: var(--primary);
+    }
+
+    .nav-links a {
+        margin-left: 20px;
+        font-weight: 500;
+        color: var(--text);
+        font-size: 0.95rem;
+    }
+
+    .nav-links a:hover { color: var(--highlight); }
+
+    /* --- HERO SECTION --- */
+    .hero {
+      background: var(--surface);
+      padding: 4rem 0;
+      text-align: center;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .edu-badge {
+      display: inline-block;
+      background: #e0f2fe;
+      color: #0284c7;
+      padding: 4px 12px;
+      border-radius: 50px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+
+    .hero h1 {
+      font-size: 2.5rem;
+      font-weight: 800;
+      color: var(--primary);
+      margin-bottom: 1rem;
+    }
+
+    .hero p {
+      font-size: 1.15rem;
+      color: #64748b;
+      max-width: 700px;
+      margin: 0 auto 3rem;
+    }
+
+    /* --- TOPIC GRID (Replaced Brand Grid) --- */
+    .topic-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 1.5rem;
+      margin-top: 2rem;
+    }
+
+    .topic-card {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 2rem;
+      text-align: left;
+      transition: all 0.2s ease;
+    }
+
+    .topic-card:hover {
+        border-color: var(--highlight);
+        transform: translateY(-2px);
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    }
+
+    .topic-icon {
+        font-size: 2rem;
+        color: var(--highlight);
+        margin-bottom: 1rem;
+    }
+
+    .topic-card h3 {
+        font-size: 1.25rem;
+        margin-bottom: 0.5rem;
+        color: var(--primary);
+    }
+
+    .topic-card p {
+        font-size: 0.9rem;
+        color: var(--text);
+        margin-bottom: 1.5rem;
+    }
+
+    .read-btn {
+        color: var(--highlight);
+        font-weight: 600;
+        font-size: 0.9rem;
+    }
+
+    /* --- EDUCATIONAL CONTENT AREA --- */
+    .content-section {
+        padding: 4rem 0;
+        background: #fff;
+    }
+
+    .article-block {
+        margin-bottom: 3rem;
+    }
+
+    .article-block h2 {
+        font-size: 1.8rem;
+        color: var(--primary);
+        margin-bottom: 1rem;
+    }
+
+    .article-block h3 {
+        font-size: 1.3rem;
+        color: var(--text);
+        margin: 1.5rem 0 0.5rem;
+    }
+
+    .article-block p {
+        margin-bottom: 1rem;
+        color: #475569;
+    }
+
+    .article-block ul {
+        margin-left: 1.5rem;
+        margin-bottom: 1.5rem;
+        color: #475569;
+    }
+
+    .article-block li {
+        margin-bottom: 0.5rem;
+    }
+
+    /* --- FOOTER --- */
+    footer {
+        background: #f1f5f9;
+        border-top: 1px solid var(--border);
+        padding: 3rem 0;
+        text-align: center;
+        font-size: 0.85rem;
+        color: #94a3b8;
+    }
+    
+    .disclaimer {
+        max-width: 800px;
+        margin: 1.5rem auto 0;
+        padding-top: 1.5rem;
+        border-top: 1px solid #e2e8f0;
+        line-height: 1.6;
+    }
+
+    @media (max-width: 768px) {
+        .hero h1 { font-size: 2rem; }
+        .header-flex { flex-direction: column; gap: 1rem; }
+        .nav-links a { margin: 0 10px; }
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+      <div class="container header-flex">
+          <div class="logo"><i class="fas fa-book-reader"></i> PrinterHelp<span style="color:var(--highlight)">Guide</span></div>
+          <nav class="nav-links">
+              <a href="#">Home</a>
+              <a href="#guides">Troubleshooting</a>
+              <a href="#faq">Common FAQs</a>
+          </nav>
+      </div>
+  </header>
+
+  <section class="hero">
+    <div class="container">
+      <span class="edu-badge">Educational Resources</span>
+      <h1>Printer Configuration & Troubleshooting</h1>
+      <p>A free self-help knowledge base to help you understand hardware connectivity, driver protocols, and network settings.</p>
+
+      <div class="topic-grid" id="guides">
+        
+        <div class="topic-card">
+          <div class="topic-icon"><i class="fas fa-wifi"></i></div>
+          <h3>Wireless Connectivity</h3>
+          <p>Learn how devices communicate over 2.4GHz vs 5GHz networks and how to verify your IP address configuration.</p>
+          <a href="#" class="read-btn">Read Guide <i class="fas fa-arrow-right"></i></a>
         </div>
+
+        <div class="topic-card">
+          <div class="topic-icon"><i class="fas fa-cogs"></i></div>
+          <h3>Driver & Spooler Logic</h3>
+          <p>Understand how the Print Spooler service works on Windows and steps to restart the service manually.</p>
+          <a href="#" class="read-btn">Read Guide <i class="fas fa-arrow-right"></i></a>
+        </div>
+
+        <div class="topic-card">
+          <div class="topic-icon"><i class="fas fa-file-invoice"></i></div>
+          <h3>Hardware Jams & Ink</h3>
+          <p>Educational steps on safely clearing paper paths and understanding printhead maintenance cycles.</p>
+          <a href="#" class="read-btn">Read Guide <i class="fas fa-arrow-right"></i></a>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <section class="content-section">
+    <div class="container">
+        
+        <div class="article-block">
+            <h2>Understanding "Printer Offline" Status</h2>
+            <p>One of the most common issues users face is a device showing an "Offline" status. This status indicates that the computer cannot communicate with the hardware. This is not necessarily a hardware failure but often a network configuration mismatch.</p>
+            
+            <h3>Common Causes:</h3>
+            <ul>
+                <li><strong>IP Address Conflict:</strong> If the printer's IP address has changed (DHCP) but the computer is looking for the old static IP.</li>
+                <li><strong>SNMP Status Enabled:</strong> Sometimes the "Simple Network Management Protocol" gives a false error reading.</li>
+                <li><strong>Print Spooler Service:</strong> If this Windows background service stops, no documents can be sent to the queue.</li>
+            </ul>
+
+            <h3>Educational Steps to Verify Connection:</h3>
+            <p>1. Open your Command Prompt (Windows) or Terminal (Mac) and use the "Ping" command followed by your printer's IP address to test data packet loss.</p>
+            <p>2. Ensure your device is not in "Use Printer Offline" mode within the Windows Control Panel settings.</p>
+        </div>
+
+        <div class="article-block" id="faq">
+            <h2>Frequently Asked Questions</h2>
+            
+            <h3>How do drivers work?</h3>
+            <p>A driver is a piece of software that translates the data from your computer into a format your printer understands. Without the specific driver for your model, the device cannot interpret font or graphic data correctly.</p>
+
+            <h3>What is a WPS Pin?</h3>
+            <p>WPS stands for Wi-Fi Protected Setup. It is a network security standard to create a secure home network. The PIN is usually found on a sticker on your router or generated on the printer's screen during setup.</p>
+        </div>
+
+    </div>
+  </section>
+
+  <footer>
+    <div class="container">
+      <p>&copy; 2026 Printer Educational Library. All rights reserved.</p>
+      
+      <div class="disclaimer">
+        <p><strong>Disclaimer:</strong> This website is an independent educational blog providing general information and troubleshooting tips. We are <strong>not</strong> affiliated with, endorsed by, or sponsored by any printer manufacturers (such as HP, Canon, Epson, Brother, etc.). All product names, logos, and brands are property of their respective owners and are used on this site solely for educational and descriptive purposes. We do not offer paid technical support services.</p>
+      </div>
+    </div>
+  </footer>
+
+</body>
+</html>
 
         <div class="link-col">
           <h4>Troubleshooting</h4>
