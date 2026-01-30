@@ -3,22 +3,29 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Printer Troubleshooting Knowledge Base | Self-Help Guides</title>
-  <meta name="description" content="Free educational resources and step-by-step guides for troubleshooting common printer connectivity, spooler, and hardware issues."/>
+  <title>Printer Configuration Portal |  Setup & Drivers</title>
+  <meta name="description" content=" device configuration portal. Setup guides, driver installation, Wi-Fi connection fixes, and expert troubleshooting for all major printer models."/>
   
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
   <style>
     :root {
+      /* Palette */
       --primary: #0f172a;       
-      --highlight: #2563eb;     
+      --highlight: #2563eb;     /* Action Blue */
+      --highlight-hover: #1d4ed8;
       --bg-page: #f8fafc;
       --surface: #ffffff;
       --border: #e2e8f0;
       --text: #334155;
+      --text-light: #64748b;
+      
+      /* Depth & Focus */
+      --shadow-card: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+      --shadow-hover: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -28,273 +35,666 @@
       background-color: var(--bg-page);
       color: var(--text);
       line-height: 1.6;
+      position: relative;
+      /* Padding for top sticky bar */
+      padding-top: 60px; 
     }
 
     a { text-decoration: none; color: inherit; transition: all 0.2s ease; }
-    
+
     .container {
-      max-width: 1000px;
+      max-width: 1200px;
       margin: 0 auto;
       padding: 0 1.5rem;
     }
 
-    /* --- SIMPLE HEADER --- */
-    header {
-      background: var(--surface);
-      border-bottom: 1px solid var(--border);
-      padding: 1.5rem 0;
+    /* --- PROFESSIONAL STICKY HEADER (Top) --- */
+    .top-contact-line {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      z-index: 1000;
+      background-color: var(--highlight); 
+      color: #ffffff;
+      padding: 14px 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 15px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.25);
+      letter-spacing: 0.02em;
+    }
+
+    .live-indicator {
+      height: 10px;
+      width: 10px;
+      background-color: #4ade80; /* Bright Green */
+      border-radius: 50%;
+      display: inline-block;
+      box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.3);
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0% { box-shadow: 0 0 0 0 rgba(74, 222, 128, 0.7); }
+      70% { box-shadow: 0 0 0 10px rgba(74, 222, 128, 0); }
+      100% { box-shadow: 0 0 0 0 rgba(74, 222, 128, 0); }
+    }
+
+    /* --- FLOATING BOTTOM-LEFT CONTACT (New) --- */
+    .bottom-floating-contact {
+      position: fixed;
+      bottom: 30px;
+      left: 30px;
+      z-index: 9999;
+      background-color: var(--highlight);
+      color: white;
+      padding: 12px 24px;
+      border-radius: 50px;
+      font-weight: 700;
+      font-size: 1rem;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      box-shadow: 0 4px 20px rgba(37, 99, 235, 0.4);
+      transition: transform 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      cursor: pointer;
+      text-decoration: none;
+    }
+
+    .bottom-floating-contact:hover {
+      transform: scale(1.05) translateY(-3px);
+      background-color: var(--highlight-hover);
+    }
+
+    .bottom-pulse {
+        height: 8px;
+        width: 8px;
+        background-color: #fff;
+        border-radius: 50%;
+        display: inline-block;
+        animation: simplePulse 1.5s infinite;
     }
     
-    .header-flex {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
+    @keyframes simplePulse {
+        0% { opacity: 1; transform: scale(1); }
+        50% { opacity: 0.5; transform: scale(1.2); }
+        100% { opacity: 1; transform: scale(1); }
     }
-
-    .logo {
-        font-weight: 800;
-        font-size: 1.5rem;
-        color: var(--primary);
-    }
-
-    .nav-links a {
-        margin-left: 20px;
-        font-weight: 500;
-        color: var(--text);
-        font-size: 0.95rem;
-    }
-
-    .nav-links a:hover { color: var(--highlight); }
 
     /* --- HERO SECTION --- */
     .hero {
       background: var(--surface);
-      padding: 4rem 0;
-      text-align: center;
+      padding: 2rem 0 4rem;
       border-bottom: 1px solid var(--border);
+      text-align: center;
+      position: relative;
     }
 
-    .edu-badge {
-      display: inline-block;
-      background: #e0f2fe;
-      color: #0284c7;
-      padding: 4px 12px;
+    .secure-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      background: #f0fdf4;
+      color: #15803d;
+      padding: 6px 14px;
       border-radius: 50px;
       font-size: 0.85rem;
       font-weight: 600;
-      margin-bottom: 1rem;
+      border: 1px solid #dcfce7;
+      margin-bottom: 1.5rem;
     }
 
     .hero h1 {
-      font-size: 2.5rem;
+      font-size: 3rem;
       font-weight: 800;
       color: var(--primary);
       margin-bottom: 1rem;
+      letter-spacing: -0.03em;
     }
 
     .hero p {
-      font-size: 1.15rem;
+      font-size: 1.25rem;
       color: #64748b;
-      max-width: 700px;
+      max-width: 750px;
       margin: 0 auto 3rem;
     }
 
-    /* --- TOPIC GRID (Replaced Brand Grid) --- */
-    .topic-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 1.5rem;
-      margin-top: 2rem;
+    /* --- BRAND GRID --- */
+    .brand-grid {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap; /* Allows wrapping on very small mobile screens */
+      gap: 1rem;      /* Compact gap */
+      margin-bottom: 4rem;
     }
 
-    .topic-card {
+    .brand-box {
       background: var(--surface);
-      border: 1px solid var(--border);
-      border-radius: 12px;
-      padding: 2rem;
-      text-align: left;
-      transition: all 0.2s ease;
+      border: 2px solid var(--border);
+      border-radius: 16px;
+      
+      /* --- CHANGED for Single Row Fit --- */
+      flex: 1;           
+      min-width: 140px;  /* Small min-width ensures they fit in one row */
+      padding: 1.5rem;   
+      /* ---------------------------------- */
+      
+      height: auto; 
+      min-height: 280px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      position: relative;
+      transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+      box-shadow: var(--shadow-card);
     }
 
-    .topic-card:hover {
-        border-color: var(--highlight);
-        transform: translateY(-2px);
-        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+    .brand-box img {
+      height: 70px;  
+      width: auto;
+      object-fit: contain;
+      margin-bottom: 1rem;
+      filter: drop-shadow(0 4px 3px rgba(0,0,0,0.07));
+      transition: transform 0.3s ease;
     }
 
-    .topic-icon {
+    .brand-title {
+        font-size: 1.4rem;
+        font-weight: 800;
+        color: var(--primary);
+        margin-bottom: 1.5rem;
+    }
+
+    .setup-btn {
+      background-color: var(--highlight);
+      color: white;
+      width: 100%;
+      padding: 0.8rem; 
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 0.95rem;
+      text-align: center;
+      letter-spacing: 0.02em;
+      transition: background 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      margin-top: auto; 
+    }
+
+    .brand-box:hover {
+      border-color: var(--highlight);
+      transform: translateY(-8px);
+      box-shadow: var(--shadow-hover);
+    }
+
+    /* Hover effect for both Images AND Icons inside brand-box */
+    .brand-box:hover img, 
+    .brand-box:hover i.fa-print { 
+      transform: scale(1.1); 
+      transition: transform 0.3s ease;
+    }
+
+    .brand-box:hover .setup-btn {
+      background-color: var(--highlight-hover);
+      box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+    }
+
+    /* --- ISSUE GRID --- */
+    .issue-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+        gap: 1.5rem;
+        max-width: 1000px;
+        margin: 0 auto;
+        padding-top: 2rem;
+    }
+
+    .issue-card {
+        background: white;
+        border: 1px solid var(--border);
+        border-radius: 12px;
+        padding: 1.5rem;
+        text-align: center;
+        transition: 0.3s ease;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+        box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+    }
+
+    .issue-card i {
         font-size: 2rem;
         color: var(--highlight);
         margin-bottom: 1rem;
     }
 
-    .topic-card h3 {
-        font-size: 1.25rem;
-        margin-bottom: 0.5rem;
+    .issue-card h3 {
+        font-size: 0.95rem;
         color: var(--primary);
-    }
-
-    .topic-card p {
-        font-size: 0.9rem;
-        color: var(--text);
-        margin-bottom: 1.5rem;
-    }
-
-    .read-btn {
-        color: var(--highlight);
         font-weight: 600;
-        font-size: 0.9rem;
+        line-height: 1.3;
     }
 
-    /* --- EDUCATIONAL CONTENT AREA --- */
-    .content-section {
+    .issue-card:hover {
+        transform: translateY(-5px);
+        border-color: var(--highlight);
+        box-shadow: var(--shadow-hover);
+    }
+    .issue-card:hover i {
+        transform: scale(1.1);
+    }
+
+    /* --- SEO CONTENT SECTION --- */
+    .seo-content {
         padding: 4rem 0;
         background: #fff;
     }
-
-    .article-block {
-        margin-bottom: 3rem;
-    }
-
-    .article-block h2 {
+    .seo-text h2 {
         font-size: 1.8rem;
         color: var(--primary);
         margin-bottom: 1rem;
     }
-
-    .article-block h3 {
-        font-size: 1.3rem;
-        color: var(--text);
-        margin: 1.5rem 0 0.5rem;
-    }
-
-    .article-block p {
-        margin-bottom: 1rem;
-        color: #475569;
-    }
-
-    .article-block ul {
-        margin-left: 1.5rem;
+    .seo-text p {
         margin-bottom: 1.5rem;
-        color: #475569;
+        color: var(--text-light);
     }
 
-    .article-block li {
-        margin-bottom: 0.5rem;
+    /* --- UTILITIES SECTION --- */
+    .services-section {
+      padding: 5rem 0;
+      background-color: var(--bg-page);
     }
+
+    .section-title {
+      text-align: center;
+      font-size: 2rem;
+      color: var(--primary);
+      font-weight: 700;
+      margin-bottom: 3rem;
+    }
+
+    .grid-container {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 1.5rem;
+    }
+
+    .service-card {
+      background: var(--surface);
+      padding: 2rem;
+      border-radius: 12px;
+      border: 1px solid var(--border);
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      transition: 0.2s;
+    }
+
+    .service-card:hover { border-color: var(--highlight); background: #eff6ff; }
+
+    .icon-circle {
+      width: 56px;
+      height: 56px;
+      background: white;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      color: var(--highlight);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+      flex-shrink: 0;
+    }
+
+    .text-content h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.25rem; color: var(--primary); }
+    .text-content p { font-size: 0.9rem; color: #64748b; }
+
+    /* --- CONTACT SECTION --- */
+    .contact-banner {
+      background-color: var(--primary);
+      color: white;
+      padding: 4rem 0;
+    }
+
+    .contact-flex {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 2rem;
+    }
+
+    .contact-text h2 { font-size: 2rem; margin-bottom: 1rem; }
+    .contact-text p { color: #cbd5e1; font-size: 1.1rem; max-width: 600px; margin-bottom: 1.5rem; }
+
+    .keyword-tags { display: flex; flex-wrap: wrap; gap: 10px; }
+    .kw-tag { background: rgba(255,255,255,0.1); padding: 5px 12px; border-radius: 4px; font-size: 0.85rem; color: #e2e8f0; }
+
+    .contact-action {
+      text-align: center;
+      background: rgba(255,255,255,0.05);
+      padding: 2rem;
+      border-radius: 12px;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+
+    .phone-display { display: block; font-size: 1.8rem; font-weight: 700; color: white; margin-bottom: 0.5rem; }
+    .phone-sub { font-size: 0.9rem; color: #94a3b8; }
+
+    /* --- FAQ SECTION --- */
+    .faq-section { padding: 4rem 0; background: #f8fafc; }
+    .faq-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+    .faq-item h4 { font-weight: 700; margin-bottom: 0.5rem; color: var(--primary); }
+    .faq-item p { font-size: 0.95rem; color: var(--text-light); }
+
+    /* --- RESOURCES --- */
+    .resources-wrapper { background: white; border-top: 1px solid var(--border); padding: 4rem 0 2rem; }
+    .link-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 3rem; margin-bottom: 3rem; }
+    .link-col h4 { color: var(--primary); font-size: 1rem; font-weight: 700; margin-bottom: 1.5rem; text-transform: uppercase; }
+    .link-col ul { list-style: none; }
+    .link-col li { margin-bottom: 0.8rem; }
+    .link-col a { color: var(--text-light); font-size: 0.9rem; font-weight: 500; }
+    .link-col a:hover { color: var(--highlight); text-decoration: underline; }
 
     /* --- FOOTER --- */
-    footer {
-        background: #f1f5f9;
-        border-top: 1px solid var(--border);
-        padding: 3rem 0;
-        text-align: center;
-        font-size: 0.85rem;
-        color: #94a3b8;
-    }
-    
-    .disclaimer {
-        max-width: 800px;
-        margin: 1.5rem auto 0;
-        padding-top: 1.5rem;
-        border-top: 1px solid #e2e8f0;
-        line-height: 1.6;
-    }
+    footer { background: #f1f5f9; border-top: 1px solid var(--border); padding: 3rem 0; text-align: center; font-size: 0.85rem; color: #94a3b8; }
+    .footer-links { margin-bottom: 1.5rem; }
+    .footer-links a { margin: 0 15px; color: #64748b; font-weight: 600; }
+    .disclaimer { max-width: 800px; margin: 0 auto; line-height: 1.6; color: #94a3b8; }
 
     @media (max-width: 768px) {
-        .hero h1 { font-size: 2rem; }
-        .header-flex { flex-direction: column; gap: 1rem; }
-        .nav-links a { margin: 0 10px; }
+      .top-contact-line { font-size: 0.95rem; padding: 12px 0; }
+      .bottom-floating-contact { left: 20px; bottom: 20px; font-size: 0.9rem; padding: 10px 18px; }
+      .hero { padding-top: 2rem; }
+      /* On mobile, allow them to wrap naturally */
+      .brand-box { width: 100%; height: auto; padding: 1.5rem; flex: auto; }
+      .brand-box img { height: 60px; }
+      .faq-grid { grid-template-columns: 1fr; }
+      .issue-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+      .contact-flex { flex-direction: column; text-align: center; }
+      .keyword-tags { justify-content: center; }
     }
   </style>
+  <script src="//code.jivosite.com/widget/KWWRWBGveU" async></script>
+  <!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-17870679276"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'AW-17870679276');
+</script>
+
+<script>
+function gtag_report_conversion(url) {
+  var callback = function () {
+    if (typeof(url) != 'undefined') {
+      window.location = url;
+    }
+  };
+  gtag('event', 'conversion', {
+      'send_to': 'AW-17870679276/863sCM2P5eEbEOzZs8lC',
+      'value': 1.0,
+      'currency': 'INR',
+      'event_callback': callback
+  });
+  return false;
+}
+</script>
 </head>
 <body>
 
-  <header>
-      <div class="container header-flex">
-          <div class="logo"><i class="fas fa-book-reader"></i> PrinterHelp<span style="color:var(--highlight)">Guide</span></div>
-          <nav class="nav-links">
-              <a href="#">Home</a>
-              <a href="#guides">Troubleshooting</a>
-              <a href="#faq">Common FAQs</a>
-          </nav>
-      </div>
-  </header>
+  <div class="top-contact-line">
+    <span class="live-indicator"></span>
+    <span><strong> Helpline:</strong> +1 (614) 654-3738</span>
+  </div>
 
   <section class="hero">
     <div class="container">
-      <span class="edu-badge">Educational Resources</span>
-      <h1>Printer Configuration & Troubleshooting</h1>
-      <p>A free self-help knowledge base to help you understand hardware connectivity, driver protocols, and network settings.</p>
+      <div class="secure-badge"><i class="fas fa-shield-check"></i>  System Configurator</div>
+      
+      <h1>Select Your Brand for Instant Fix</h1>
+      <p>Click your printer brand below to automatically resolve offline errors, install drivers, and complete setup.</p>
 
-      <div class="topic-grid" id="guides">
+      <div class="brand-grid">
         
-        <div class="topic-card">
-          <div class="topic-icon"><i class="fas fa-wifi"></i></div>
-          <h3>Wireless Connectivity</h3>
-          <p>Learn how devices communicate over 2.4GHz vs 5GHz networks and how to verify your IP address configuration.</p>
-          <a href="#" class="read-btn">Read Guide <i class="fas fa-arrow-right"></i></a>
-        </div>
+        <a href="setup.html?brand=H" class="brand-box" onclick="return gtag_report_conversion(this.href);">
+          <img src="../Image/h.png">
+          <div class="setup-btn">Setup Now <i class="fas fa-arrow-right"></i></div>
+        </a>
 
-        <div class="topic-card">
-          <div class="topic-icon"><i class="fas fa-cogs"></i></div>
-          <h3>Driver & Spooler Logic</h3>
-          <p>Understand how the Print Spooler service works on Windows and steps to restart the service manually.</p>
-          <a href="#" class="read-btn">Read Guide <i class="fas fa-arrow-right"></i></a>
-        </div>
+        <a href="setup.html?brand=Br" class="brand-box" onclick="return gtag_report_conversion(this.href);">
+           <img src="../Image/br.png">
+          <div class="setup-btn">Setup Now <i class="fas fa-arrow-right"></i></div>
+        </a>
 
-        <div class="topic-card">
-          <div class="topic-icon"><i class="fas fa-file-invoice"></i></div>
-          <h3>Hardware Jams & Ink</h3>
-          <p>Educational steps on safely clearing paper paths and understanding printhead maintenance cycles.</p>
-          <a href="#" class="read-btn">Read Guide <i class="fas fa-arrow-right"></i></a>
+        <a href="setup.html?brand=Ep" class="brand-box" onclick="return gtag_report_conversion(this.href);">
+           <img src="../Image/ep.png">
+          <div class="setup-btn">Setup Now <i class="fas fa-arrow-right"></i></div>
+        </a>
+
+        <a href="setup.html?brand=Ca" class="brand-box" onclick="return gtag_report_conversion(this.href);">
+           <img src="../Image/ca.jpg">
+          <div class="setup-btn">Setup Now <i class="fas fa-arrow-right"></i></div>
+        </a>
+
+      </div>
+
+      <div class="issue-grid">
+        <a href="#setup" class="issue-card">
+          <i class="fas fa-box-open"></i>
+          <h3>Printer Set Up<br>Issue</h3>
+        </a>
+        <a href="#offline" class="issue-card">
+          <i class="fas fa-power-off"></i>
+          <h3>Printer<br>Offline</h3>
+        </a>
+        <a href="#wireless" class="issue-card">
+          <i class="fas fa-wifi"></i>
+          <h3>Wireless Printer<br>Issue</h3>
+        </a>
+        <a href="#jam" class="issue-card">
+          <i class="fas fa-copy"></i>
+          <h3>Paper Jam<br>Issue</h3>
+        </a>
+        <a href="#queue" class="issue-card">
+          <i class="fas fa-hourglass-half"></i>
+          <h3>Job Stuck In<br>Queue</h3>
+        </a>
+        <a href="#scanner" class="issue-card">
+          <i class="fas fa-print"></i>
+          <h3>Scanner<br>Issues</h3>
+        </a>
+      </div>
+      </div>
+  </section>
+
+  <section class="seo-content">
+    <div class="container">
+        <div class="seo-text">
+            <h2>Manual Configuration & Troubleshooting Guide</h2>
+            <p>
+                Setting up a printing device often requires specific driver protocols and network permission handling. Whether you are dealing with a <strong>'Printer Offline'</strong> status, Print Spooler service errors, or SMTP scanning configuration, our portal assists in diagnosing the root cause.
+                For wireless connections, issues often arise from IP address conflicts, WPS pin mismatches, or firewall blockages on Windows 11 and macOS Sonoma. 
+                Common error codes relating to ink cartridges, paper jams, and fuser errors can often be resolved by resetting the internal memory or updating the firmware to the latest version.
+                Ensure your devices are on the same subnet as your router to facilitate AirPrint and plugin-free printing.
+            </p>
         </div>
+    </div>
+  </section>
+
+  <section class="services-section">
+    <div class="container">
+      <h2 class="section-title">Common Utilities & Diagnostics</h2>
+      
+      <div class="grid-container">
+        
+        <a href="/setup.html" class="service-card">
+          <div class="icon-circle"><i class="fas fa-box-open"></i></div>
+          <div class="text-content">
+            <h3>New Device Setup</h3>
+            <p>Unboxing and initial software installation.</p>
+          </div>
+        </a>
+
+        <a href="/wifi-fix.html" class="service-card">
+          <div class="icon-circle"><i class="fas fa-wifi"></i></div>
+          <div class="text-content">
+            <h3>Wi-Fi Connection Fix</h3>
+            <p>Reconnect device to network or router.</p>
+          </div>
+        </a>
+
+        <a href="/guide/offline.html" class="service-card">
+          <div class="icon-circle"><i class="fas fa-plug"></i></div>
+          <div class="text-content">
+            <h3>Device Offline?</h3>
+            <p>Bring your device back online.</p>
+          </div>
+        </a>
+
+        <a href="/guide/drivers.html" class="service-card">
+          <div class="icon-circle"><i class="fas fa-download"></i></div>
+          <div class="text-content">
+            <h3>Driver Updates</h3>
+            <p>Download latest software version.</p>
+          </div>
+        </a>
 
       </div>
     </div>
   </section>
 
-  <section class="content-section">
+  <section class="contact-banner">
+    <div class="container contact-flex">
+      <div class="contact-text">
+        <h2>Need Expert Assistance?</h2>
+        <p>Our technical specialists are available to resolve complex configuration issues, IP conflicts, and driver installation errors.</p>
+        <div class="keyword-tags">
+          <span class="kw-tag">Wireless Setup</span>
+          <span class="kw-tag">Offline Fix</span>
+          <span class="kw-tag">Spooler Error</span>
+          <span class="kw-tag">Driver Conflict</span>
+          <span class="kw-tag">Scanner Config</span>
+        </div>
+      </div>
+      <div class="contact-action">
+        <span class="phone-sub">Toll-Free Helpline</span>
+        <a class="phone-display">+1 (614) 654-3738</a>
+        <span class="phone-sub">Available 24/7 for Technical Help</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="faq-section">
+      <div class="container">
+          <h2 class="section-title">Frequently Asked Questions</h2>
+          <div class="faq-grid">
+              <div class="faq-item">
+                  <h4>Why is my printer showing "Offline"?</h4>
+                  <p>This usually occurs due to a break in communication between the PC and the device. Check your Wi-Fi signal, restart the router, or reinstall the drivers to refresh the IP address.</p>
+              </div>
+              <div class="faq-item">
+                  <h4>How do I install drivers without a CD drive?</h4>
+                  <p>Modern laptops often lack CD drives. You can download the "Easy Start" software or full feature drivers directly from our portal which detects your OS version automatically.</p>
+              </div>
+              <div class="faq-item">
+                  <h4>Scanner not working on Windows 11?</h4>
+                  <p>Windows updates often reset WIA services. You may need to reinstall the specific scanner driver or use the universal scanning utility app.</p>
+              </div>
+              <div class="faq-item">
+                  <h4>How do I find the WPS PIN?</h4>
+                  <p>The WPS PIN is usually generated on the printer's LCD screen during the wireless setup wizard, or found on a sticker on the back of the router.</p>
+              </div>
+          </div>
+      </div>
+  </section>
+
+  <section class="resources-wrapper">
     <div class="container">
+      <div class="link-grid">
         
-        <div class="article-block">
-            <h2>Understanding "Printer Offline" Status</h2>
-            <p>One of the most common issues users face is a device showing an "Offline" status. This status indicates that the computer cannot communicate with the hardware. This is not necessarily a hardware failure but often a network configuration mismatch.</p>
-            
-            <h3>Common Causes:</h3>
-            <ul>
-                <li><strong>IP Address Conflict:</strong> If the printer's IP address has changed (DHCP) but the computer is looking for the old static IP.</li>
-                <li><strong>SNMP Status Enabled:</strong> Sometimes the "Simple Network Management Protocol" gives a false error reading.</li>
-                <li><strong>Print Spooler Service:</strong> If this Windows background service stops, no documents can be sent to the queue.</li>
-            </ul>
-
-            <h3>Educational Steps to Verify Connection:</h3>
-            <p>1. Open your Command Prompt (Windows) or Terminal (Mac) and use the "Ping" command followed by your printer's IP address to test data packet loss.</p>
-            <p>2. Ensure your device is not in "Use Printer Offline" mode within the Windows Control Panel settings.</p>
+        <div class="link-col">
+          <h4>Setup Guides</h4>
+          <ul>
+             <li><a href="#">Enterprise Series Setup</a></li>
+             <li><a href="#">InkJet & Laser Config</a></li>
+             <li><a href="#">Wireless Model Setup</a></li>
+             <li><a href="#">Eco-Tank Series</a></li>
+             <li><a href="#">Multi-Function Printers</a></li>
+             <li><a href="#">Laser & LED Setup</a></li>
+          </ul>
         </div>
 
-        <div class="article-block" id="faq">
-            <h2>Frequently Asked Questions</h2>
-            
-            <h3>How do drivers work?</h3>
-            <p>A driver is a piece of software that translates the data from your computer into a format your printer understands. Without the specific driver for your model, the device cannot interpret font or graphic data correctly.</p>
-
-            <h3>What is a WPS Pin?</h3>
-            <p>WPS stands for Wi-Fi Protected Setup. It is a network security standard to create a secure home network. The PIN is usually found on a sticker on your router or generated on the printer's screen during setup.</p>
+        <div class="link-col">
+          <h4>Installation Tools</h4>
+          <ul>
+             <li><a href="#">Universal Print Driver</a></li>
+             <li><a href="#">Install without CD</a></li>
+             <li><a href="#">Scanner Driver Download</a></li>
+             <li><a href="#">Easy Start Assistant</a></li>
+             <li><a href="#">WPS Pin Setup</a></li>
+             <li><a href="#">Smart App Connection</a></li>
+          </ul>
         </div>
 
+        <div class="link-col">
+          <h4>Troubleshooting</h4>
+          <ul>
+             <li><a href="#">Clear Print Spooler</a></li>
+             <li><a href="#">Fix Paper Jams</a></li>
+             <li><a href="#">Faded Print Quality</a></li>
+             <li><a href="#">Ink System Failure</a></li>
+             <li><a href="#">Device Not Found</a></li>
+             <li><a href="#">Factory Reset Guide</a></li>
+          </ul>
+        </div>
+
+        <div class="link-col">
+          <h4>OS Compatibility</h4>
+          <ul>
+             <li><a href="#">Windows 11 Drivers</a></li>
+             <li><a href="#">Windows 10 Update</a></li>
+             <li><a href="#">macOS Sonoma/Ventura</a></li>
+             <li><a href="#">iOS AirPrint Setup</a></li>
+             <li><a href="#">Android Print Plugin</a></li>
+             <li><a href="#">Chromebook Printing</a></li>
+          </ul>
+        </div>
+
+      </div>
     </div>
   </section>
 
   <footer>
     <div class="container">
-      <p>&copy; 2026 Printer Educational Library. All rights reserved.</p>
+      <div class="footer-links">
+        <a href="#">About Us</a>
+        <a href="#">Accessibility</a>
+        <a href="privacy.html">Privacy Policy</a>
+        <a href="terms.html">Terms of Service</a>
+        <a href="#">Cookie Policy</a>
+        <a href="contact.html">Contact Us</a>
+      </div>
       
       <div class="disclaimer">
-        <p><strong>Disclaimer:</strong> This website is an independent educational blog providing general information and troubleshooting tips. We are <strong>not</strong> affiliated with, endorsed by, or sponsored by any printer manufacturers (such as HP, Canon, Epson, Brother, etc.). All product names, logos, and brands are property of their respective owners and are used on this site solely for educational and descriptive purposes. We do not offer paid technical support services.</p>
+        <p><strong>Disclaimer:</strong> This website is an independent third-party service provider. We are not affiliated with, endorsed by, or sponsored by any printer manufacturers or brands. All product names, logos, and brands are property of their respective owners and are used on this site solely for identification and compatibility purposes. Users are advised to review the manufacturers' terms before proceeding.</p>
+        <p style="margin-top:15px">&copy; 2026 Device Configurator Portal. All rights reserved.</p>
       </div>
     </div>
   </footer>
+
 
 </body>
 </html>
